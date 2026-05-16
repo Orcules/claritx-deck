@@ -1,7 +1,8 @@
 // Custom build wrapper for open-slide:
 //   1. Builds via @open-slide/core's vite config with a configurable `base`.
-//   2. Injects a URL-rewriting shim so React Router (BrowserRouter without
-//      basename) routes correctly when hosted under a sub-path on GitHub Pages.
+//   2. Injects `basename={import.meta.env.BASE_URL}` into the open-slide
+//      <BrowserRouter> so React Router resolves routes correctly when the
+//      app is hosted under a sub-path on GitHub Pages.
 //   3. Writes 404.html (= index.html) so SPA deep-links resolve.
 import { build as viteBuild, mergeConfig } from 'vite';
 import { createViteConfig } from '@open-slide/core/vite';
@@ -14,9 +15,29 @@ const outDir = process.env.OUT_DIR || 'dist';
 
 console.log(`Building with base="${base}" → ${outDir}/`);
 
+// Vite plugin that injects `basename` into open-slide's <BrowserRouter>.
+// BrowserRouter without basename can't match routes under a sub-path; this
+// makes the same build work at /, /claritx-deck/, or any other base.
+const routerBasenamePlugin = {
+  name: 'cx-router-basename',
+  enforce: 'pre',
+  transform(code, id) {
+    if (!id.includes('@open-slide/core/src/app/app.tsx')) return null;
+    if (!code.includes('<BrowserRouter>')) return null;
+    return {
+      code: code.replace(
+        /<BrowserRouter>/g,
+        "<BrowserRouter basename={import.meta.env.BASE_URL.replace(/\\/$/, '') || '/'}>"
+      ),
+      map: null,
+    };
+  },
+};
+
 const config = await createViteConfig({ userCwd: process.cwd(), mode: 'build' });
 const merged = mergeConfig(config, {
   base,
+  plugins: [routerBasenamePlugin],
   build: { outDir: path.resolve(process.cwd(), outDir) },
 });
 await viteBuild(merged);
@@ -24,20 +45,7 @@ await viteBuild(merged);
 const distDir = path.resolve(process.cwd(), outDir);
 const indexPath = path.join(distDir, 'index.html');
 
-// Inject sub-path → router shim into <head>. The shim strips the BASE prefix
-// from the initial URL so BrowserRouter (which has no basename) can match the
-// app's routes (`/`, `/s/:slideId`), then patches pushState/replaceState to
-// re-add the prefix when the app navigates — so deep links stay shareable.
-if (base !== '/') {
-  const trimmed = base.replace(/\/$/, ''); // "/claritx-deck"
-  const shim = `<script>(function(){var b=${JSON.stringify(trimmed)};var p=location.pathname;if(p===b||p===b+'/'){history.replaceState(null,'','/'+location.search+location.hash);}else if(p.indexOf(b+'/')===0){history.replaceState(null,'',p.slice(b.length)+location.search+location.hash);}['pushState','replaceState'].forEach(function(m){var o=history[m];history[m]=function(s,t,u){if(typeof u==='string'&&u.charAt(0)==='/'&&u.indexOf(b+'/')!==0&&u!==b){u=b+u;}return o.call(history,s,t,u);};});})();</script>`;
-  let html = await fs.readFile(indexPath, 'utf8');
-  html = html.replace('<head>', '<head>\n    ' + shim);
-  await fs.writeFile(indexPath, html);
-  console.log('✓ Injected sub-path router shim');
-}
-
-// GitHub Pages SPA fallback: 404.html === index.html lets any unknown sub-path
+// GitHub Pages SPA fallback: 404.html = index.html lets any unknown sub-path
 // bootstrap the React app, which then resolves the route client-side.
 await fs.copyFile(indexPath, path.join(distDir, '404.html'));
 
