@@ -1572,6 +1572,28 @@ const FlywheelSlide: Page = () => (
       <div data-cx-anim style={{ marginTop: 16, ...rise(240) }}>
         <Flywheel />
       </div>
+
+      <div
+        data-cx-anim
+        style={{
+          marginTop: 18,
+          padding: '14px 22px',
+          background: C.surface,
+          border: `1px solid ${C.rule}`,
+          borderLeft: `3px solid ${C.cyan}`,
+          borderRadius: 8,
+          fontSize: 15,
+          color: C.text,
+          lineHeight: 1.5,
+          ...rise(420),
+        }}
+      >
+        <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.24em', color: C.cyan, textTransform: 'uppercase', marginRight: 10 }}>
+          Coming next
+        </span>
+        Broker API integration, connect a live portfolio so ClaritX reads your real holdings, surfaces changes that
+        move the thesis, and routes one-tap trades back, the bridge from research to direct, AI-driven management.
+      </div>
     </div>
     <Watermark />
     <PageNum n={10} />
@@ -2180,8 +2202,8 @@ const Funds: Page = () => (
           title="Fiduciary path"
           delay={440}
           bullets={[
-            'Compliance + legal review',
-            'RIA-registration scaffolding',
+            'Broker API integration · live portfolio connect',
+            'Compliance + legal review · RIA-registration scaffolding',
             'Custody + tax-loss-harvesting partner',
           ]}
         />
@@ -3534,7 +3556,7 @@ const VisionFuture: Page = () => (
         <StackLayerRow num="01" name="Scan" title="9-angle AI read on any stock" status="live" delay={240} />
         <StackLayerRow num="02" name="Match" title="Portfolio matched to your life" status="live" delay={300} />
         <StackLayerRow num="03" name="Personalize" title="Every read re-scored to you" status="live" delay={360} />
-        <StackLayerRow num="04" name="Adapt" title="Live re-evaluation on market forces" status="building" delay={420} />
+        <StackLayerRow num="04" name="Adapt" title="Live portfolio sync + direct management" status="building" delay={420} />
       </div>
 
       <div
