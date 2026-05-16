@@ -712,7 +712,7 @@ const Pain: Page = () => (
         </Card>
         <Card delay={400} accent={C.red} style={{ padding: '18px 22px' }}>
           <div style={{ fontSize: 18, color: C.text, lineHeight: 1.5 }}>
-            <GreenAccent>69%</GreenAccent> of investors who follow finfluencers report losses, vs. 26% of non-followers.⁴
+            Of finfluencer followers <strong style={{ color: C.text }}>targeted for fraud</strong>, <GreenAccent>69%</GreenAccent> lose money to it, vs. 26% of non-followers.⁴
           </div>
         </Card>
       </div>
@@ -917,60 +917,109 @@ const Competitive: Page = () => (
 // PAGE 5, FINFLUENCER STAT (big number)
 // ============================================================================
 
+const FinfluencerStat = ({
+  big,
+  label,
+  delay,
+}: {
+  big: string;
+  label: React.ReactNode;
+  delay: number;
+}) => (
+  <div
+    data-cx-anim
+    style={{
+      padding: '22px 24px',
+      background: C.surface,
+      border: `1px solid ${C.rule}`,
+      borderLeft: `3px solid ${C.green}`,
+      borderRadius: 8,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6,
+      ...rise(delay),
+    }}
+  >
+    <div
+      style={{
+        fontFamily: 'var(--osd-font-display)',
+        fontSize: 64,
+        fontWeight: 600,
+        color: C.text,
+        letterSpacing: '-0.025em',
+        lineHeight: 1,
+        fontVariantNumeric: 'tabular-nums',
+      }}
+    >
+      {big}
+    </div>
+    <div style={{ fontSize: 15, color: C.muted, lineHeight: 1.45 }}>{label}</div>
+  </div>
+);
+
 const Finfluencer: Page = () => (
   <div style={fill}>
-    <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
+    <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="05 / 24">The void retail is filling, badly</Eyebrow>
+      <Heading size={50}>
+        Young investors <em style={{ fontStyle: 'italic' }}>are</em> researching,{' '}
+        <GreenAccent>they're just doing it on TikTok.</GreenAccent>
+      </Heading>
+      <Lede maxWidth={1620}>
+        FINRA's 2024 NFCS Investor Survey of US retail investors found a consistent pattern: under-35 investors lean
+        heavily on social-media personalities, consult more sources than older cohorts, and still score the worst on
+        objective investment knowledge, while rating themselves highest.
+      </Lede>
 
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 80,
-          marginTop: 32,
-          alignItems: 'center',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 18,
+          marginTop: 36,
         }}
       >
-        <div data-cx-anim style={{ ...rise(220) }}>
-          <div
-            style={{
-              fontFamily: 'var(--osd-font-display)',
-              fontSize: 280,
-              fontWeight: 600,
-              lineHeight: 0.95,
-              color: C.red,
-              letterSpacing: '-0.04em',
-              fontVariantNumeric: 'tabular-nums',
-            }}
-          >
-            69%
-          </div>
-          <div style={{ fontSize: 22, color: C.muted, marginTop: 16, lineHeight: 1.45, maxWidth: 600 }}>
-            of investors who follow finfluencers <strong style={{ color: C.text }}>reported losing money</strong>, versus only 26%
-            of non-followers.
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-          <Heading size={48} delay={120} maxWidth={900}>
-            When tools dump data, retail buys conviction from TikTok.
-          </Heading>
-          <Lede delay={280} maxWidth={900}>
-            Under-35 finfluencer-followers averaged <GreenAccent>42%</GreenAccent> on a basic investment knowledge
-            quiz. They aren't lazy. They're <strong style={{ color: C.text }}>starved for synthesis</strong>, and
-            taking it from the wrong source.
-          </Lede>
-
-          <Card delay={400} accent={C.green} style={{ padding: '20px 24px', marginTop: 8 }}>
-            <div style={{ fontSize: 18, color: C.text, lineHeight: 1.5 }}>
-              The market gap is not for <em style={{ fontStyle: 'italic' }}>more data.</em> It's for{' '}
-              <GreenAccent>trustworthy, synthesized, cited opinion</GreenAccent> at the moment of decision.
-            </div>
-          </Card>
-        </div>
+        <FinfluencerStat
+          big="61%"
+          delay={260}
+          label={
+            <>
+              of <strong style={{ color: C.text }}>18–34 investors</strong> made an investment decision based on a
+              social-media personality, vs. 6% of those 55+.
+            </>
+          }
+        />
+        <FinfluencerStat
+          big="42%"
+          delay={340}
+          label={
+            <>
+              average score on FINRA's objective investment-knowledge quiz, yet{' '}
+              <strong style={{ color: C.text }}>63%</strong> of the same group rated their own knowledge "high".
+            </>
+          }
+        />
+        <FinfluencerStat
+          big="69%"
+          delay={420}
+          label={
+            <>
+              of finfluencer followers <strong style={{ color: C.text }}>targeted for fraud</strong> lost money to it,
+              vs. 26% of non-followers.
+            </>
+          }
+        />
       </div>
 
-      <Sources delay={520} items={['FINRA Foundation 2025, Finfluencer Followers and Social Media Scrollers (NFCS 2024)']} />
+      <Card delay={520} accent={C.green} style={{ padding: '16px 22px', marginTop: 20 }}>
+        <div style={{ fontSize: 17, color: C.text, lineHeight: 1.5 }}>
+          The gap isn't <em style={{ fontStyle: 'italic' }}>more data</em>. It's{' '}
+          <GreenAccent>trustworthy, synthesized, cited analysis</GreenAccent> at the moment of decision, the role
+          finfluencers are filling by default.
+        </div>
+      </Card>
+
+      <Sources delay={620} items={['FINRA Foundation 2025, Finfluencer Followers and Social Media Scrollers (2024 NFCS Investor Survey, n ≈ 2,800)']} />
     </div>
     <Watermark />
     <PageNum n={5} />
