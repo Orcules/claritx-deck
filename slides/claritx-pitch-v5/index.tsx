@@ -3089,39 +3089,40 @@ const TamBar = ({
 
 const AdvisorTam: Page = () => (
   <div style={fill}>
-    <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
+    <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="14 / 24">Market · the bigger prize</Eyebrow>
-      <Heading size={54}>
-        The TAM expands when <GreenAccent>AI reads mature into portfolio guidance.</GreenAccent>
+      <Heading size={48}>
+        From a $3B software market to the <GreenAccent>$260B US advisor industry.</GreenAccent>
       </Heading>
-      <Lede>
-        ClaritX competes in a $3B online-platform market today. As AI synthesis matures from single-stock reads into
-        matched portfolio guidance, we step into the $260B US fee-based advisor market, and the millions of Americans
-        who can't clear the $500K-AUM entry bar.
+      <Lede maxWidth={1620}>
+        Today ClaritX monetizes from the $3B digital retail investing software market (SaaS subs + affiliate routing
+        to brokers). The bigger prize is the $260B/yr US fee-based advisor industry, structurally inaccessible to the
+        tens of millions of households below the $500K-AUM minimum. As AI matures from single-stock research into
+        full portfolio guidance, that adjacent market becomes addressable.
       </Lede>
 
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1.5fr 1fr',
-          gap: 56,
-          marginTop: 44,
+          gap: 48,
+          marginTop: 32,
           alignItems: 'flex-start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
           <TamBar
-            label="Online investment platforms"
-            sub="Today's TAM · paid research SaaS"
-            amount="$3.0B"
+            label="Today · digital retail investing software"
+            sub="Apps, robo-advisors, wealth platforms · ClaritX captures via SaaS + affiliate¹"
+            amount="$3B / yr"
             widthPct={12}
             color={C.muted}
             delay={240}
           />
           <TamBar
-            label="+ US fee-based advisor revenue"
-            sub="Adjacent TAM unlocked by read→portfolio→assist maturity¹"
-            amount="+$260B"
+            label="Adjacent · US fee-based advisor industry"
+            sub="Reached when AI matures into portfolio guidance²"
+            amount="$260B / yr"
             widthPct={92}
             color={C.green}
             delay={340}
@@ -3135,35 +3136,36 @@ const AdvisorTam: Page = () => (
               border: `1px solid ${C.green}40`,
               borderLeft: `3px solid ${C.green}`,
               borderRadius: 8,
-              fontSize: 16,
+              fontSize: 15,
               color: C.text,
               lineHeight: 1.5,
               ...rise(460),
             }}
           >
-            A <GreenAccent>1% capture of the expanded TAM</GreenAccent> = a $2.6B revenue line. Even 0.1% capture is
-            a generational consumer-fintech outcome.
+            <strong style={{ color: C.green }}>The math:</strong> even a 0.5% revenue share of the adjacent advisor
+            industry = $1.3B annual revenue. ClaritX's research-SaaS floor today protects against zero-disruption
+            scenarios while we mature.
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Card delay={400} accent={C.green}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase' }}>
-              Advisor shortage
+              Advisor shortfall by 2034²
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 48, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
+            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
               –100K
             </div>
-            <div style={{ fontSize: 14, color: C.muted, marginTop: 4 }}>US human-advisor shortfall projected by 2034, AI is the only economic answer²</div>
+            <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>US human-advisor gap McKinsey projects, the structural opening for AI-driven advice.</div>
           </Card>
           <Card delay={460} accent={C.cyan}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.cyan, textTransform: 'uppercase' }}>
-              Robo proof point
+              Robo-advisor AUM³
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 48, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
+            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
               $2.06T
             </div>
-            <div style={{ fontSize: 14, color: C.muted, marginTop: 4 }}>Robo-advisor AUM projected 2026, retail already pays for matched abstraction</div>
+            <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Projected 2026, proof retail will pay for AI-driven, matched investing at scale.</div>
           </Card>
         </div>
       </div>
@@ -3171,9 +3173,9 @@ const AdvisorTam: Page = () => (
       <Sources
         delay={620}
         items={[
-          'McKinsey "The looming advisor shortage in US wealth management" 2025',
-          'McKinsey 2025, 100K-advisor shortfall projected by 2034',
-          'Statista Robo-Advisors 2025',
+          'Grand View Research · Online Investment Platform Market 2025',
+          'McKinsey · "The looming advisor shortage in US wealth management" 2025',
+          'Statista · Robo-Advisors 2025 forecast',
         ]}
       />
     </div>
