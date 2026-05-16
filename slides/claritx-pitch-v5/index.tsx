@@ -2507,7 +2507,6 @@ const Team: Page = () => (
           bullets={[
             '6 yrs eng · Technical Lead at Stealth',
             'Ex-Senior SWE Skai, microservices, AWS Lambda, Python/Java',
-            'Certified LLM Engineer (2025)',
           ]}
           trust="LLM Engineer · Distributed Systems"
         />
