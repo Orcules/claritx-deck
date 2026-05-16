@@ -1408,26 +1408,28 @@ const Portfolio: Page = () => (
           <PortfolioMockup />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div
             data-cx-anim
             style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase', ...rise(280) }}
           >
-            Three inputs · one matched portfolio
+            The real 9-question wizard
           </div>
-          <HorizonChip label="Horizon" meta="3 yrs · 10 yrs · 30 yrs, every allocation shifts" color={C.green} delay={340} />
-          <HorizonChip label="Risk tolerance" meta="Capital preservation → balanced → growth" color={C.cyan} delay={400} />
-          <HorizonChip label="Capital + goals" meta="Retirement · house · learn · just curious" color={C.amber} delay={460} />
+          <HorizonChip label="Investment goal" meta="Long-term growth · regular income · stability & balance" color={C.green} delay={320} />
+          <HorizonChip label="Risk tolerance" meta="Conservative (β &lt; 0.8) · Moderate (0.8–1.3) · Aggressive (> 1.3)" color={C.cyan} delay={370} />
+          <HorizonChip label="Style + market cap" meta="Value · Growth · Blend × Large-cap / Mid-cap / Any" color={C.amber} delay={420} />
+          <HorizonChip label="Sectors + dividends" meta="11 sectors · dividend importance high / medium / low" color="#5fb3d4" delay={470} />
+          <HorizonChip label="AI-score floor" meta="Show all · 40+ · 60+ · 75+ (only top-rated stocks)" color={C.muted} delay={520} />
 
-          <Card delay={520} accent={C.green} style={{ padding: '16px 22px', marginTop: 8 }}>
-            <div style={{ fontSize: 16, color: C.text, lineHeight: 1.5 }}>
+          <Card delay={580} accent={C.green} style={{ padding: '14px 20px', marginTop: 6 }}>
+            <div style={{ fontSize: 15, color: C.text, lineHeight: 1.5 }}>
               Robo-advisor AUM reached <GreenAccent>$1.2T</GreenAccent> end-2024, proof retail will pay for matched abstraction.¹
             </div>
           </Card>
         </div>
       </div>
 
-      <Sources delay={620} items={['Statista Robo-Advisors 2025 forecast']} />
+      <Sources delay={680} items={['Statista Robo-Advisors 2025 forecast', 'src/data/portfolioQuestions.ts in the live product codebase']} />
     </div>
     <Watermark />
     <PageNum n={8} />
