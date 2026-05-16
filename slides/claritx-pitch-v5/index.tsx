@@ -630,27 +630,38 @@ const Underperformance: Page = () => (
           </div>
         </div>
 
-        <Card delay={340} accent={C.green} style={{ padding: '28px 32px' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase', marginBottom: 12 }}>
-            20-year compounded drag
+        <Card delay={340} accent={C.green} style={{ padding: '24px 28px' }}>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase', marginBottom: 12 }}>
+            Long-horizon compounded drag
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, color: C.text }}>
-              <span>S&P 500 (20-yr)</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.text }}>
+              <span>S&P 500 (20-yr to 2024)¹</span>
               <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>10.35% / yr</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, color: C.muted }}>
-              <span>Retail (20-yr)</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.muted }}>
+              <span>Retail equity investor (20-yr)¹</span>
               <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>9.24% / yr</span>
             </div>
-            <div style={{ borderTop: `1px solid ${C.ruleSoft}`, marginTop: 4, paddingTop: 14, fontSize: 16, color: C.muted, lineHeight: 1.5 }}>
-              A 1.11-point annual gap compounds into <GreenAccent>~25%</GreenAccent> less wealth at retirement.
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.muted, paddingTop: 8, borderTop: `1px solid ${C.ruleSoft}` }}>
+              <span>Fund investor gap (10-yr)²</span>
+              <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>–1.2 pp / yr</span>
+            </div>
+            <div style={{ marginTop: 4, fontSize: 14, color: C.muted, lineHeight: 1.5 }}>
+              Two independent long-horizon studies converge on the same gap. Over a 30-year retirement saving window
+              that compounds into <GreenAccent>~25%</GreenAccent> less wealth.
             </div>
           </div>
         </Card>
       </div>
 
-      <Sources delay={520} items={['Dalbar QAIB 2024, Quantitative Analysis of Investor Behavior']} />
+      <Sources
+        delay={520}
+        items={[
+          'DALBAR QAIB 2025 · 20-year period ending Dec 2024',
+          'Morningstar "Mind the Gap" 2024 · 10-year fund investor return gap',
+        ]}
+      />
     </div>
     <Watermark />
     <PageNum n={2} />
@@ -972,16 +983,17 @@ const Finfluencer: Page = () => (
 
 // Mock verdict UI rendered inline (no product screenshot dependency)
 const VerdictMockup = () => {
+  // 9 real dimensions from the live product (see AnalysisTabs.tsx in the main app)
   const dims: { name: string; signal: 'pos' | 'neg' | 'neu'; note: string }[] = [
-    { name: 'Fundamentals', signal: 'pos', note: 'Margin expansion · cash-rich' },
-    { name: 'Technicals', signal: 'pos', note: 'Above 200-day SMA · low vol' },
-    { name: 'Sentiment', signal: 'neu', note: 'Mixed retail · positive analyst' },
-    { name: 'Macro', signal: 'pos', note: 'Rate path supportive' },
-    { name: 'Peers', signal: 'pos', note: 'Premium to peers justified' },
     { name: 'News', signal: 'neu', note: 'No catalyst in 30 days' },
-    { name: 'Insider', signal: 'neg', note: 'Net selling Q1' },
-    { name: 'Options', signal: 'pos', note: 'Call skew · low put demand' },
-    { name: 'Valuation', signal: 'neu', note: 'Fair · 22× fwd P/E' },
+    { name: 'Technicals', signal: 'pos', note: 'Above 200-day SMA · low vol' },
+    { name: 'Social Hype', signal: 'neu', note: 'Mixed retail · positive influencer' },
+    { name: 'Financials', signal: 'pos', note: 'Margin expansion · cash-rich' },
+    { name: 'Analysts', signal: 'pos', note: '11 buy · 4 hold · target $215' },
+    { name: 'vs Market', signal: 'pos', note: 'Outperforming S&P 30-day' },
+    { name: 'Insiders', signal: 'neg', note: 'Net selling Q1' },
+    { name: 'Dividends', signal: 'pos', note: '0.5% yield · 7% growth FY' },
+    { name: 'AI Synthesis', signal: 'pos', note: 'Bullish · 87/100 confidence' },
   ];
   const signalColor = (s: 'pos' | 'neg' | 'neu') => (s === 'pos' ? C.green : s === 'neg' ? C.red : C.amber);
   const signalGlyph = (s: 'pos' | 'neg' | 'neu') => (s === 'pos' ? '+' : s === 'neg' ? '−' : '◦');
@@ -1124,8 +1136,8 @@ const ProductVerdict: Page = () => (
         Type a ticker. Get a cited 9-angle <GreenAccent>read in 70 seconds.</GreenAccent>
       </Heading>
       <Lede>
-        Multi-dimensional AI synthesis, fundamentals, technicals, sentiment, macro, peers, news, insider, options,
-        valuation, into one directional signal with full reasoning and every claim cited.
+        9-dimension AI synthesis across news, technicals, social, financials, analysts, peer comparison, insiders,
+        dividends, and an overall AI Insight, with full reasoning and every claim cited.
       </Lede>
 
       <div data-cx-anim style={{ marginTop: 28, ...rise(240) }}>
@@ -1178,13 +1190,16 @@ const HorizonChip = ({
 );
 
 // Inline mock of the Portfolio Simulator UI (no product screenshot dependency)
+// Inputs + result reflect the real product (see src/data/portfolioQuestions.ts).
 const PortfolioMockup = () => {
+  // The real product builds a stock+ETF list filtered by the user's answers.
+  // Allocation shown here is illustrative — sector breakdown of the matched list.
   const allocations = [
-    { label: 'US Equities', pct: 55, color: C.green },
-    { label: 'Int’l Equities', pct: 18, color: C.cyan },
-    { label: 'Bonds', pct: 18, color: C.amber },
-    { label: 'Cash', pct: 6, color: C.muted },
-    { label: 'Alternatives', pct: 3, color: C.dim },
+    { label: 'Technology', pct: 28, color: C.green },
+    { label: 'Healthcare', pct: 18, color: C.cyan },
+    { label: 'Financial Services', pct: 16, color: C.amber },
+    { label: 'Broad-market ETFs', pct: 22, color: '#5fb3d4' },
+    { label: 'Other sectors', pct: 16, color: C.muted },
   ];
   // Donut: build cumulative arcs over 360deg
   let acc = 0;
@@ -1219,12 +1234,13 @@ const PortfolioMockup = () => {
         gap: 18,
       }}
     >
-      {/* Input row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+      {/* Input row — real questionnaire from src/data/portfolioQuestions.ts (9 questions in the live product) */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
         {[
-          { label: 'Horizon', value: '10 years', color: C.green },
-          { label: 'Risk tolerance', value: 'Balanced growth', color: C.cyan },
-          { label: 'Goal', value: 'Retirement nest', color: C.amber },
+          { label: 'Goal', value: 'Long-term Growth', color: C.green },
+          { label: 'Risk', value: 'Moderate · β 0.8–1.3', color: C.cyan },
+          { label: 'Style', value: 'Blend · value + growth', color: C.amber },
+          { label: 'Min AI score', value: '60 +', color: C.muted },
         ].map((i) => (
           <div
             key={i.label}
@@ -1250,11 +1266,11 @@ const PortfolioMockup = () => {
           {arcs.map((a) => (
             <path key={a.label} d={arcPath(a.start, a.end)} fill={a.color} stroke={C.bg} strokeWidth="1.5" />
           ))}
-          <text x="80" y="76" textAnchor="middle" fill={C.text} fontFamily="Space Grotesk" fontSize="20" fontWeight="600">
-            $50K
+          <text x="80" y="74" textAnchor="middle" fill={C.text} fontFamily="Space Grotesk" fontSize="18" fontWeight="600">
+            42
           </text>
-          <text x="80" y="94" textAnchor="middle" fill={C.muted} fontFamily="Inter" fontSize="9" letterSpacing="2">
-            STARTING
+          <text x="80" y="92" textAnchor="middle" fill={C.muted} fontFamily="Inter" fontSize="9" letterSpacing="2">
+            MATCHES
           </text>
         </svg>
 
@@ -1325,8 +1341,9 @@ const Portfolio: Page = () => (
         Build a portfolio matched to <GreenAccent>your life</GreenAccent>, and the market.
       </Heading>
       <Lede>
-        Most tools ignore time horizon, risk, and goals. ClaritX makes them the inputs that drive the whole portfolio,
-        and re-balances against live market forces every day.
+        A 9-question wizard, goal, risk, style, sectors, dividends, AI-score floor, captures the investor's profile
+        and filters a matched stock + ETF set from the analyzed universe. Re-checked against live market forces every
+        trading day.
       </Lede>
 
       <div
@@ -1695,7 +1712,7 @@ const WhyNow: Page = () => (
       >
         <StatBlock big="165M" label="US retail investors, 62% of the US population¹¹" delay={240} />
         <StatBlock big="20–25%" label="of US equity trading volume is now retail (35% peak Apr '25)¹²" delta="+ doubled in the past decade" delay={310} />
-        <StatBlock big="+$308B" label="added to US stocks by retail in 2025¹³" delta="+ 14% over prior 2021 meme-stock peak" delay={380} />
+        <StatBlock big="+$300B" label="added to US stocks by retail in 2025¹³" delta="14% above the 2021 meme-stock peak" delay={380} />
       </div>
 
       <Sources
@@ -2190,7 +2207,7 @@ const Roadmap: Page = () => (
 
       <div style={{ display: 'flex', gap: 16, marginTop: 44, alignItems: 'stretch' }}>
         <QuarterCard
-          q="Q1 · 2026 H2"
+          q="Now · Q2 2026"
           title="Acquisition engine on"
           active
           delay={260}
@@ -2201,7 +2218,7 @@ const Roadmap: Page = () => (
           ]}
         />
         <QuarterCard
-          q="Q2"
+          q="Q3 2026"
           title="First paying cohort"
           delay={320}
           bullets={[
@@ -2211,7 +2228,7 @@ const Roadmap: Page = () => (
           ]}
         />
         <QuarterCard
-          q="Q3"
+          q="Q4 2026"
           title="Stickiness validated"
           delay={380}
           bullets={[
@@ -2221,7 +2238,7 @@ const Roadmap: Page = () => (
           ]}
         />
         <QuarterCard
-          q="Q4"
+          q="Q1 2027"
           title="Scaled growth profile"
           delay={440}
           bullets={[
@@ -2880,32 +2897,32 @@ const RiskPersonality: Page = () => (
             textTransform: 'uppercase',
           }}
         >
-          <div>Investor profile</div>
-          <div>Horizon</div>
-          <div>Loss tolerance</div>
-          <div>NVDA read, same day</div>
+          <div>Risk profile</div>
+          <div>Beta filter</div>
+          <div>Style preference</div>
+          <div>NVDA read (β ≈ 1.7), same day</div>
         </div>
         <RiskMatrixRow
-          profile="Capital preserve"
-          horizon="3 yrs"
-          loss="≤ 5%"
-          verdict="Outside risk envelope · volatility above ceiling"
+          profile="Conservative"
+          horizon="β &lt; 0.8"
+          loss="Value / dividend lean"
+          verdict="Filtered out · volatility above ceiling"
           verdictColor={C.red}
           delay={260}
         />
         <RiskMatrixRow
-          profile="Balanced growth"
-          horizon="10 yrs"
-          loss="≤ 20%"
-          verdict="Conditional read · 2% position cap"
+          profile="Moderate"
+          horizon="β 0.8 – 1.3"
+          loss="Blend · value + growth"
+          verdict="Filtered out · above beta ceiling"
           verdictColor={C.amber}
           delay={330}
         />
         <RiskMatrixRow
-          profile="Long-horizon growth"
-          horizon="30 yrs"
-          loss="≤ 40%"
-          verdict="Within envelope · 5% position cap"
+          profile="Aggressive"
+          horizon="β > 1.3"
+          loss="Growth lean"
+          verdict="Within envelope · ranked by AI score"
           verdictColor={C.green}
           delay={400}
         />
@@ -2933,8 +2950,8 @@ const RiskPersonality: Page = () => (
             How we wrap it
           </div>
           <div style={{ fontSize: 17, color: C.text, lineHeight: 1.5 }}>
-            5-question profile · re-evaluated quarterly · every read re-scored against the user's containment window
-            before it's rendered.
+            9-question profile (goal, risk, style, sectors, dividends, AI floor). Every read filtered through the
+            user's beta band, sector preference, and AI-score floor before it's surfaced.
           </div>
         </Card>
       </div>
@@ -3014,9 +3031,9 @@ const AdvisorTam: Page = () => (
         The TAM expands when <GreenAccent>AI reads mature into portfolio guidance.</GreenAccent>
       </Heading>
       <Lede>
-        We're a $3B online-platform company today. When AI synthesis matures from single-stock reads into matched
-        portfolio guidance, we move into the $260B US fee-based advisor market, and the millions of Americans who
-        can't clear the $500K-AUM entry bar.
+        ClaritX competes in a $3B online-platform market today. As AI synthesis matures from single-stock reads into
+        matched portfolio guidance, we step into the $260B US fee-based advisor market, and the millions of Americans
+        who can't clear the $500K-AUM entry bar.
       </Lede>
 
       <div
