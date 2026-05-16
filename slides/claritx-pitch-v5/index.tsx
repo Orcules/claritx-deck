@@ -1827,53 +1827,66 @@ const SparkArea = () => (
 
 const Market: Page = () => (
   <div style={fill}>
-    <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
+    <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="13 / 24">Market · today</Eyebrow>
-      <Heading size={56}>
-        A <GreenAccent>$3B market, growing 14% a year</GreenAccent>, and consolidating.
+      <Heading size={50}>
+        Digital retail investing software is a <GreenAccent>$3B → $6.6B</GreenAccent> market.
       </Heading>
-      <Lede>
-        Online investment platforms reach $6.6B by 2030. Robo-advisors prove retail will pay for synthesis at scale.
+      <Lede maxWidth={1620}>
+        Grand View Research's "online investment platforms" category covers mobile trading apps, robo-advisors,
+        digital wealth-management services, and supporting software. ClaritX sits one layer above as the AI research
+        and decision-support layer, with SaaS revenue and affiliate routing into the brokerages already inside this
+        market.
       </Lede>
 
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: '1.6fr 1fr',
-          gap: 56,
-          marginTop: 36,
+          gap: 48,
+          marginTop: 28,
           alignItems: 'center',
         }}
       >
         <div data-cx-anim style={{ ...rise(240) }}>
           <SparkArea />
-          <div style={{ marginTop: 12, fontSize: 13, color: C.dim, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600 }}>
-            Online investment platforms, global market¹⁴
+          <div style={{ marginTop: 12, fontSize: 12, color: C.dim, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600 }}>
+            Online investment platforms, global market¹
+          </div>
+          <div style={{ marginTop: 8, fontSize: 13, color: C.muted, lineHeight: 1.45, maxWidth: 880 }}>
+            Includes: mobile trading apps · robo-advisors · digital wealth-management services · advisory + support
+            software. Does not include brokerage commissions or PFOF revenue.
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Card delay={320} accent={C.green}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase' }}>
-              CAGR · 2024 → 2030
+              CAGR · 2024 → 2030¹
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 48, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
+            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
               14.2%
             </div>
           </Card>
           <Card delay={380} accent={C.cyan}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.cyan, textTransform: 'uppercase' }}>
-              Robo-advisor AUM
+              Robo-advisor AUM²
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 48, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
+            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
               $1.2T → $2.06T
             </div>
-            <div style={{ fontSize: 14, color: C.muted, marginTop: 4 }}>2024 → 2025⁹</div>
+            <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>2024 → 2025 · proof retail will pay for matched abstraction</div>
           </Card>
         </div>
       </div>
 
-      <Sources delay={520} items={['Grand View Research 2025', 'Statista Robo-Advisors 2025 forecast']} />
+      <Sources
+        delay={520}
+        items={[
+          'Grand View Research · Online Investment Platform Market Report 2025',
+          'Statista · Robo-Advisors 2025 forecast',
+        ]}
+      />
     </div>
     <Watermark />
     <PageNum n={13} />
