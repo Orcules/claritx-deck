@@ -2783,20 +2783,12 @@ const Ask: Page = () => (
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <Card delay={260} accent={C.cyan}>
-            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.cyan, textTransform: 'uppercase' }}>
-              Where we'd love your help
-            </div>
-            <div style={{ fontSize: 18, color: C.text, marginTop: 8, lineHeight: 1.5 }}>
-              Broker partnerships · compliance / RIA pathway · senior AI-eng hire · early creator partnerships
-            </div>
-          </Card>
-          <Card delay={420} accent={C.amber}>
-            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.amber, textTransform: 'uppercase' }}>
+          <Card delay={260} accent={C.green}>
+            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase' }}>
               Talk to us
             </div>
             <div style={{ fontSize: 18, color: C.text, marginTop: 8, lineHeight: 1.5 }}>
-              or@claritx.ai · claritx.ai · Tel Aviv, Israel
+              business@claritx.ai · claritx.ai · Tel Aviv, Israel
             </div>
           </Card>
         </div>
