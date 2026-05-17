@@ -587,79 +587,148 @@ const ReturnBar = ({
   </div>
 );
 
+// Multi-study comparison row: shows one long-horizon study's market vs retail return as paired bars.
+const StudyRow = ({
+  study,
+  period,
+  marketLabel,
+  marketPct,
+  retailLabel,
+  retailPct,
+  delay,
+}: {
+  study: string;
+  period: string;
+  marketLabel: string;
+  marketPct: number;
+  retailLabel: string;
+  retailPct: number;
+  delay: number;
+}) => {
+  const gap = (marketPct - retailPct).toFixed(2);
+  const maxScale = 20; // %/yr ceiling for bar width
+  return (
+    <div data-cx-anim style={{ display: 'flex', flexDirection: 'column', gap: 6, ...rise(delay) }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 13, color: C.muted }}>
+        <span style={{ fontWeight: 700, color: C.text, letterSpacing: '0.04em' }}>{study}</span>
+        <span style={{ letterSpacing: '0.08em', fontVariantNumeric: 'tabular-nums' }}>{period}</span>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: C.text, marginBottom: 4 }}>
+            <span>{marketLabel}</span>
+            <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>
+              {marketPct.toFixed(2)}% / yr
+            </span>
+          </div>
+          <div style={{ height: 10, background: C.ruleSoft, borderRadius: 5, overflow: 'hidden' }}>
+            <div style={{ width: `${(marketPct / maxScale) * 100}%`, height: '100%', background: C.green }} />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, color: C.muted, marginTop: 6, marginBottom: 4 }}>
+            <span>{retailLabel}</span>
+            <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>
+              {retailPct.toFixed(2)}% / yr
+            </span>
+          </div>
+          <div style={{ height: 10, background: C.ruleSoft, borderRadius: 5, overflow: 'hidden' }}>
+            <div style={{ width: `${(retailPct / maxScale) * 100}%`, height: '100%', background: C.muted }} />
+          </div>
+        </div>
+        <div
+          style={{
+            minWidth: 92,
+            textAlign: 'right',
+            fontFamily: 'var(--osd-font-display)',
+            fontSize: 22,
+            fontWeight: 600,
+            color: C.red,
+            letterSpacing: '-0.02em',
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
+          –{gap} pp
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Underperformance: Page = () => (
   <div style={fill}>
-    <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
+    <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="02 / 24">The cost of noise</Eyebrow>
-      <Heading size={56}>
-        The average retail investor lost <GreenAccent>848 bps</GreenAccent> to the S&P 500 in 2024.
+      <Heading size={48}>
+        Retail loses roughly <GreenAccent>1 pp / yr</GreenAccent> to the market, in every long-horizon study.
       </Heading>
-      <Lede>
-        It's not lack of capital. It's not bad luck. <strong style={{ color: C.text }}>It's decisions made under
-        information overload.</strong>
+      <Lede maxWidth={1620}>
+        Three independent studies, three different methodologies, three different time periods. They all reach the
+        same conclusion. It's not lack of capital. It's not bad luck. It's decisions made under information overload.
       </Lede>
 
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.4fr 1fr',
-          gap: 80,
-          marginTop: 56,
-          alignItems: 'center',
+          gridTemplateColumns: '1.5fr 1fr',
+          gap: 48,
+          marginTop: 32,
+          alignItems: 'flex-start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-          <ReturnBar label="S&P 500 (market)" pct="25.02%" pctOfWidth={100} color={C.green} delay={220} highlight />
-          <ReturnBar label="Average retail equity investor" pct="16.54%" pctOfWidth={66} color={C.muted} delay={300} />
-          <div
-            data-cx-anim
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-              fontSize: 18,
-              color: C.muted,
-              ...rise(400),
-            }}
-          >
-            <span style={{ width: 32, height: 2, background: C.red }} />
-            <span>
-              <strong style={{ color: C.red, fontFamily: 'var(--osd-font-display)', fontSize: 22 }}>–848 bps</strong> · second-largest
-              gap of the past decade¹
-            </span>
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+          <StudyRow
+            study="DALBAR QAIB 2025¹"
+            period="20 yrs · US · 2004–2024"
+            marketLabel="S&P 500"
+            marketPct={10.35}
+            retailLabel="Average retail equity investor"
+            retailPct={9.24}
+            delay={240}
+          />
+          <StudyRow
+            study='Morningstar "Mind the Gap" 2024²'
+            period="10 yrs · US funds · 2014–2024"
+            marketLabel="Fund total return"
+            marketPct={8.2}
+            retailLabel="Fund investor (dollar-weighted)"
+            retailPct={7.0}
+            delay={320}
+          />
+          <StudyRow
+            study="Barber & Odean · Berkeley³"
+            period="6 yrs · US discount-broker panel · 1991–1996"
+            marketLabel="Market"
+            marketPct={17.9}
+            retailLabel="Most-active retail quintile"
+            retailPct={11.4}
+            delay={400}
+          />
         </div>
 
-        <Card delay={340} accent={C.green} style={{ padding: '24px 28px' }}>
-          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase', marginBottom: 12 }}>
-            Long-horizon compounded drag
+        <Card delay={460} accent={C.green} style={{ padding: '20px 24px' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase', marginBottom: 10 }}>
+            2024, the most recent data point
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.text }}>
-              <span>S&P 500 (20-yr to 2024)¹</span>
-              <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>10.35% / yr</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.muted }}>
-              <span>Retail equity investor (20-yr)¹</span>
-              <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>9.24% / yr</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 16, color: C.muted, paddingTop: 8, borderTop: `1px solid ${C.ruleSoft}` }}>
-              <span>Fund investor gap (10-yr)²</span>
-              <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>–1.2 pp / yr</span>
-            </div>
-            <div style={{ marginTop: 4, fontSize: 14, color: C.muted, lineHeight: 1.5 }}>
-              Two independent long-horizon studies converge on the same gap. <GreenAccent>It compounds materially over
-              a career.</GreenAccent>
-            </div>
+          <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 40, fontWeight: 600, color: C.text, letterSpacing: '-0.02em', lineHeight: 1 }}>
+            –848 bps
+          </div>
+          <div style={{ marginTop: 10, fontSize: 14, color: C.muted, lineHeight: 1.55 }}>
+            S&P 500 returned <strong style={{ color: C.text }}>25.02%</strong> · the average retail equity investor
+            captured <strong style={{ color: C.text }}>16.54%</strong>. Second-largest single-year gap of the past
+            decade.¹
+          </div>
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${C.ruleSoft}`, fontSize: 14, color: C.text, lineHeight: 1.5 }}>
+            <GreenAccent>The 2024 gap is dramatic.</GreenAccent> The multi-decade gap is what matters: ~1+ pp/yr that
+            compounds materially over a career.
           </div>
         </Card>
       </div>
 
       <Sources
-        delay={520}
+        delay={540}
         items={[
           'DALBAR QAIB 2025 · 20-year period ending Dec 2024',
           'Morningstar "Mind the Gap" 2024 · 10-year fund investor return gap',
+          'Barber & Odean, "Trading is Hazardous to Your Wealth," Journal of Finance 2000',
         ]}
       />
     </div>
