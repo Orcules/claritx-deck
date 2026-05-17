@@ -786,7 +786,7 @@ const CompRow = ({
 const Competitive: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="04 / 24">Why existing tools fail retail</Eyebrow>
+      <Eyebrow section="05 / 24">Why existing tools fail retail</Eyebrow>
       <Heading size={50}>
         Existing tools were built for traders. <GreenAccent>Retail needs a clarity layer.</GreenAccent>
       </Heading>
@@ -908,7 +908,7 @@ const Competitive: Page = () => (
       />
     </div>
     <Watermark />
-    <PageNum n={4} />
+    <PageNum n={5} />
   </div>
 );
 
@@ -959,7 +959,7 @@ const FinfluencerStat = ({
 const Finfluencer: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="05 / 24">The void retail is filling, badly</Eyebrow>
+      <Eyebrow section="04 / 24">The void retail is filling, badly</Eyebrow>
       <Heading size={50}>
         Young investors <em style={{ fontStyle: 'italic' }}>are</em> researching,{' '}
         <GreenAccent>they're just doing it on TikTok.</GreenAccent>
@@ -1021,7 +1021,7 @@ const Finfluencer: Page = () => (
       <Sources delay={620} items={['FINRA Foundation 2025, Finfluencer Followers and Social Media Scrollers (2024 NFCS Investor Survey, n ≈ 2,800)']} />
     </div>
     <Watermark />
-    <PageNum n={5} />
+    <PageNum n={4} />
   </div>
 );
 
@@ -1179,7 +1179,7 @@ const VerdictMockup = () => {
 const ProductVerdict: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="07 / 24">Layer 1 · scan any stock</Eyebrow>
+      <Eyebrow section="13 / 24">Layer 1 · scan any stock</Eyebrow>
       <Heading size={52}>
         Type a ticker. Get a cited 9-angle <GreenAccent>read in 70 seconds.</GreenAccent>
       </Heading>
@@ -1200,7 +1200,7 @@ const ProductVerdict: Page = () => (
       </p>
     </div>
     <Watermark />
-    <PageNum n={7} />
+    <PageNum n={13} />
   </div>
 );
 
@@ -1384,7 +1384,7 @@ const PortfolioMockup = () => {
 const Portfolio: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="08 / 24">Layer 2 · build a matched portfolio</Eyebrow>
+      <Eyebrow section="14 / 24">Layer 2 · build a matched portfolio</Eyebrow>
       <Heading size={52}>
         Build a portfolio matched to <GreenAccent>your life</GreenAccent>, and the market.
       </Heading>
@@ -1431,7 +1431,7 @@ const Portfolio: Page = () => (
       <Sources delay={680} items={['Statista Robo-Advisors 2025 forecast', 'src/data/portfolioQuestions.ts in the live product codebase']} />
     </div>
     <Watermark />
-    <PageNum n={8} />
+    <PageNum n={14} />
   </div>
 );
 
@@ -1559,7 +1559,7 @@ const Flywheel = () => (
 const FlywheelSlide: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 90px' }}>
-      <Eyebrow section="10 / 24">Layer 4 · adapt to live market forces</Eyebrow>
+      <Eyebrow section="16 / 24">Layer 4 · adapt to live market forces</Eyebrow>
       <Heading size={52}>
         Reads and portfolios <GreenAccent>re-evaluate every trading day.</GreenAccent>
       </Heading>
@@ -1595,7 +1595,7 @@ const FlywheelSlide: Page = () => (
       </div>
     </div>
     <Watermark />
-    <PageNum n={10} />
+    <PageNum n={16} />
   </div>
 );
 
@@ -1648,7 +1648,7 @@ const FlowArrow = () => (
 const Monetization: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
-      <Eyebrow section="11 / 24">Business model</Eyebrow>
+      <Eyebrow section="17 / 24">Business model</Eyebrow>
       <Heading size={52}>
         We get paid not for the trade,<GreenAccent>but for the decision.</GreenAccent>
       </Heading>
@@ -1713,7 +1713,7 @@ const Monetization: Page = () => (
       <Sources delay={760} items={['Robinhood Partners 2025 ($20 CPA) · eToro Partners 2025 (up to $250 CPA)']} />
     </div>
     <Watermark />
-    <PageNum n={11} />
+    <PageNum n={17} />
   </div>
 );
 
@@ -1766,7 +1766,7 @@ const StatBlock = ({
 const WhyNow: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
-      <Eyebrow section="12 / 24">Why now</Eyebrow>
+      <Eyebrow section="06 / 24">Why now</Eyebrow>
       <Heading size={56}>
         Retail money is bigger, younger, and <GreenAccent>underserved.</GreenAccent>
       </Heading>
@@ -1797,7 +1797,7 @@ const WhyNow: Page = () => (
       />
     </div>
     <Watermark />
-    <PageNum n={12} />
+    <PageNum n={6} />
   </div>
 );
 
@@ -1849,7 +1849,7 @@ const SparkArea = () => (
 const Market: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="13 / 24">Market · today</Eyebrow>
+      <Eyebrow section="07 / 24">Market · today</Eyebrow>
       <Heading size={50}>
         Global digital retail investing software, <GreenAccent>$3B → $6.6B</GreenAccent>.
       </Heading>
@@ -1910,7 +1910,7 @@ const Market: Page = () => (
       />
     </div>
     <Watermark />
-    <PageNum n={13} />
+    <PageNum n={7} />
   </div>
 );
 
@@ -1939,7 +1939,7 @@ const MagnifiComp: Page = () => (
     />
 
     <div style={{ position: 'absolute', left: 96, right: 96, top: 360, bottom: 110 }}>
-      <Eyebrow section="17 / 24">Closest competitor</Eyebrow>
+      <Eyebrow section="10 / 24">Closest competitor</Eyebrow>
       <Heading size={48}>
         Magnifi proved retail will pay for synthesis. <GreenAccent>We go further.</GreenAccent>
       </Heading>
@@ -1979,7 +1979,7 @@ const MagnifiComp: Page = () => (
       <Sources delay={460} items={['Magnifi press 2024 · Crunchbase']} />
     </div>
     <Watermark />
-    <PageNum n={17} />
+    <PageNum n={10} />
   </div>
 );
 
@@ -2505,7 +2505,6 @@ const Team: Page = () => (
           delay={360}
           bullets={[
             '6 yrs eng · Technical Lead at Stealth',
-            'Ex-Senior SWE Skai, microservices, AWS Lambda, Python/Java',
           ]}
           trust="LLM Engineer · Distributed Systems"
         />
@@ -2784,16 +2783,7 @@ const Ask: Page = () => (
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <Card delay={260} accent={C.green}>
-            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase' }}>
-              What we want from partners
-            </div>
-            <div style={{ fontSize: 18, color: C.text, marginTop: 8, lineHeight: 1.5 }}>
-              VCs who see consumer AI · fintech distribution · the advice-gap thesis. Bring intros, hard questions,
-              and conviction on a 5-year horizon.
-            </div>
-          </Card>
-          <Card delay={340} accent={C.cyan}>
+          <Card delay={260} accent={C.cyan}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.cyan, textTransform: 'uppercase' }}>
               Where we'd love your help
             </div>
@@ -2948,7 +2938,7 @@ const RiskMatrixRow = ({
 const RiskPersonality: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '88px 96px 110px' }}>
-      <Eyebrow section="09 / 24">Layer 3 · personalize every read</Eyebrow>
+      <Eyebrow section="15 / 24">Layer 3 · personalize every read</Eyebrow>
       <Heading size={54}>
         Risk isn't a number. It's <GreenAccent>your life.</GreenAccent>
       </Heading>
@@ -3049,7 +3039,7 @@ const RiskPersonality: Page = () => (
       />
     </div>
     <Watermark />
-    <PageNum n={9} />
+    <PageNum n={15} />
   </div>
 );
 
@@ -3110,7 +3100,7 @@ const TamBar = ({
 const AdvisorTam: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="14 / 24">Market · the bigger prize</Eyebrow>
+      <Eyebrow section="08 / 24">Market · the bigger prize</Eyebrow>
       <Heading size={48}>
         From $3B today to a <GreenAccent>$1T+ global advisor industry</GreenAccent>.
       </Heading>
@@ -3204,7 +3194,7 @@ const AdvisorTam: Page = () => (
       />
     </div>
     <Watermark />
-    <PageNum n={14} />
+    <PageNum n={8} />
   </div>
 );
 
@@ -3252,7 +3242,7 @@ const AdvisorRow = ({
 const AdvisorComparison: Page = () => (
   <div style={fill}>
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
-      <Eyebrow section="15 / 24">Why human advisors fail retail</Eyebrow>
+      <Eyebrow section="09 / 24">Why human advisors fail retail</Eyebrow>
       <Heading size={50}>
         The advisor model is built for <GreenAccent>the wealthy.</GreenAccent> Not the next hundreds of millions.
       </Heading>
@@ -3321,7 +3311,7 @@ const AdvisorComparison: Page = () => (
       </div>
     </div>
     <Watermark />
-    <PageNum n={15} />
+    <PageNum n={9} />
   </div>
 );
 
@@ -3545,7 +3535,7 @@ const VisionFuture: Page = () => (
         gap: 12,
       }}
     >
-      <Eyebrow section="16 / 24">The clarity layer · the full stack</Eyebrow>
+      <Eyebrow section="12 / 24">The clarity layer · the full stack</Eyebrow>
       <Heading size={46} maxWidth={860}>
         Four layers wrap the retail investor in <GreenAccent>end-to-end clarity.</GreenAccent>
       </Heading>
@@ -3583,7 +3573,7 @@ const VisionFuture: Page = () => (
       </div>
     </div>
     <Watermark />
-    <PageNum n={16} />
+    <PageNum n={12} />
   </div>
 );
 
@@ -3691,7 +3681,7 @@ const AIMoat: Page = () => (
         gap: 12,
       }}
     >
-      <Eyebrow section="06 / 24">Our moat · why us</Eyebrow>
+      <Eyebrow section="11 / 24">Our moat · why us</Eyebrow>
       <Heading size={48} maxWidth={940}>
         Everyone says "AI". We do <GreenAccent>AI grounding.</GreenAccent>
       </Heading>
@@ -3768,7 +3758,7 @@ const AIMoat: Page = () => (
       </div>
     </div>
     <Watermark />
-    <PageNum n={6} />
+    <PageNum n={11} />
   </div>
 );
 
@@ -3781,26 +3771,31 @@ export const meta: SlideMeta = {
 };
 
 export default [
+  // Hook + Pain (1-5)
   Cover,
   Underperformance,
   Pain,
-  Competitive,
   Finfluencer,
-  AIMoat,
-  ProductVerdict,
-  Portfolio,
-  RiskPersonality,
-  FlywheelSlide,
-  Monetization,
+  Competitive,
+  // Market + Competitive landscape (6-10)
   WhyNow,
   Market,
   AdvisorTam,
   AdvisorComparison,
-  VisionFuture,
   MagnifiComp,
+  // Our product (11-16)
+  AIMoat,
+  VisionFuture,
+  ProductVerdict,
+  Portfolio,
+  RiskPersonality,
+  FlywheelSlide,
+  // Business model + plan (17-20)
+  Monetization,
   Pricing,
   Funds,
   Roadmap,
+  // Who + close (21-24)
   Team,
   Philosophy,
   Ask,
