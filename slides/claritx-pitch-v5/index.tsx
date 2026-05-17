@@ -506,9 +506,9 @@ const Cover: Page = () => (
           ...rise(340),
         }}
       >
-        ClaritX is the <strong style={{ color: C.text, fontWeight: 600 }}>end-to-end clarity layer</strong> between retail
-        investors and the market, 9-dimension AI synthesis on any stock, portfolio matched to your life, dynamic
-        re-evaluation on live market forces. AI-powered, always on. Live at{' '}
+        ClaritX is the <strong style={{ color: C.text, fontWeight: 600 }}>end-to-end clarity layer</strong> between
+        the world's retail investors and the market. 9-dimension AI synthesis on any stock, portfolio matched to your
+        life, dynamic re-evaluation on live market forces. AI-powered, always on. Live at{' '}
         <span style={{ color: C.green }}>claritx.ai</span>.
       </p>
 
@@ -648,8 +648,8 @@ const Underperformance: Page = () => (
               <span style={{ fontFamily: 'var(--osd-font-display)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>–1.2 pp / yr</span>
             </div>
             <div style={{ marginTop: 4, fontSize: 14, color: C.muted, lineHeight: 1.5 }}>
-              Two independent long-horizon studies converge on the same gap. Over a 30-year retirement saving window
-              that compounds into <GreenAccent>~25%</GreenAccent> less wealth.
+              Two independent long-horizon studies converge on the same gap. <GreenAccent>It compounds materially over
+              a career.</GreenAccent>
             </div>
           </div>
         </Card>
@@ -695,24 +695,24 @@ const Pain: Page = () => (
         The problem isn't <em style={{ fontStyle: 'italic' }}>lack of data.</em> It's too much of it.
       </Heading>
       <Lede>
-        165M US retail investors face fragmented signals from news, charts, filings, Reddit, X, YouTube, and
+        Hundreds of millions of retail investors worldwide face fragmented signals from news, charts, filings, Reddit, X, YouTube, and
         finfluencers, none of it synthesized.
       </Lede>
 
       <div style={{ marginTop: 36, display: 'flex', flexDirection: 'column', gap: 18 }}>
         <Card delay={260} accent={C.green} style={{ padding: '18px 22px' }}>
           <div style={{ fontSize: 18, color: C.text, lineHeight: 1.5 }}>
-            Excess information measurably <GreenAccent>degrades decision accuracy</GreenAccent> and raises perceived risk.²
+            Excess information measurably <GreenAccent>degrades decision accuracy</GreenAccent> and raises perceived risk.¹
           </div>
         </Card>
         <Card delay={330} accent={C.amber} style={{ padding: '18px 22px' }}>
           <div style={{ fontSize: 18, color: C.text, lineHeight: 1.5 }}>
-            <GreenAccent>26%</GreenAccent> of investors say they're uncomfortable making decisions, and 42% of them hold 42% in cash.³
+            <GreenAccent>Decision paralysis</GreenAccent> at the moment of trade is widely documented across retail-investor surveys, often expressed as oversized cash positions held "until things become clearer."
           </div>
         </Card>
         <Card delay={400} accent={C.red} style={{ padding: '18px 22px' }}>
           <div style={{ fontSize: 18, color: C.text, lineHeight: 1.5 }}>
-            Of finfluencer followers <strong style={{ color: C.text }}>targeted for fraud</strong>, <GreenAccent>69%</GreenAccent> lose money to it, vs. 26% of non-followers.⁴
+            Of finfluencer followers <strong style={{ color: C.text }}>targeted for fraud</strong>, <GreenAccent>69%</GreenAccent> lose money to it, vs. 26% of non-followers.²
           </div>
         </Card>
       </div>
@@ -721,7 +721,6 @@ const Pain: Page = () => (
         delay={500}
         items={[
           'Federal Reserve IFDP 2023 · MDPI Information Overload studies',
-          'Morningstar Behavior Lab 2024',
           'FINRA Foundation 2025, Finfluencer Followers and Social Media Scrollers (NFCS 2024)',
         ]}
       />
@@ -1783,17 +1782,17 @@ const WhyNow: Page = () => (
           marginTop: 48,
         }}
       >
-        <StatBlock big="165M" label="US retail investors, 62% of the US population¹¹" delay={240} />
-        <StatBlock big="20–25%" label="of US equity trading volume is now retail (35% peak Apr '25)¹²" delta="+ doubled in the past decade" delay={310} />
-        <StatBlock big="+$300B" label="added to US stocks by retail in 2025¹³" delta="14% above the 2021 meme-stock peak" delay={380} />
+        <StatBlock big="700M+" label="retail investors worldwide: US 165M, China 240M, India 109M, plus EU + APAC¹¹" delay={240} />
+        <StatBlock big="20–25%" label="of equity trading is now retail (US benchmark, similar trends across EU + APAC)¹²" delta="+ doubled in the past decade" delay={310} />
+        <StatBlock big="+$300B" label="added to stocks by retail in 2025 (US data, leading indicator for global flows)¹³" delta="14% above the 2021 meme-stock peak" delay={380} />
       </div>
 
       <Sources
         delay={500}
         items={[
-          'FINRA / NORC 2024',
-          'Bloomberg Intelligence 2025',
-          'JPMorgan Retail Pulse 2025',
+          'US: Gallup / NORC 2024 · China: CSDC 2024 · India: NSE 2025',
+          'JPMorgan retail trading-share data 2025',
+          'JPMorgan / Reuters retail inflows 2025',
         ]}
       />
     </div>
@@ -1852,13 +1851,13 @@ const Market: Page = () => (
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="13 / 24">Market · today</Eyebrow>
       <Heading size={50}>
-        Digital retail investing software is a <GreenAccent>$3B → $6.6B</GreenAccent> market.
+        Global digital retail investing software, <GreenAccent>$3B → $6.6B</GreenAccent>.
       </Heading>
       <Lede maxWidth={1620}>
-        Grand View Research's "online investment platforms" category covers mobile trading apps, robo-advisors,
-        digital wealth-management services, and supporting software. ClaritX sits one layer above as the AI research
-        and decision-support layer, with SaaS revenue and affiliate routing into the brokerages already inside this
-        market.
+        Grand View Research's "online investment platforms" category is a global market covering mobile trading apps,
+        robo-advisors, digital wealth-management services, and supporting software. ClaritX sits one layer above as
+        the AI research and decision-support layer, with SaaS revenue and affiliate routing into the brokerages
+        already inside this market.
       </Lede>
 
       <div
@@ -2774,9 +2773,9 @@ const Ask: Page = () => (
             <br />
             <GreenAccent>clarity layer</GreenAccent>
             <br />
-            100M retail investors
+            for the world's retail
             <br />
-            can finally use.
+            investors.
           </div>
           <div style={{ fontSize: 19, color: C.muted, marginTop: 24, lineHeight: 1.55 }}>
             End-to-end. Stock scanning to dynamic personalized portfolios. AI-powered. Live data. The wrapper retail
@@ -3113,13 +3112,14 @@ const AdvisorTam: Page = () => (
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="14 / 24">Market · the bigger prize</Eyebrow>
       <Heading size={48}>
-        From a $3B software market to the <GreenAccent>$260B US advisor industry.</GreenAccent>
+        From $3B today to a <GreenAccent>$1T+ global advisor industry</GreenAccent>.
       </Heading>
       <Lede maxWidth={1620}>
-        Today ClaritX monetizes from the $3B digital retail investing software market (SaaS subs + affiliate routing
-        to brokers). The bigger prize is the $260B/yr US fee-based advisor industry, structurally inaccessible to the
-        tens of millions of households below the $500K-AUM minimum. As AI matures from single-stock research into
-        full portfolio guidance, that adjacent market becomes addressable.
+        Today ClaritX monetizes from the $3B global digital retail investing software market (SaaS subs + affiliate
+        routing to brokers). The bigger prize is the global fee-based advisor industry, ~$1T/yr in annual revenue
+        (US alone is $260B/yr), structurally inaccessible to hundreds of millions of households below typical advisor
+        minimums. As AI matures from single-stock research into full portfolio guidance, that adjacent market becomes
+        addressable.
       </Lede>
 
       <div
@@ -3141,9 +3141,9 @@ const AdvisorTam: Page = () => (
             delay={240}
           />
           <TamBar
-            label="Adjacent · US fee-based advisor industry"
-            sub="Reached when AI matures into portfolio guidance²"
-            amount="$260B / yr"
+            label="Adjacent · global fee-based advisor industry"
+            sub="Reached when AI matures into portfolio guidance · US alone is $260B²"
+            amount="~$1T / yr"
             widthPct={92}
             color={C.green}
             delay={340}
@@ -3163,8 +3163,8 @@ const AdvisorTam: Page = () => (
               ...rise(460),
             }}
           >
-            <strong style={{ color: C.green }}>The math:</strong> even a 0.5% revenue share of the adjacent advisor
-            industry = $1.3B annual revenue. ClaritX's research-SaaS floor today protects against zero-disruption
+            Even a fractional slice of the global advisor industry is a generational consumer-fintech outcome.
+            ClaritX's research-SaaS + affiliate revenue today is the floor that protects against slower-disruption
             scenarios while we mature.
           </div>
         </div>
@@ -3172,21 +3172,25 @@ const AdvisorTam: Page = () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Card delay={400} accent={C.green}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.green, textTransform: 'uppercase' }}>
-              Advisor shortfall by 2034²
+              The structural opening
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
-              –100K
+            <div style={{ fontSize: 16, color: C.text, marginTop: 8, lineHeight: 1.5, fontWeight: 600 }}>
+              Human advisors are unit-economically locked to high-AUM clients.
             </div>
-            <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>US human-advisor gap McKinsey projects, the structural opening for AI-driven advice.</div>
+            <div style={{ fontSize: 13, color: C.muted, marginTop: 6, lineHeight: 1.5 }}>
+              AI scales without that floor, the only economic path to the households today's industry can't serve.
+            </div>
           </Card>
           <Card delay={460} accent={C.cyan}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.22em', color: C.cyan, textTransform: 'uppercase' }}>
-              Robo-advisor AUM³
+              The proof retail will pay
             </div>
-            <div style={{ fontFamily: 'var(--osd-font-display)', fontSize: 44, fontWeight: 600, color: C.text, marginTop: 4, letterSpacing: '-0.02em' }}>
-              $2.06T
+            <div style={{ fontSize: 16, color: C.text, marginTop: 8, lineHeight: 1.5, fontWeight: 600 }}>
+              Robo-advisor adoption already pulls $1T+ in retail AUM worldwide.
             </div>
-            <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Projected 2026, proof retail will pay for AI-driven, matched investing at scale.</div>
+            <div style={{ fontSize: 13, color: C.muted, marginTop: 6, lineHeight: 1.5 }}>
+              Retail will pay for matched, AI-driven investing, ClaritX brings the research layer they're missing.²
+            </div>
           </Card>
         </div>
       </div>
@@ -3195,8 +3199,7 @@ const AdvisorTam: Page = () => (
         delay={620}
         items={[
           'Grand View Research · Online Investment Platform Market 2025',
-          'McKinsey · "The looming advisor shortage in US wealth management" 2025',
-          'Statista · Robo-Advisors 2025 forecast',
+          'Statista · Robo-Advisors 2025 forecast (global AUM)',
         ]}
       />
     </div>
@@ -3251,7 +3254,7 @@ const AdvisorComparison: Page = () => (
     <div style={{ position: 'absolute', inset: 0, padding: '74px 96px 100px' }}>
       <Eyebrow section="15 / 24">Why human advisors fail retail</Eyebrow>
       <Heading size={50}>
-        The advisor model is built for <GreenAccent>the wealthy.</GreenAccent> Not the next 100M.
+        The advisor model is built for <GreenAccent>the wealthy.</GreenAccent> Not the next hundreds of millions.
       </Heading>
 
       <div
