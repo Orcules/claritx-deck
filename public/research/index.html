@@ -919,10 +919,11 @@ stock's (short stock + long SPY). Filter by ticker, year or sector:</p>
 </div>
 <script>
 function ttf() {
-  const q = document.getElementById('ttq').value.toLowerCase();
+  const terms = document.getElementById('ttq').value.toLowerCase().split(/\s+/).filter(Boolean);
   let n = 0;
   for (const tr of document.querySelectorAll('#tt tbody tr')) {
-    const show = tr.textContent.toLowerCase().includes(q);
+    const txt = tr.textContent.toLowerCase();
+    const show = terms.every(t => txt.includes(t));
     tr.style.display = show ? '' : 'none';
     if (show) n++;
   }
