@@ -1010,6 +1010,21 @@ function ttf() {
   ③ No biotech / binary-event stocks — the only left tail that truly hurts.
 </div>
 
+<div class="panel" style="margin-top:18px">
+  <b>Can the rule be improved with another variable? We tested — honestly, no.</b>
+  <p style="font-size:14px;margin-top:6px">
+  15 entry-time variables (RSI levels and drop, price extension, volume ratio, prior run-up, beta, market cap,
+  SPY depth/momentum/volatility, days-in-bear, entry discount...) plus sector splits were scanned for what
+  separates the 297 winning trades from the 206 losers — with a discovery pool (bear-market trades outside the
+  rule, n=1,436) separate from the validation pool (the rule's own 503), train/test thresholds, month-clustered
+  p-values and FDR correction. <b>None survived.</b> A cautionary tale from the process: "first RSI peak below 70"
+  looked great inside the rule's own trades (67% vs 53% win) — and REVERSED sign in the independent pool.
+  Textbook overfitting; without out-of-pool validation it would have been sold as a discovery.
+  One directionally-consistent lead remains — a <i>moderate</i> prior run-up (&lt;16%/60d, the grinding leader
+  rather than the parabolic one) showed +2.4pp in train, +2.1pp in test, but p=0.069 before any multiplicity
+  correction: worth monitoring, not worth trading. The rule stands as-is.</p>
+</div>
+
 <h2><span class="num">09</span> · Sources &amp; honest limitations</h2>
 <div class="m-grid">
   <div class="m-card"><b>Data</b> Financial Modeling Prep daily OHLCV (stable API), 2005–2026, 509 tickers,
