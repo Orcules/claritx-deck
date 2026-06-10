@@ -45,6 +45,17 @@ await viteBuild(merged);
 const distDir = path.resolve(process.cwd(), outDir);
 const indexPath = path.join(distDir, 'index.html');
 
+// Static extras: open-slide's vite root is not the repo root, so the
+// conventional public/ dir is not picked up automatically - copy it here.
+// (Currently hosts /research/ - the RSI divergence research reports.)
+const publicDir = path.resolve(process.cwd(), 'public');
+try {
+  await fs.cp(publicDir, distDir, { recursive: true });
+  console.log('✓ Copied public/ static extras into dist');
+} catch (err) {
+  if (err.code !== 'ENOENT') throw err;
+}
+
 // GitHub Pages SPA fallback: 404.html = index.html lets any unknown sub-path
 // bootstrap the React app, which then resolves the route client-side.
 await fs.copyFile(indexPath, path.join(distDir, '404.html'));
