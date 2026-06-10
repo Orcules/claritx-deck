@@ -108,8 +108,9 @@
 <div class="hero"><div class="hero-in">
   <h1>Everyone knows this signal.<br>One setup actually makes money.</h1>
   <p>RSI bearish divergence, tested on 21 years of real daily prices · 509 large US stocks &amp; ETFs ·
-     25,203 detected events · 672 rule combinations screened · one rule survived every test.
-     Every number on this page is computed from real trading data and was independently re-verified.
+     25,196 detected events · 672 rule combinations screened · one rule survived every test.
+     Every number on this page is computed from real trading data, independently re-verified, and the
+     underlying prices were cross-checked against an external source (224 checks).
      All 503 trades of the winning rule are listed at the bottom.</p>
   <div class="chips">
     <div class="chip"><div class="k">Trades in the winning rule</div><div class="v">503</div></div>
@@ -153,47 +154,48 @@
   <div class="wb">
     <div class="wb-label">Probability the stock declines within 20 days after a divergence</div>
     <div class="wb-track"><div class="wb-fill" style="width:42.8%;background:#0b5394"></div>
-      <div class="wb-null" style="left:35.3%"></div></div>
-    <div class="wb-nums"><b>42.8%</b> vs. random baseline 35.3% (the black marker — large stocks
+      <div class="wb-null" style="left:35.4%"></div></div>
+    <div class="wb-nums"><b>42.8%</b> vs. random baseline 35.4% (the black marker — large stocks
     decline in only 35% of random 20-day windows; 50% would be the wrong benchmark)</div>
   </div>
   <p style="font-size:14.5px">On average the stock rises <b>-1.4% less</b> than a random entry over the
-  next 20 days — across 25,136 paired events, consistent in <b>19 of 22 years</b> (one more year, 2013, is a dead
-  tie at −0.002pp, and 2026 is a partial year), p&lt;0.0001 month-clustered, and it survives a 30-day non-overlap
-  cooldown (−1.38%, p&lt;0.0001). The exhaustion-top variant (a stricter 8-condition pattern, 5,300 events)
+  next 20 days — across 25,129 paired events, consistent in
+  <b>19 of 22 years</b> (one more year, 2013, is a dead tie at −0.002pp, and 2026 is a partial year),
+  p&lt;0.0001 month-clustered, and it survives a 30-day non-overlap cooldown (−1.4%, p&lt;0.0001).
+  The exhaustion-top variant (a stricter 8-condition pattern, 5,300 events)
   shows the same picture at −1.61%, 21 of 22 years.</p>
 
   <h4>Where the relative edge is strongest (generic signal, by universe)</h4>
     <table><tr><th style="text-align:left">Universe</th><th>Events</th><th>Win 20d</th><th>Random null</th>
     <th>Avg stock move 20d</th><th>Edge vs random</th><th>FDR sig.</th></tr><tr><td style="text-align:left">Large-cap Financials</td><td>3216</td>
           <td>44.4%</td><td>35.1%</td><td>+0.74%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.63%</td><td>✓</td></tr><tr><td style="text-align:left">High-beta Tech</td><td>1936</td>
-          <td>41.4%</td><td>35.1%</td><td>+2.52%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.56%</td><td>✓</td></tr><tr><td style="text-align:left">Nasdaq 100</td><td>4511</td>
-          <td>42.4%</td><td>34.8%</td><td>+1.74%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.55%</td><td>✓</td></tr><tr><td style="text-align:left">S&P 500</td><td>24372</td>
-          <td>42.8%</td><td>35.4%</td><td>+1.21%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.41%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap Tech</td><td>2134</td>
-          <td>40.0%</td><td>33.9%</td><td>+2.38%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.64%</td><td>✓</td></tr><tr><td style="text-align:left">High-beta Tech</td><td>1936</td>
+          <td>41.4%</td><td>35.0%</td><td>+2.52%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.55%</td><td>✓</td></tr><tr><td style="text-align:left">Nasdaq 100</td><td>4512</td>
+          <td>42.5%</td><td>35.0%</td><td>+1.74%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.54%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap Tech</td><td>2134</td>
+          <td>40.0%</td><td>33.7%</td><td>+2.38%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.40%</td><td>✓</td></tr><tr><td style="text-align:left">S&P 500</td><td>24365</td>
+          <td>42.8%</td><td>35.5%</td><td>+1.21%</td>
           <td style="color:#1a7f37;font-weight:600">-1.39%</td><td>✓</td></tr><tr><td style="text-align:left">Large-cap Healthcare</td><td>2971</td>
-          <td>43.5%</td><td>35.9%</td><td>+1.11%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.38%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap (>$100B)</td><td>6058</td>
-          <td>41.4%</td><td>34.3%</td><td>+1.63%</td>
-          <td style="color:#1a7f37;font-weight:600">-1.32%</td><td>✓</td></tr><tr><td style="text-align:left">ETFs/Indices</td><td>185</td>
-          <td>31.9%</td><td>26.8%</td><td>+0.97%</td>
-          <td style="color:#1a7f37;font-weight:600">-0.91%</td><td>—</td></tr></table>
+          <td>43.5%</td><td>36.1%</td><td>+1.12%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.35%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap (>$100B)</td><td>6058</td>
+          <td>41.4%</td><td>34.2%</td><td>+1.63%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.30%</td><td>✓</td></tr><tr><td style="text-align:left">ETFs/Indices</td><td>185</td>
+          <td>31.9%</td><td>27.2%</td><td>+0.97%</td>
+          <td style="color:#1a7f37;font-weight:600">-0.87%</td><td>—</td></tr></table>
   <p style="font-size:13px;color:var(--muted)">FDR sig. = significant at 5% after multiple-comparison correction.
   Note ETFs/indices: weak and not significant — divergence on SPY/QQQ alone is a poor signal; it works on individual stocks.</p>
 
   <h4>The regime split that changes everything</h4>
   <table><tr><th style="text-align:left">Market regime (SPY 200-day MA)</th><th>Events</th>
     <th>Avg stock move 20d</th><th>Edge vs random</th><th>Win 20d</th></tr><tr><td style="text-align:left">bear</td><td>1939</td>
-          <td>-0.01%</td><td style="color:#1a7f37;font-weight:600">-1.72%</td>
-          <td>49.7%</td></tr><tr><td style="text-align:left">bull</td><td>20379</td>
-          <td>+1.27%</td><td style="color:#1a7f37;font-weight:600">-1.47%</td>
-          <td>42.3%</td></tr><tr><td style="text-align:left">sideways</td><td>2885</td>
-          <td>+1.59%</td><td style="color:#1a7f37;font-weight:600">-1.05%</td>
-          <td>42.0%</td></tr></table>
+          <td>-0.01%</td><td style="color:#1a7f37;font-weight:600">-1.73%</td>
+          <td>49.7%</td></tr><tr><td style="text-align:left">bull</td><td>20371</td>
+          <td>+1.27%</td><td style="color:#1a7f37;font-weight:600">-1.45%</td>
+          <td>42.3%</td></tr><tr><td style="text-align:left">sideways</td><td>2886</td>
+          <td>+1.59%</td><td style="color:#1a7f37;font-weight:600">-1.04%</td>
+          <td>42.1%</td></tr></table>
   <p style="font-size:13px;color:var(--muted)">In bull regimes stocks still rise after the signal (+1.27% avg) —
   shorting loses. In bear regimes the average move turns flat/negative and the win rate hits ~50%. This split
   is what the winning rule exploits.</p>
@@ -1011,8 +1013,17 @@ function ttf() {
 <h2><span class="num">09</span> · Sources &amp; honest limitations</h2>
 <div class="m-grid">
   <div class="m-card"><b>Data</b> Financial Modeling Prep daily OHLCV (stable API), 2005–2026, 509 tickers,
-    stored in SQLite. Prices split-adjusted but ex-dividend — absolute bearish metrics gain ~0.1–0.5% of dividend
-    drift; the vs-random edge is immune (both legs share it).</div>
+    stored in SQLite. Prices split-adjusted but ex-dividend. Measured dividend drag (vs Yahoo total-return data,
+    8 high-yield names): ~0.1–0.3pp at 5–20 days, but <b>0.7–1.6pp per 60-day window</b> for dividend payers —
+    short-side 60d economics on high-yield names are overstated by up to ~1pp. The vs-random edge is immune
+    (both legs share the basis); the hedged pair's residual bias ≈ (stock yield − SPY yield) × 60/252, near zero
+    on average.</div>
+  <div class="m-card"><b>External data verification</b> 224 cross-checks against Yahoo Finance (independent
+    source): random prices across 2006–2026 (24/24, mostly exact to the cent), six famous splits incl. volume
+    (66/66), the SPY bear-regime gate on all 245 entry dates (100% agreement), 14 random trade returns (max diff
+    0.06pp), all showcase pivot highs (exact), NYSE calendar 5,031/5,031 days, and a 2.5M-row OHLC integrity
+    scan. Found &amp; cleaned: 992 synthetic pre-listing bars (SW), 18 (CHTR), 2 bad volume rows (DFS) — none
+    touched the winning rule's trades.</div>
   <div class="m-card"><b>Survivorship bias</b> The universe is today's index members, so today's winners are
     over-represented and absolute returns skew positive. The headline metric — edge vs random entries in the same
     stocks — is immune by construction.</div>
