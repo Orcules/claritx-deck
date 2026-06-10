@@ -1032,7 +1032,56 @@ function ttf() {
   after — chasing the breakdown underperformed in both pools). None meets the bar. The rule stands as-is.</p>
 </div>
 
-<h2><span class="num">09</span> · Sources &amp; honest limitations</h2>
+<h2><span class="num">09</span> · The most significant characteristics — found at full power</h2>
+<p class="lead">Rounds 1-2 searched inside the rule's 503 trades — too small for anything to clear rigorous bars.
+Round 3 changed the question: across ALL 25,196 events, which entry-time characteristics make the signal's
+<i>relative edge</i> (stock vs its own random baseline) strongest? 50× the statistical power — with a five-gate
+protocol: same effect sign in three time folds (2005-14 / 2015-20 / 2021-26) AND two independent ticker halves,
+month-clustered p-values, FDR&lt;0.05, and monotone dose-response. <b>37 feature tests survived all five gates.</b></p>
+
+<div class="panel">
+  <h4 style="margin-top:0">The strongest validated moderators (effect on the 60-day relative edge)</h4>
+  <table>
+    <tr><th style="text-align:left">Characteristic at entry</th><th>Effect on 60d edge</th><th>FDR q</th></tr>
+    <tr><td style="text-align:left">Stock stretched &gt;12.6% above its own 200-day MA</td><td style="color:#1a7f37;font-weight:700">−5.9pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">50-day MA &gt;11% above 200-day MA (steep golden-cross spread)</td><td style="color:#1a7f37;font-weight:700">−6.0pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">First RSI peak genuinely overbought (&gt;71.8)</td><td style="color:#1a7f37;font-weight:700">−4.5pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">Strong prior run-up (&gt;13.8% / 60d)</td><td style="color:#1a7f37">−3.4pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">Big extension between the two peaks (&gt;5.1%)</td><td style="color:#1a7f37">−3.4pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">SPY itself extended &gt;6% above its 200-day MA</td><td style="color:#1a7f37">−3.3pp</td><td>0.001</td></tr>
+    <tr><td style="text-align:left">Fresh 52-week high (≤16 days old)</td><td style="color:#1a7f37">−2.8pp</td><td>&lt;0.0001</td></tr>
+    <tr><td style="text-align:left">Deep RSI divergence (drop &gt;10.6 points)</td><td style="color:#1a7f37">−2.1pp</td><td>&lt;0.00001</td></tr>
+    <tr><td style="text-align:left">Idiosyncratic mover (60d correlation with SPY &lt;0.57)</td><td style="color:#1a7f37">−2.5pp</td><td>&lt;0.0001</td></tr>
+  </table>
+  <p class="note">Negative = the signal bites harder. Every row: same sign in all three time folds and both
+  ticker halves, monotone across quintiles. Full table (37 rows): <code>output/short_playbook/deep_scan.csv</code>.</p>
+
+  <h4>Dose-response: a 6-condition composite score</h4>
+  <table>
+    <tr><th>Score (conditions met)</th><th>Edge 60d, 2005-14</th><th>2015-20</th><th>2021-26 (holdout)</th></tr>
+    <tr><td>0-1</td><td>−0.3pp</td><td>−1.6pp</td><td>−0.6pp</td></tr>
+    <tr><td>2</td><td>−2.6pp</td><td>−2.9pp</td><td>−2.9pp</td></tr>
+    <tr><td>3</td><td>−4.3pp</td><td>−5.1pp</td><td>−5.4pp</td></tr>
+    <tr><td>4</td><td>−7.3pp</td><td>−5.5pp</td><td>−9.6pp</td></tr>
+    <tr><td style="font-weight:700">5-6</td><td style="font-weight:700;color:#1a7f37">−8.7pp</td><td style="font-weight:700;color:#1a7f37">−8.7pp</td><td style="font-weight:700;color:#1a7f37">−13.0pp</td></tr>
+  </table>
+  <p class="note">Monotone in every fold — strongest in the never-touched holdout. The profile in words:
+  <b>short the euphoria, not the breakdown</b> — a parabolic, fresh-high, genuinely overbought, idiosyncratic
+  leader with a deep divergence, ideally when the whole market is extended too.</p>
+
+  <h4>The honest translation — what this is and is not</h4>
+  <p style="font-size:14px">
+  These characteristics predict <b>relative underperformance</b> — and a stock at score 5-6 still RISES in bull
+  markets (its baseline drift is enormous); naked shorting it still loses (−1.4%/20d measured), and even
+  SPY-hedged in bulls loses (−1.5%/60d at top score). Inside the bear-regime rule the composite even inverts
+  (score 0-2 trades did better than 4-6 — the rule already selects the theme; its most extreme members are the
+  crowded, squeeze-prone ones). <b>The right uses:</b> ① a long-book risk tool — a score 5-6 divergence forecasts
+  −9 to −13pp of 60-day underperformance vs the stock's own normal: take profits, tighten, delay adds;
+  ② signal ranking in the nightly scanner (now outputs the 0-6 score); ③ the bear-regime pair rule stays the
+  only validated absolute-short conversion, unchanged.</p>
+</div>
+
+<h2><span class="num">10</span> · Sources &amp; honest limitations</h2>
 <div class="m-grid">
   <div class="m-card"><b>Data</b> Financial Modeling Prep daily OHLCV (stable API), 2005–2026, 509 tickers,
     stored in SQLite. Prices split-adjusted but ex-dividend. Measured dividend drag (vs Yahoo total-return data,
