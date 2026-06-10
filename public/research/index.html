@@ -108,10 +108,10 @@
 <div class="hero"><div class="hero-in">
   <h1>Everyone knows this signal.<br>One setup actually makes money.</h1>
   <p>RSI bearish divergence, tested on 21 years of real daily prices · 509 large US stocks &amp; ETFs ·
-     25,196 detected events · 672 rule combinations screened · one rule survived every test.
-     Every number on this page is computed from real trading data, independently re-verified, and the
-     underlying prices were cross-checked against an external source (224 checks).
-     All 503 trades of the winning rule are listed at the bottom.</p>
+     25,196 detected events · 672 rule combinations screened. Every number computed from real data,
+     independently re-verified, prices cross-checked externally (224 checks) — and then the whole thing was
+     put through a final exam it could not study for: a frozen-rule test on 1994-2004, an era no stage of the
+     research ever touched (section 10). The core signal passed its third decade; the trading rule did not.</p>
   <div class="chips">
     <div class="chip"><div class="k">Trades in the winning rule</div><div class="v">503</div></div>
     <div class="chip"><div class="k">Avg profit per hedged trade</div><div class="v good">+2.5%</div></div>
@@ -976,14 +976,15 @@ function ttf() {
 <h2><span class="num">08</span> · The strategy — making money from it consistently</h2>
 <div class="tiers">
   <div class="tier core">
-    <span class="t-tag">THE CORE — where the money is</span>
+    <span class="t-tag" style="background:#fdf0e0;color:#9a6700">CONDITIONAL — demoted by the 1990s holdout</span>
     <h3>Hedged pair in a bear regime</h3>
-    <div class="t-stat">+2.5% per trade · 59% win</div>
+    <div class="t-stat">+2.5% (2005-26) · <span style="color:var(--bad)">−5.0% (1994-2004)</span></div>
     <ul>
-      <li>All 4 entry conditions + short stock / long SPY, equal dollars</li>
-      <li>1–2% of capital per leg · run 10–15 pairs at once</li>
-      <li>No biotech or binary-event stocks (the verified Moderna lesson: −113% on one short leg)</li>
-      <li>Real bear years produce plenty of setups: 135 in 2008, 124 in 2022 — diversification across them is the source of consistency</li>
+      <li><b>Read section 10 first:</b> +2.5%/trade in the systemic bears of 2008/2022 — but −5.0%/trade in the
+          dot-com ROTATION bear, where near-high names were the refuge and SPY fell harder</li>
+      <li>If traded at all: small, defined-risk (put spreads), and only with awareness that bear type is
+          unknowable in advance</li>
+      <li>All original rules still apply: 4 entry conditions, no biotech, no tight stops, exit on regime flip</li>
     </ul>
   </div>
   <div class="tier sat">
@@ -1097,7 +1098,51 @@ month-clustered p-values, FDR&lt;0.05, and monotone dose-response. <b>37 feature
   only validated absolute-short conversion, unchanged.</p>
 </div>
 
-<h2><span class="num">10</span> · Sources &amp; honest limitations</h2>
+<h2><span class="num">10</span> · The final exam: a holdout from another era (1994-2004)</h2>
+<p class="lead">After everything above was published, we fetched 1.33M additional daily bars (1988-2004) and ran
+the FROZEN rules — zero re-tuning — on 1994-2004: the LTCM shock and the entire dot-com bear, an era that never
+participated in any stage of this research. 8,148 divergence events, 350 tickers. Three verdicts:</p>
+
+<div class="panel">
+  <h3 style="margin-top:0">✓ The core signal passed its third decade</h3>
+  <p style="font-size:14.5px">Generic paired edge in 1994-2004: <b>−1.49% per 20 days</b> (published on
+  2005-2026: −1.42%), p&lt;0.0001, and it beat random entries in <b>11 of 11 years</b> — including the
+  1999 mania. Combined record now: ~30 of 33 years across three distinct market eras.</p>
+
+  <h3>✓ The edge moderators passed too</h3>
+  <p style="font-size:14.5px">Overbought first peak (RSI1&gt;71.8): <b>−4.8pp</b> in the 90s vs −4.5pp published.
+  Deep divergence: −4.2pp vs −2.1pp. Big extension: −4.5pp vs −3.4pp. Near-52w-high: same sign, weaker
+  (−0.7pp vs −2.6pp). The "short the euphoria" profile is era-stable.</p>
+
+  <h3 style="color:var(--bad)">✗ The pair trading rule FAILED — and the reason matters</h3>
+  <p style="font-size:14.5px">The frozen bear-regime pair rule produced 559 trades in the holdout:
+  <b style="color:var(--bad)">−4.95% per trade, 34% win rate</b> (published on 2005-2026: +2.53%, 59%).
+  Why: the rule's hidden assumption is that near-high leaders fall HARDER than the index in a bear. True in
+  the <i>systemic</i> bears of 2008/2022 (leaders' 60d move: −8.3%). Inverted in the dot-com
+  <i>rotation</i> bear: the near-high names were old-economy refuges that fell only −2.2% (consumer cyclicals
+  and REITs actually ROSE) while tech-heavy SPY fell −7.6% — the pair lost on both legs simultaneously.
+  A bear's type cannot be reliably known in advance, and with only ~8 bear episodes in 33 years there is no
+  honest way to validate a "bear-type filter" without yet another fresh holdout.</p>
+
+  <table>
+  <tr><th>Holdout year</th><th>Trades</th><th>Avg pair P&amp;L</th></tr>
+  <tr><td>1994</td><td>34</td><td style="color:var(--bad)">−2.0%</td></tr>
+  <tr><td>2000</td><td>90</td><td style="color:var(--bad)">−3.4%</td></tr>
+  <tr><td>2001</td><td>221</td><td style="color:var(--bad)">−5.5%</td></tr>
+  <tr><td>2002</td><td>199</td><td style="color:var(--bad)">−6.2%</td></tr>
+  <tr><td>2003</td><td>15</td><td style="color:#1a7f37">+4.6%</td></tr>
+  </table>
+
+  <h3>The revised bottom line</h3>
+  <p style="font-size:14.5px"><b>What is now validated across three decades:</b> bearish RSI divergence —
+  especially overbought, deep, and extended — reliably marks stocks about to UNDERPERFORM their own normal
+  drift. Use it to manage longs and rank risk. <b>What is now rejected as an unconditional strategy:</b> the
+  bear-regime pair trade. It earned +2.5%/trade in systemic bears and lost −5.0%/trade in a rotation bear;
+  treat it at most as a small, conditional, systemic-bear instrument — never as a machine.
+  Holdout trade list: <code>output/short_playbook/holdout_1990s_trades.csv</code>.</p>
+</div>
+
+<h2><span class="num">11</span> · Sources &amp; honest limitations</h2>
 <div class="m-grid">
   <div class="m-card"><b>Data</b> Financial Modeling Prep daily OHLCV (stable API), 2005–2026, 509 tickers,
     stored in SQLite. Prices split-adjusted but ex-dividend. Measured dividend drag (vs Yahoo total-return data,
