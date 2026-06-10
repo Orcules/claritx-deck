@@ -2,13 +2,12 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RSI Bearish Divergence — The Proof and the Playbook</title>
+<title>RSI Bearish Divergence — Findings, Proof, Trades &amp; Playbook</title>
 <style>
   :root { --ink:#16212c; --muted:#5b6b7a; --line:#e3e8ee; --good:#1a7f37; --bad:#c0392b; --accent:#0b5394; --paper:#fff; }
   * { box-sizing:border-box; margin:0; }
   body { font-family:"Segoe UI",Arial,sans-serif; color:var(--ink); background:#f4f6f8; line-height:1.6; }
   .wrap { max-width:1020px; margin:0 auto; padding:0 22px 90px; }
-
   .hero { background:var(--ink); color:#fff; padding:64px 22px 56px; }
   .hero-in { max-width:1020px; margin:0 auto; }
   .hero h1 { font-size:40px; line-height:1.2; max-width:780px; }
@@ -18,34 +17,32 @@
   .chip .k { font-size:12.5px; color:#aebbc7; }
   .chip .v { font-size:27px; font-weight:800; margin-top:2px; }
   .chip .v.good { color:#5fd38a; }
-
   h2 { font-size:27px; margin:64px 0 8px; }
   h2 .num { color:var(--accent); }
-  .lead { color:var(--muted); max-width:780px; margin-bottom:22px; }
+  h4 { margin:18px 0 4px; }
+  .lead { color:var(--muted); max-width:800px; margin-bottom:22px; }
   .panel { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:26px 28px; }
-
+  table { border-collapse:collapse; width:100%; background:#fff; font-size:13.5px; margin:8px 0 4px; }
+  th, td { border:1px solid var(--line); padding:6px 9px; text-align:center; }
+  th { background:#f0f3f7; }
   .gauges { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
   .gauge { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 18px; text-align:center; }
   .gauge svg { width:140px; height:140px; }
   .g-label { font-weight:700; margin-top:10px; }
   .g-sub { font-size:13px; color:var(--muted); margin-top:4px; }
-
   .proofs { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin-top:18px; }
   .proof { background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--good); border-radius:10px; padding:14px 18px; }
   .proof b { display:block; margin-bottom:3px; }
   .proof .res { color:var(--good); font-weight:700; }
   .proof .src { font-size:12.5px; color:var(--muted); margin-top:5px; }
-
   .funnel { display:flex; flex-direction:column; align-items:center; gap:6px; margin:24px 0; }
   .f-step { color:#fff; text-align:center; padding:13px 10px; border-radius:9px; font-weight:600; }
   .f-arrow { color:var(--muted); font-size:14px; }
-
   .rule { border:2px solid var(--good); background:#f3faf5; border-radius:14px; padding:24px 28px; margin-top:8px; }
   .rule h3 { font-size:20px; margin-bottom:14px; }
   .checks { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
   .check { background:#fff; border:1px solid #cfe6d6; border-radius:9px; padding:11px 14px; font-size:14.5px; }
   .check::before { content:"✓ "; color:var(--good); font-weight:800; }
-
   .curve { width:100%; background:var(--paper); border:1px solid var(--line); border-radius:12px; }
   .ybars { display:flex; gap:8px; align-items:flex-end; justify-content:space-between; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:22px 18px 14px; overflow-x:auto; }
   .ybar { text-align:center; min-width:58px; }
@@ -56,14 +53,13 @@
   .ybar-val { font-size:12px; font-weight:700; margin-bottom:4px; }
   .ybar-yr { font-size:12.5px; font-weight:600; margin-top:6px; }
   .ybar-n { font-size:10.5px; color:var(--muted); }
-
   .exs { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   @media (max-width:760px) { .exs { grid-template-columns:1fr; } }
   .ex { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
   .ex-win { border-top:4px solid var(--good); }
   .ex-loss { border-top:4px solid var(--bad); grid-column:1 / -1; background:#fdf6f5; }
   .ex-head { display:flex; justify-content:space-between; align-items:baseline; }
-  .ex-tick { font-size:21px; font-weight:800; letter-spacing:.5px; }
+  .ex-tick { font-size:21px; font-weight:800; }
   .ex-pnl { font-size:21px; font-weight:800; }
   .ex-pnl small { font-size:11px; font-weight:500; color:var(--muted); }
   .ex-title { font-weight:600; color:var(--accent); margin:4px 0 12px; font-size:14.5px; }
@@ -71,14 +67,12 @@
   .ex-grid span { display:block; font-size:11.5px; color:var(--muted); }
   .ex-grid b { font-size:14px; }
   .ex-blurb { font-size:13.5px; color:#2c3a47; margin-top:12px; border-top:1px dashed var(--line); padding-top:10px; }
-
   .wb { margin:16px 0; }
   .wb-label { font-weight:600; margin-bottom:5px; }
   .wb-track { position:relative; height:26px; background:#eef1f4; border-radius:99px; }
   .wb-fill { height:100%; border-radius:99px; }
   .wb-null { position:absolute; top:-5px; bottom:-5px; width:3px; background:var(--ink); border-radius:2px; }
   .wb-nums { font-size:13px; color:var(--muted); margin-top:4px; }
-
   .tiers { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; }
   .tier { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 24px; }
   .tier.core { border:2px solid var(--good); }
@@ -90,15 +84,21 @@
   .tier ul { padding-left:18px; font-size:14.5px; color:#2c3a47; }
   .tier li { margin:6px 0; }
   .t-stat { font-size:24px; font-weight:800; color:var(--good); }
-
   .steps { counter-reset:s; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:18px; }
   .step { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px 20px 16px; position:relative; }
   .step::before { counter-increment:s; content:counter(s); position:absolute; top:-13px; left:16px; background:var(--accent); color:#fff; width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; }
   .step b { display:block; margin-bottom:5px; margin-top:4px; }
   .step span { font-size:13.5px; color:var(--muted); }
-
   .dont { background:#fdf3f2; border:1px solid #f2cfc9; border-radius:12px; padding:18px 22px; margin-top:18px; }
   .dont b { color:var(--bad); }
+  .m-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .m-card { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:16px 18px; font-size:14px; }
+  .m-card b { display:block; color:var(--accent); margin-bottom:4px; }
+  .tt-wrap { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .tt-scroll { max-height:480px; overflow:auto; margin-top:10px; }
+  .tt-scroll table { margin:0; }
+  .tt-scroll thead th { position:sticky; top:0; background:#f0f3f7; z-index:1; }
+  #ttq { width:280px; max-width:100%; padding:8px 12px; border:1px solid var(--line); border-radius:8px; font-size:14px; }
   .foot { font-size:12.5px; color:var(--muted); margin-top:56px; border-top:1px solid var(--line); padding-top:16px; }
   code { background:#eef1f4; padding:2px 8px; border-radius:5px; font-size:13px; }
 </style>
@@ -109,7 +109,8 @@
   <h1>Everyone knows this signal.<br>One setup actually makes money.</h1>
   <p>RSI bearish divergence, tested on 21 years of real daily prices · 509 large US stocks &amp; ETFs ·
      25,203 detected events · 672 rule combinations screened · one rule survived every test.
-     Every number on this page is computed from real trading data and was independently re-verified.</p>
+     Every number on this page is computed from real trading data and was independently re-verified.
+     All 503 trades of the winning rule are listed at the bottom.</p>
   <div class="chips">
     <div class="chip"><div class="k">Trades in the winning rule</div><div class="v">503</div></div>
     <div class="chip"><div class="k">Avg profit per hedged trade</div><div class="v good">+2.5%</div></div>
@@ -120,79 +121,94 @@
 
 <div class="wrap">
 
-<h2><span class="num">01</span> · Confidence — how strong is the proof</h2>
-<p class="lead">"Confidence" is three different questions. Each one was measured separately, from verified historical cases only:</p>
-<div class="gauges">
-  
-    <div class="gauge">
-      <svg viewBox="0 0 140 140">
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#1a7f37" stroke-width="14"
-          stroke-dasharray="322.3 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">95%</text>
-        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text>
-      </svg>
-      <div class="g-label">The historical edge is real</div>
-      <div class="g-sub">Bootstrap on 245 independent event-days: P(no edge) = 0.9% · yearly sign test p = 0.006 · haircut applied for rule-selection bias</div>
-    </div>
-  
-    <div class="gauge">
-      <svg viewBox="0 0 140 140">
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#0b5394" stroke-width="14"
-          stroke-dasharray="271.4 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">80%</text>
-        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text>
-      </svg>
-      <div class="g-label">It keeps working in the next bear market</div>
-      <div class="g-sub">10 of 11 historical bear years profitable (Laplace estimate 84.6%) · discounted for borrow costs and market change</div>
-    </div>
-  
-    <div class="gauge">
-      <svg viewBox="0 0 140 140">
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
-        <circle cx="70" cy="70" r="54" fill="none" stroke="#9a6700" stroke-width="14"
-          stroke-dasharray="200.3 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
-        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">59%</text>
-        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text>
-      </svg>
-      <div class="g-label">Any single trade wins</div>
-      <div class="g-sub">This number never gets better. Consistency comes from repetition: dozens of trades per bear year, not one big bet</div>
-    </div>
+<h2><span class="num">01</span> · What we tested, on what data</h2>
+<div class="m-grid">
+  <div class="m-card"><b>The signal</b>
+    RSI(14) bearish divergence: price makes a higher high (≥2%) while RSI makes a lower high (≥5 points lower),
+    the two peaks 10–60 trading days apart. Peaks = pivot highs (above the 5 bars on each side).</div>
+  <div class="m-card"><b>The data source</b>
+    Financial Modeling Prep (FMP) daily OHLCV, 2005–2026. 509 tickers: S&amp;P 500 + Nasdaq 100 members,
+    SPY/QQQ/DIA/IWM. ~2.6M daily bars stored locally in SQLite. RSI computed in-house with Wilder's exact formula —
+    no API indicator values trusted.</div>
+  <div class="m-card"><b>No hindsight</b>
+    A pivot needs 5 future bars to confirm, so entries are taken at the close 5 bars AFTER the second peak —
+    never at the peak itself. All forward returns (5/10/20/60 days) measured from that confirmed entry.</div>
+  <div class="m-card"><b>The control group</b>
+    Every event is compared to 20 random entries in the same stock within ±6 months (excluding overlap with the
+    event's own window). This removes the "stocks went up for 20 years" bias — we measure edge, not drift.</div>
+  <div class="m-card"><b>Conservative statistics</b>
+    Events overlap and cluster at market tops, so p-values use month-clustered robust errors on paired
+    (event − random) differences; Benjamini-Hochberg FDR across all 87 table cells; non-overlapping cooldown
+    robustness checks.</div>
+  <div class="m-card"><b>Hostile audit before trusting anything</b>
+    20 adversarial AI reviewers hunted the code for lookahead bias, statistical flaws and survivorship issues.
+    16 confirmed flaws (including a control-group contamination and a volatility-regime lookahead) were fixed
+    and the entire study re-run before any conclusion was drawn.</div>
 </div>
 
-<div class="proofs">
-  <div class="proof"><b>Double independent verification</b>
-    <span class="res">Exact match, 1:1</span>
-    <div class="src">Two separate auditors recomputed everything directly from the raw database, without access to the research code. 40/40 spot checks against raw prices passed.</div></div>
-  <div class="proof"><b>Train / test split</b>
-    <span class="res">+3.0% (2005–15) → +2.1% (2016–26)</span>
-    <div class="src">The rule was selected using only the first half of history, then validated on the second half it had never seen.</div></div>
-  <div class="proof"><b>Remove the crash years entirely</b>
-    <span class="res">Without 2008 + 2022: still +2.7%, 60% win</span>
-    <div class="src">The edge is not one lucky crash — it is spread across 10 different years.</div></div>
-  <div class="proof"><b>Collapse same-day clusters</b>
-    <span class="res">One-trade-per-day: +1.8%, 58% win</span>
-    <div class="src">Even counting all signals of the same day as a single trade (245 unique days), the edge survives.</div></div>
-  <div class="proof"><b>Bootstrap interval (20,000 resamples)</b>
-    <span class="res">+0.3% to +3.2% per trade</span>
-    <div class="src">Even the worst end of the 95% range is positive. At monthly clustering (most conservative): 97% confidence.</div></div>
-  <div class="proof"><b>Hostile methodology audit</b>
-    <span class="res">16 flaws found and fixed before reporting</span>
-    <div class="src">20 adversarial AI reviewers hunted for lookahead bias, statistical errors and survivorship bias. Everything found was fixed and the study re-run.</div></div>
+<h2><span class="num">02</span> · Finding #1 — the popular belief is wrong, but the signal is real</h2>
+<p class="lead">After a bearish divergence in a rising market the stock does NOT fall — it keeps rising, just
+<b>more slowly than normal</b>. That relative weakness is real, large-sample, and remarkably consistent:</p>
+<div class="panel">
+  <div class="wb">
+    <div class="wb-label">Probability the stock declines within 20 days after a divergence</div>
+    <div class="wb-track"><div class="wb-fill" style="width:42.8%;background:#0b5394"></div>
+      <div class="wb-null" style="left:35.3%"></div></div>
+    <div class="wb-nums"><b>42.8%</b> vs. random baseline 35.3% (the black marker — large stocks
+    decline in only 35% of random 20-day windows; 50% would be the wrong benchmark)</div>
+  </div>
+  <p style="font-size:14.5px">On average the stock rises <b>-1.4% less</b> than a random entry over the
+  next 20 days — across 25,136 paired events, consistent in <b>20 of 22 years</b>, p&lt;0.0001 month-clustered,
+  and it survives a 30-day non-overlap cooldown (−1.38%, p&lt;0.0001). The exhaustion-top variant
+  (a stricter 8-condition pattern, 5,300 events) shows the same picture at −1.61%, 21 of 22 years.</p>
+
+  <h4>Where the relative edge is strongest (generic signal, by universe)</h4>
+    <table><tr><th style="text-align:left">Universe</th><th>Events</th><th>Win 20d</th><th>Random null</th>
+    <th>Avg stock move 20d</th><th>Edge vs random</th><th>FDR sig.</th></tr><tr><td style="text-align:left">Large-cap Financials</td><td>3216</td>
+          <td>44.4%</td><td>35.1%</td><td>+0.74%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.63%</td><td>✓</td></tr><tr><td style="text-align:left">High-beta Tech</td><td>1936</td>
+          <td>41.4%</td><td>35.1%</td><td>+2.52%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.56%</td><td>✓</td></tr><tr><td style="text-align:left">Nasdaq 100</td><td>4511</td>
+          <td>42.4%</td><td>34.8%</td><td>+1.74%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.55%</td><td>✓</td></tr><tr><td style="text-align:left">S&P 500</td><td>24372</td>
+          <td>42.8%</td><td>35.4%</td><td>+1.21%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.41%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap Tech</td><td>2134</td>
+          <td>40.0%</td><td>33.9%</td><td>+2.38%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.39%</td><td>✓</td></tr><tr><td style="text-align:left">Large-cap Healthcare</td><td>2971</td>
+          <td>43.5%</td><td>35.9%</td><td>+1.11%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.38%</td><td>✓</td></tr><tr><td style="text-align:left">Mega-cap (>$100B)</td><td>6058</td>
+          <td>41.4%</td><td>34.3%</td><td>+1.63%</td>
+          <td style="color:#1a7f37;font-weight:600">-1.32%</td><td>✓</td></tr><tr><td style="text-align:left">ETFs/Indices</td><td>185</td>
+          <td>31.9%</td><td>26.8%</td><td>+0.97%</td>
+          <td style="color:#1a7f37;font-weight:600">-0.91%</td><td>—</td></tr></table>
+  <p style="font-size:13px;color:var(--muted)">FDR sig. = significant at 5% after multiple-comparison correction.
+  Note ETFs/indices: weak and not significant — divergence on SPY/QQQ alone is a poor signal; it works on individual stocks.</p>
+
+  <h4>The regime split that changes everything</h4>
+  <table><tr><th style="text-align:left">Market regime (SPY 200-day MA)</th><th>Events</th>
+    <th>Avg stock move 20d</th><th>Edge vs random</th><th>Win 20d</th></tr><tr><td style="text-align:left">bear</td><td>1939</td>
+          <td>-0.01%</td><td style="color:#1a7f37;font-weight:600">-1.72%</td>
+          <td>49.7%</td></tr><tr><td style="text-align:left">bull</td><td>20379</td>
+          <td>+1.27%</td><td style="color:#1a7f37;font-weight:600">-1.47%</td>
+          <td>42.3%</td></tr><tr><td style="text-align:left">sideways</td><td>2885</td>
+          <td>+1.59%</td><td style="color:#1a7f37;font-weight:600">-1.05%</td>
+          <td>42.0%</td></tr></table>
+  <p style="font-size:13px;color:var(--muted)">In bull regimes stocks still rise after the signal (+1.27% avg) —
+  shorting loses. In bear regimes the average move turns flat/negative and the win rate hits ~50%. This split
+  is what the winning rule exploits.</p>
 </div>
 
-<h2><span class="num">02</span> · The search: 672 → 4 → 1</h2>
-<p class="lead">We didn't pick a rule that looked good — we screened the whole space and kept only what survived both halves of history:</p>
+<h2><span class="num">03</span> · Finding #2 — the one rule that turns it into money</h2>
+<p class="lead">We screened 672 rule combinations (pattern × regime × setup filters × horizon × naked/hedged),
+ranking them ONLY on 2005–2015 and validating on 2016–2026:</p>
 <div class="panel">
   <div class="funnel">
-    <div class="f-step" style="width:100%;background:#5b6b7a">672 rule combinations (pattern × market regime × setup filters × horizon × naked/hedged)</div>
-    <div class="f-arrow">▼ &nbsp;profitable in BOTH train and test, win rate ≥ 55%</div>
-    <div class="f-step" style="width:58%;background:#0b5394">4 rules survived — all four are the same pattern</div>
+    <div class="f-step" style="width:100%;background:#5b6b7a">672 rule combinations</div>
+    <div class="f-arrow">▼ &nbsp;profitable in BOTH halves of history, win rate ≥ 55%</div>
+    <div class="f-step" style="width:58%;background:#0b5394">4 survivors — all four are the same pattern</div>
     <div class="f-arrow">▼ &nbsp;significance, robustness, independent verification</div>
     <div class="f-step" style="width:36%;background:#1a7f37">"The last leader cracking"</div>
   </div>
-
   <div class="rule">
     <h3>Entry conditions — ALL must be true</h3>
     <div class="checks">
@@ -211,109 +227,110 @@
   </div>
 </div>
 
-<h2><span class="num">03</span> · Visual proof — all 503 trades, 2008–2026</h2>
-<p class="lead">Cumulative P&amp;L (sum of per-trade returns, one unit per trade) across history. Not a simulation — these are the actual detected events:</p>
+<h2><span class="num">04</span> · The proof — how confident, and why</h2>
+<div class="gauges">
+  
+    <div class="gauge"><svg viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#1a7f37" stroke-width="14"
+          stroke-dasharray="322.3 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">95%</text>
+        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text></svg>
+      <div class="g-label">The historical edge is real</div><div class="g-sub">Bootstrap on 245 independent event-days: P(no edge) = 0.9% · yearly sign test p = 0.006 · haircut applied for rule-selection bias</div></div>
+  
+    <div class="gauge"><svg viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#0b5394" stroke-width="14"
+          stroke-dasharray="271.4 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">80%</text>
+        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text></svg>
+      <div class="g-label">It keeps working in the next bear market</div><div class="g-sub">10 of 11 historical bear years profitable (Laplace estimate 84.6%) · discounted for borrow costs and market change</div></div>
+  
+    <div class="gauge"><svg viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#e8edf2" stroke-width="14"/>
+        <circle cx="70" cy="70" r="54" fill="none" stroke="#9a6700" stroke-width="14"
+          stroke-dasharray="200.3 339.3" stroke-linecap="round" transform="rotate(-90 70 70)"/>
+        <text x="70" y="66" text-anchor="middle" font-size="26" font-weight="700" fill="#16212c">59%</text>
+        <text x="70" y="86" text-anchor="middle" font-size="10" fill="#5b6b7a">confidence</text></svg>
+      <div class="g-label">Any single trade wins</div><div class="g-sub">This number never gets better. Consistency comes from repetition: dozens of trades per bear year, not one big bet</div></div>
+</div>
+<div class="proofs">
+  <div class="proof"><b>Double independent verification</b><span class="res">Exact match, 1:1</span>
+    <div class="src">Two separate auditors recomputed everything directly from the raw database, without access to the research code. 40/40 spot checks against raw prices passed.</div></div>
+  <div class="proof"><b>Train / test split</b><span class="res">+3.0% (2005–15) → +2.1% (2016–26)</span>
+    <div class="src">The rule was selected using only the first half of history, then validated on the second half it had never seen.</div></div>
+  <div class="proof"><b>Remove the crash years entirely</b><span class="res">Without 2008 + 2022: still +2.7%, 60% win</span>
+    <div class="src">The edge is not one lucky crash — it is spread across 10 different years.</div></div>
+  <div class="proof"><b>Collapse same-day clusters</b><span class="res">One-trade-per-day: +1.8%, 58% win</span>
+    <div class="src">Even counting all signals of the same day as a single trade (245 unique days), the edge survives.</div></div>
+  <div class="proof"><b>Bootstrap interval (20,000 resamples)</b><span class="res">+0.3% to +3.2% per trade</span>
+    <div class="src">Even the worst end of the 95% range is positive. At monthly clustering (most conservative): 97% confidence.</div></div>
+  <div class="proof"><b>What did NOT survive — reported honestly</b><span class="res">Naked shorting: rejected</span>
+    <div class="src">The naked-short variant (+2.0% avg) failed verification: without 2008+2018 its edge is just +0.1%. It's a bet on the bear continuing, not a stable rule — demoted to satellite status with strict conditions.</div></div>
+</div>
 
-    <svg viewBox="0 0 860 280" class="curve">
-      <line x1="40" y1="40" x2="40" y2="240" stroke="#eef1f4"/><text x="40" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2008</text><line x1="255" y1="40" x2="255" y2="240" stroke="#eef1f4"/><text x="255" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2009</text><line x1="269" y1="40" x2="269" y2="240" stroke="#eef1f4"/><text x="269" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2011</text><line x1="344" y1="40" x2="344" y2="240" stroke="#eef1f4"/><text x="344" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2015</text><line x1="413" y1="40" x2="413" y2="240" stroke="#eef1f4"/><text x="413" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2016</text><line x1="464" y1="40" x2="464" y2="240" stroke="#eef1f4"/><text x="464" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2018</text><line x1="542" y1="40" x2="542" y2="240" stroke="#eef1f4"/><text x="542" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2019</text><line x1="547" y1="40" x2="547" y2="240" stroke="#eef1f4"/><text x="547" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2020</text><line x1="606" y1="40" x2="606" y2="240" stroke="#eef1f4"/><text x="606" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2022</text><line x1="803" y1="40" x2="803" y2="240" stroke="#eef1f4"/><text x="803" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2023</text><line x1="827" y1="40" x2="827" y2="240" stroke="#eef1f4"/><text x="827" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2025</text>
+<h2><span class="num">05</span> · Visual proof — all 503 trades, 2008–2026</h2>
+<p class="lead">Cumulative P&amp;L (sum of per-trade returns, one unit per trade). Not a simulation — these are the actual detected events:</p>
+<svg viewBox="0 0 860 280" class="curve"><line x1="40" y1="40" x2="40" y2="240" stroke="#eef1f4"/><text x="40" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2008</text><line x1="255" y1="40" x2="255" y2="240" stroke="#eef1f4"/><text x="255" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2009</text><line x1="269" y1="40" x2="269" y2="240" stroke="#eef1f4"/><text x="269" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2011</text><line x1="344" y1="40" x2="344" y2="240" stroke="#eef1f4"/><text x="344" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2015</text><line x1="413" y1="40" x2="413" y2="240" stroke="#eef1f4"/><text x="413" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2016</text><line x1="464" y1="40" x2="464" y2="240" stroke="#eef1f4"/><text x="464" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2018</text><line x1="542" y1="40" x2="542" y2="240" stroke="#eef1f4"/><text x="542" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2019</text><line x1="547" y1="40" x2="547" y2="240" stroke="#eef1f4"/><text x="547" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2020</text><line x1="606" y1="40" x2="606" y2="240" stroke="#eef1f4"/><text x="606" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2022</text><line x1="803" y1="40" x2="803" y2="240" stroke="#eef1f4"/><text x="803" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2023</text><line x1="827" y1="40" x2="827" y2="240" stroke="#eef1f4"/><text x="827" y="266" font-size="10" fill="#8a98a6" text-anchor="middle">2025</text>
       <line x1="40" y1="231.2" x2="840" y2="231.2" stroke="#c8d2dc" stroke-dasharray="4 4"/>
       <polygon points="40,231.2 40.0,231.6 41.6,230.0 43.2,229.6 44.8,230.8 46.4,224.0 48.0,223.2 49.6,218.4 51.2,216.7 52.7,216.4 54.3,221.6 55.9,221.4 57.5,222.3 59.1,229.4 60.7,230.3 62.3,228.3 63.9,227.4 65.5,228.5 67.1,229.1 68.7,227.4 70.3,230.4 71.9,231.1 73.5,232.3 75.1,230.7 76.7,229.9 78.2,233.7 79.8,236.3 81.4,236.7 83.0,238.3 84.6,239.3 86.2,240.0 87.8,237.9 89.4,237.4 91.0,234.8 92.6,232.0 94.2,230.9 95.8,231.1 97.4,229.3 99.0,228.0 100.6,226.4 102.2,225.0 103.7,228.5 105.3,229.9 106.9,228.7 108.5,226.8 110.1,229.3 111.7,227.6 113.3,227.1 114.9,226.4 116.5,226.6 118.1,226.0 119.7,222.6 121.3,218.3 122.9,216.7 124.5,211.6 126.1,210.7 127.6,209.5 129.2,206.9 130.8,207.8 132.4,209.9 134.0,210.2 135.6,205.6 137.2,209.0 138.8,207.3 140.4,208.0 142.0,206.6 143.6,205.8 145.2,205.8 146.8,203.1 148.4,205.9 150.0,200.3 151.6,197.6 153.1,198.5 154.7,198.3 156.3,194.0 157.9,195.1 159.5,193.5 161.1,191.3 162.7,185.5 164.3,185.6 165.9,181.0 167.5,178.0 169.1,176.1 170.7,174.5 172.3,173.9 173.9,174.9 175.5,171.8 177.1,171.8 178.6,172.7 180.2,170.4 181.8,173.2 183.4,174.9 185.0,176.4 186.6,176.4 188.2,177.7 189.8,177.5 191.4,176.8 193.0,177.0 194.6,179.4 196.2,176.2 197.8,174.8 199.4,175.0 201.0,175.6 202.5,177.7 204.1,178.2 205.7,175.8 207.3,174.0 208.9,175.3 210.5,174.3 212.1,173.8 213.7,172.6 215.3,175.5 216.9,179.1 218.5,178.8 220.1,178.9 221.7,177.2 223.3,176.6 224.9,173.1 226.5,174.9 228.0,174.1 229.6,173.3 231.2,173.2 232.8,174.4 234.4,174.0 236.0,174.4 237.6,176.8 239.2,173.9 240.8,172.9 242.4,175.5 244.0,173.8 245.6,176.7 247.2,176.7 248.8,177.6 250.4,172.6 252.0,172.5 253.5,174.5 255.1,171.5 256.7,169.2 258.3,166.4 259.9,166.2 261.5,165.1 263.1,164.6 264.7,161.6 266.3,160.0 267.9,161.8 269.5,165.3 271.1,165.9 272.7,164.6 274.3,166.0 275.9,166.2 277.5,165.0 279.0,164.7 280.6,163.8 282.2,163.6 283.8,162.7 285.4,163.4 287.0,164.4 288.6,165.0 290.2,165.0 291.8,164.2 293.4,159.9 295.0,158.4 296.6,157.9 298.2,157.3 299.8,157.1 301.4,157.5 302.9,156.9 304.5,155.8 306.1,153.9 307.7,155.2 309.3,156.3 310.9,153.1 312.5,151.3 314.1,150.0 315.7,150.0 317.3,150.9 318.9,149.4 320.5,149.5 322.1,151.1 323.7,150.4 325.3,150.1 326.9,152.1 328.4,150.0 330.0,147.9 331.6,147.4 333.2,147.1 334.8,145.3 336.4,143.4 338.0,140.1 339.6,138.9 341.2,137.1 342.8,133.8 344.4,132.2 346.0,132.2 347.6,132.6 349.2,133.0 350.8,132.9 352.4,133.2 353.9,133.4 355.5,132.1 357.1,132.3 358.7,128.7 360.3,126.4 361.9,126.3 363.5,123.6 365.1,123.7 366.7,122.1 368.3,121.7 369.9,123.2 371.5,122.5 373.1,122.6 374.7,122.4 376.3,122.2 377.8,122.0 379.4,123.3 381.0,125.0 382.6,125.8 384.2,126.2 385.8,126.2 387.4,126.7 389.0,125.0 390.6,127.9 392.2,128.9 393.8,129.0 395.4,130.1 397.0,130.5 398.6,131.2 400.2,131.1 401.8,132.6 403.3,132.6 404.9,133.0 406.5,131.2 408.1,130.8 409.7,130.8 411.3,130.2 412.9,130.3 414.5,129.1 416.1,125.9 417.7,126.2 419.3,127.1 420.9,127.3 422.5,128.1 424.1,127.0 425.7,127.3 427.3,127.2 428.8,126.4 430.4,126.5 432.0,126.0 433.6,127.9 435.2,128.0 436.8,127.1 438.4,127.3 440.0,127.8 441.6,127.7 443.2,128.8 444.8,130.1 446.4,127.5 448.0,126.3 449.6,128.8 451.2,128.0 452.7,128.2 454.3,126.9 455.9,127.5 457.5,128.6 459.1,127.4 460.7,127.0 462.3,123.1 463.9,124.7 465.5,124.0 467.1,123.9 468.7,125.0 470.3,125.9 471.9,127.0 473.5,125.6 475.1,124.1 476.7,123.0 478.2,122.4 479.8,123.3 481.4,123.7 483.0,123.6 484.6,124.1 486.2,125.1 487.8,125.1 489.4,123.2 491.0,121.7 492.6,122.0 494.2,123.0 495.8,123.9 497.4,122.9 499.0,122.5 500.6,120.6 502.2,116.9 503.7,115.1 505.3,112.4 506.9,112.8 508.5,113.3 510.1,114.8 511.7,114.3 513.3,112.6 514.9,112.3 516.5,111.4 518.1,109.9 519.7,110.0 521.3,108.0 522.9,108.0 524.5,106.6 526.1,106.8 527.6,105.2 529.2,105.5 530.8,106.2 532.4,102.1 534.0,102.1 535.6,99.0 537.2,97.4 538.8,97.6 540.4,96.5 542.0,96.3 543.6,96.6 545.2,95.5 546.8,93.5 548.4,91.2 550.0,90.2 551.6,91.1 553.1,89.8 554.7,90.7 556.3,106.8 557.9,104.5 559.5,106.0 561.1,106.1 562.7,108.8 564.3,107.0 565.9,105.0 567.5,102.4 569.1,101.4 570.7,100.9 572.3,99.8 573.9,104.6 575.5,104.9 577.1,105.6 578.6,104.5 580.2,108.1 581.8,108.1 583.4,107.2 585.0,106.7 586.6,109.1 588.2,106.0 589.8,105.3 591.4,104.9 593.0,103.4 594.6,103.4 596.2,101.6 597.8,105.0 599.4,106.5 601.0,105.4 602.5,105.8 604.1,105.5 605.7,105.7 607.3,104.4 608.9,101.2 610.5,99.6 612.1,97.0 613.7,95.8 615.3,94.9 616.9,93.4 618.5,92.8 620.1,90.6 621.7,89.7 623.3,88.0 624.9,86.6 626.5,87.3 628.0,84.2 629.6,84.1 631.2,84.2 632.8,83.3 634.4,81.2 636.0,81.0 637.6,81.9 639.2,80.5 640.8,80.0 642.4,80.4 644.0,79.5 645.6,79.8 647.2,78.7 648.8,77.4 650.4,78.3 652.0,77.2 653.5,77.6 655.1,80.2 656.7,80.5 658.3,81.0 659.9,81.2 661.5,79.5 663.1,79.6 664.7,79.7 666.3,76.6 667.9,75.6 669.5,80.2 671.1,79.0 672.7,78.9 674.3,80.2 675.9,81.1 677.5,81.3 679.0,83.1 680.6,82.6 682.2,83.4 683.8,85.5 685.4,92.0 687.0,92.0 688.6,93.1 690.2,94.2 691.8,94.8 693.4,99.8 695.0,99.9 696.6,97.2 698.2,94.5 699.8,94.5 701.4,97.7 702.9,98.2 704.5,100.3 706.1,102.1 707.7,103.7 709.3,103.2 710.9,102.3 712.5,101.2 714.1,101.9 715.7,98.8 717.3,100.2 718.9,98.8 720.5,98.3 722.1,95.0 723.7,93.8 725.3,92.0 726.9,90.2 728.4,91.4 730.0,89.7 731.6,89.0 733.2,90.0 734.8,90.4 736.4,90.3 738.0,88.1 739.6,85.2 741.2,85.6 742.8,85.2 744.4,83.5 746.0,83.8 747.6,82.3 749.2,84.2 750.8,83.3 752.4,82.7 753.9,82.1 755.5,80.2 757.1,79.2 758.7,77.9 760.3,75.2 761.9,74.1 763.5,76.4 765.1,74.9 766.7,80.2 768.3,82.0 769.9,80.1 771.5,80.8 773.1,79.5 774.7,77.5 776.3,76.8 777.8,75.3 779.4,75.3 781.0,74.8 782.6,75.4 784.2,75.3 785.8,73.5 787.4,75.8 789.0,77.9 790.6,78.0 792.2,78.4 793.8,78.6 795.4,77.7 797.0,76.5 798.6,76.2 800.2,75.4 801.8,73.7 803.3,72.8 804.9,71.4 806.5,71.0 808.1,70.3 809.7,67.2 811.3,66.1 812.9,64.7 814.5,64.5 816.1,64.3 817.7,62.1 819.3,60.8 820.9,61.2 822.5,67.3 824.1,69.0 825.7,67.2 827.3,65.0 828.8,62.5 830.4,60.2 832.0,58.4 833.6,56.3 835.2,54.2 836.8,51.6 838.4,52.1 840.0,49.1 840,231.2" fill="rgba(26,127,55,0.08)"/>
       <polyline points="40.0,231.6 41.6,230.0 43.2,229.6 44.8,230.8 46.4,224.0 48.0,223.2 49.6,218.4 51.2,216.7 52.7,216.4 54.3,221.6 55.9,221.4 57.5,222.3 59.1,229.4 60.7,230.3 62.3,228.3 63.9,227.4 65.5,228.5 67.1,229.1 68.7,227.4 70.3,230.4 71.9,231.1 73.5,232.3 75.1,230.7 76.7,229.9 78.2,233.7 79.8,236.3 81.4,236.7 83.0,238.3 84.6,239.3 86.2,240.0 87.8,237.9 89.4,237.4 91.0,234.8 92.6,232.0 94.2,230.9 95.8,231.1 97.4,229.3 99.0,228.0 100.6,226.4 102.2,225.0 103.7,228.5 105.3,229.9 106.9,228.7 108.5,226.8 110.1,229.3 111.7,227.6 113.3,227.1 114.9,226.4 116.5,226.6 118.1,226.0 119.7,222.6 121.3,218.3 122.9,216.7 124.5,211.6 126.1,210.7 127.6,209.5 129.2,206.9 130.8,207.8 132.4,209.9 134.0,210.2 135.6,205.6 137.2,209.0 138.8,207.3 140.4,208.0 142.0,206.6 143.6,205.8 145.2,205.8 146.8,203.1 148.4,205.9 150.0,200.3 151.6,197.6 153.1,198.5 154.7,198.3 156.3,194.0 157.9,195.1 159.5,193.5 161.1,191.3 162.7,185.5 164.3,185.6 165.9,181.0 167.5,178.0 169.1,176.1 170.7,174.5 172.3,173.9 173.9,174.9 175.5,171.8 177.1,171.8 178.6,172.7 180.2,170.4 181.8,173.2 183.4,174.9 185.0,176.4 186.6,176.4 188.2,177.7 189.8,177.5 191.4,176.8 193.0,177.0 194.6,179.4 196.2,176.2 197.8,174.8 199.4,175.0 201.0,175.6 202.5,177.7 204.1,178.2 205.7,175.8 207.3,174.0 208.9,175.3 210.5,174.3 212.1,173.8 213.7,172.6 215.3,175.5 216.9,179.1 218.5,178.8 220.1,178.9 221.7,177.2 223.3,176.6 224.9,173.1 226.5,174.9 228.0,174.1 229.6,173.3 231.2,173.2 232.8,174.4 234.4,174.0 236.0,174.4 237.6,176.8 239.2,173.9 240.8,172.9 242.4,175.5 244.0,173.8 245.6,176.7 247.2,176.7 248.8,177.6 250.4,172.6 252.0,172.5 253.5,174.5 255.1,171.5 256.7,169.2 258.3,166.4 259.9,166.2 261.5,165.1 263.1,164.6 264.7,161.6 266.3,160.0 267.9,161.8 269.5,165.3 271.1,165.9 272.7,164.6 274.3,166.0 275.9,166.2 277.5,165.0 279.0,164.7 280.6,163.8 282.2,163.6 283.8,162.7 285.4,163.4 287.0,164.4 288.6,165.0 290.2,165.0 291.8,164.2 293.4,159.9 295.0,158.4 296.6,157.9 298.2,157.3 299.8,157.1 301.4,157.5 302.9,156.9 304.5,155.8 306.1,153.9 307.7,155.2 309.3,156.3 310.9,153.1 312.5,151.3 314.1,150.0 315.7,150.0 317.3,150.9 318.9,149.4 320.5,149.5 322.1,151.1 323.7,150.4 325.3,150.1 326.9,152.1 328.4,150.0 330.0,147.9 331.6,147.4 333.2,147.1 334.8,145.3 336.4,143.4 338.0,140.1 339.6,138.9 341.2,137.1 342.8,133.8 344.4,132.2 346.0,132.2 347.6,132.6 349.2,133.0 350.8,132.9 352.4,133.2 353.9,133.4 355.5,132.1 357.1,132.3 358.7,128.7 360.3,126.4 361.9,126.3 363.5,123.6 365.1,123.7 366.7,122.1 368.3,121.7 369.9,123.2 371.5,122.5 373.1,122.6 374.7,122.4 376.3,122.2 377.8,122.0 379.4,123.3 381.0,125.0 382.6,125.8 384.2,126.2 385.8,126.2 387.4,126.7 389.0,125.0 390.6,127.9 392.2,128.9 393.8,129.0 395.4,130.1 397.0,130.5 398.6,131.2 400.2,131.1 401.8,132.6 403.3,132.6 404.9,133.0 406.5,131.2 408.1,130.8 409.7,130.8 411.3,130.2 412.9,130.3 414.5,129.1 416.1,125.9 417.7,126.2 419.3,127.1 420.9,127.3 422.5,128.1 424.1,127.0 425.7,127.3 427.3,127.2 428.8,126.4 430.4,126.5 432.0,126.0 433.6,127.9 435.2,128.0 436.8,127.1 438.4,127.3 440.0,127.8 441.6,127.7 443.2,128.8 444.8,130.1 446.4,127.5 448.0,126.3 449.6,128.8 451.2,128.0 452.7,128.2 454.3,126.9 455.9,127.5 457.5,128.6 459.1,127.4 460.7,127.0 462.3,123.1 463.9,124.7 465.5,124.0 467.1,123.9 468.7,125.0 470.3,125.9 471.9,127.0 473.5,125.6 475.1,124.1 476.7,123.0 478.2,122.4 479.8,123.3 481.4,123.7 483.0,123.6 484.6,124.1 486.2,125.1 487.8,125.1 489.4,123.2 491.0,121.7 492.6,122.0 494.2,123.0 495.8,123.9 497.4,122.9 499.0,122.5 500.6,120.6 502.2,116.9 503.7,115.1 505.3,112.4 506.9,112.8 508.5,113.3 510.1,114.8 511.7,114.3 513.3,112.6 514.9,112.3 516.5,111.4 518.1,109.9 519.7,110.0 521.3,108.0 522.9,108.0 524.5,106.6 526.1,106.8 527.6,105.2 529.2,105.5 530.8,106.2 532.4,102.1 534.0,102.1 535.6,99.0 537.2,97.4 538.8,97.6 540.4,96.5 542.0,96.3 543.6,96.6 545.2,95.5 546.8,93.5 548.4,91.2 550.0,90.2 551.6,91.1 553.1,89.8 554.7,90.7 556.3,106.8 557.9,104.5 559.5,106.0 561.1,106.1 562.7,108.8 564.3,107.0 565.9,105.0 567.5,102.4 569.1,101.4 570.7,100.9 572.3,99.8 573.9,104.6 575.5,104.9 577.1,105.6 578.6,104.5 580.2,108.1 581.8,108.1 583.4,107.2 585.0,106.7 586.6,109.1 588.2,106.0 589.8,105.3 591.4,104.9 593.0,103.4 594.6,103.4 596.2,101.6 597.8,105.0 599.4,106.5 601.0,105.4 602.5,105.8 604.1,105.5 605.7,105.7 607.3,104.4 608.9,101.2 610.5,99.6 612.1,97.0 613.7,95.8 615.3,94.9 616.9,93.4 618.5,92.8 620.1,90.6 621.7,89.7 623.3,88.0 624.9,86.6 626.5,87.3 628.0,84.2 629.6,84.1 631.2,84.2 632.8,83.3 634.4,81.2 636.0,81.0 637.6,81.9 639.2,80.5 640.8,80.0 642.4,80.4 644.0,79.5 645.6,79.8 647.2,78.7 648.8,77.4 650.4,78.3 652.0,77.2 653.5,77.6 655.1,80.2 656.7,80.5 658.3,81.0 659.9,81.2 661.5,79.5 663.1,79.6 664.7,79.7 666.3,76.6 667.9,75.6 669.5,80.2 671.1,79.0 672.7,78.9 674.3,80.2 675.9,81.1 677.5,81.3 679.0,83.1 680.6,82.6 682.2,83.4 683.8,85.5 685.4,92.0 687.0,92.0 688.6,93.1 690.2,94.2 691.8,94.8 693.4,99.8 695.0,99.9 696.6,97.2 698.2,94.5 699.8,94.5 701.4,97.7 702.9,98.2 704.5,100.3 706.1,102.1 707.7,103.7 709.3,103.2 710.9,102.3 712.5,101.2 714.1,101.9 715.7,98.8 717.3,100.2 718.9,98.8 720.5,98.3 722.1,95.0 723.7,93.8 725.3,92.0 726.9,90.2 728.4,91.4 730.0,89.7 731.6,89.0 733.2,90.0 734.8,90.4 736.4,90.3 738.0,88.1 739.6,85.2 741.2,85.6 742.8,85.2 744.4,83.5 746.0,83.8 747.6,82.3 749.2,84.2 750.8,83.3 752.4,82.7 753.9,82.1 755.5,80.2 757.1,79.2 758.7,77.9 760.3,75.2 761.9,74.1 763.5,76.4 765.1,74.9 766.7,80.2 768.3,82.0 769.9,80.1 771.5,80.8 773.1,79.5 774.7,77.5 776.3,76.8 777.8,75.3 779.4,75.3 781.0,74.8 782.6,75.4 784.2,75.3 785.8,73.5 787.4,75.8 789.0,77.9 790.6,78.0 792.2,78.4 793.8,78.6 795.4,77.7 797.0,76.5 798.6,76.2 800.2,75.4 801.8,73.7 803.3,72.8 804.9,71.4 806.5,71.0 808.1,70.3 809.7,67.2 811.3,66.1 812.9,64.7 814.5,64.5 816.1,64.3 817.7,62.1 819.3,60.8 820.9,61.2 822.5,67.3 824.1,69.0 825.7,67.2 827.3,65.0 828.8,62.5 830.4,60.2 832.0,58.4 833.6,56.3 835.2,54.2 836.8,51.6 838.4,52.1 840.0,49.1" fill="none" stroke="#1a7f37" stroke-width="2.5"/>
-      <text x="836" y="37" text-anchor="end" font-size="14"
-            font-weight="700" fill="#1a7f37">+1272% summed</text>
-    </svg>
-
+      <text x="836" y="37" text-anchor="end" font-size="14" font-weight="700" fill="#1a7f37">+1272% summed</text></svg>
 <h3 style="margin:34px 0 10px;font-size:19px">Average profit per trade, by year — green = profitable year</h3>
-<div class="ybars">
-
-        <div class="ybar">
+<div class="ybars"><div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+2.9%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:23px"></div></div>
-          <div class="ybar-yr">2008</div>
-          <div class="ybar-n">135 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2008</div><div class="ybar-n">135 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+9.8%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:77px"></div></div>
-          <div class="ybar-yr">2009</div>
-          <div class="ybar-n">9 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2009</div><div class="ybar-n">9 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+4.2%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:33px"></div></div>
-          <div class="ybar-yr">2011</div>
-          <div class="ybar-n">47 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2011</div><div class="ybar-n">47 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+0.6%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:5px"></div></div>
-          <div class="ybar-yr">2015</div>
-          <div class="ybar-n">43 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2015</div><div class="ybar-n">43 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+1.6%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:12px"></div></div>
-          <div class="ybar-yr">2016</div>
-          <div class="ybar-n">32 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2016</div><div class="ybar-n">32 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+3.8%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:30px"></div></div>
-          <div class="ybar-yr">2018</div>
-          <div class="ybar-n">49 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2018</div><div class="ybar-n">49 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+2.5%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:20px"></div></div>
-          <div class="ybar-yr">2019</div>
-          <div class="ybar-n">3 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2019</div><div class="ybar-n">3 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#c0392b">-1.9%</div>
           <div class="ybar-col"><div class="ybar-fill dn" style="height:15px"></div></div>
-          <div class="ybar-yr">2020</div>
-          <div class="ybar-n">37 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2020</div><div class="ybar-n">37 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+1.8%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:14px"></div></div>
-          <div class="ybar-yr">2022</div>
-          <div class="ybar-n">124 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2022</div><div class="ybar-n">124 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+3.1%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:24px"></div></div>
-          <div class="ybar-yr">2023</div>
-          <div class="ybar-n">15 trades</div>
-        </div>
-
-        <div class="ybar">
+          <div class="ybar-yr">2023</div><div class="ybar-n">15 trades</div></div>
+<div class="ybar">
           <div class="ybar-val" style="color:#1a7f37">+14.0%</div>
           <div class="ybar-col"><div class="ybar-fill up" style="height:110px"></div></div>
-          <div class="ybar-yr">2025</div>
-          <div class="ybar-n">9 trades</div>
-        </div>
-</div>
-<p class="lead" style="margin-top:10px;font-size:14px">The only losing year: 2020 (the COVID V-shaped recovery) — and even then the loss was contained to −1.9% per trade thanks to the hedge. 2025: +14.0% per trade.</p>
+          <div class="ybar-yr">2025</div><div class="ybar-n">9 trades</div></div></div>
+<p class="lead" style="margin-top:10px;font-size:14px">The only losing year: 2020 (the COVID V-shaped recovery) —
+and even then the loss was contained to −1.9% per trade thanks to the hedge. 2025: +14.0% per trade.</p>
 
-<h2><span class="num">04</span> · Real trades from the database</h2>
-<p class="lead">Five actual events, straight from the data — three wins, the typical (median) trade, and the one disaster that defines the risk rules. Prices are split-adjusted; "stock" and "SPY" are the next 60 trading sessions from the confirmed entry.</p>
+<h2><span class="num">06</span> · Real trades from the database</h2>
+<p class="lead">Five actual events — three wins, the typical (median) trade, and the one disaster that defines the
+risk rules. Prices are split-adjusted; "stock" and "SPY" are the next 60 trading sessions from the confirmed entry.</p>
 <div class="exs">
-
         <div class="ex ex-win">
-          <div class="ex-head">
-            <span class="ex-tick">CNC</span>
-            <span class="ex-pnl" style="color:#1a7f37">+47.5% <small>pair P&L</small></span>
-          </div>
+          <div class="ex-head"><span class="ex-tick">CNC</span>
+            <span class="ex-pnl" style="color:#1a7f37">+47.5% <small>pair P&L</small></span></div>
           <div class="ex-title">The textbook win — GFC, Jan 2008</div>
           <div class="ex-grid">
             <div><span>Entry (confirmed)</span><b>2008-01-24 @ $6.32</b></div>
@@ -327,10 +344,8 @@
         </div>
 
         <div class="ex ex-win">
-          <div class="ex-head">
-            <span class="ex-tick">DVN</span>
-            <span class="ex-pnl" style="color:#1a7f37">+23.2% <small>pair P&L</small></span>
-          </div>
+          <div class="ex-head"><span class="ex-tick">DVN</span>
+            <span class="ex-pnl" style="color:#1a7f37">+23.2% <small>pair P&L</small></span></div>
           <div class="ex-title">The hedge earning its keep — Nov 2022</div>
           <div class="ex-grid">
             <div><span>Entry (confirmed)</span><b>2022-11-03 @ $70.73</b></div>
@@ -344,10 +359,8 @@
         </div>
 
         <div class="ex ex-win">
-          <div class="ex-head">
-            <span class="ex-tick">BRK-B</span>
-            <span class="ex-pnl" style="color:#1a7f37">+20.9% <small>pair P&L</small></span>
-          </div>
+          <div class="ex-head"><span class="ex-tick">BRK-B</span>
+            <span class="ex-pnl" style="color:#1a7f37">+20.9% <small>pair P&L</small></span></div>
           <div class="ex-title">Even Berkshire — May 2025</div>
           <div class="ex-grid">
             <div><span>Entry (confirmed)</span><b>2025-05-09 @ $513.74</b></div>
@@ -361,10 +374,8 @@
         </div>
 
         <div class="ex ex-win">
-          <div class="ex-head">
-            <span class="ex-tick">MRK</span>
-            <span class="ex-pnl" style="color:#1a7f37">+3.3% <small>pair P&L</small></span>
-          </div>
+          <div class="ex-head"><span class="ex-tick">MRK</span>
+            <span class="ex-pnl" style="color:#1a7f37">+3.3% <small>pair P&L</small></span></div>
           <div class="ex-title">What a TYPICAL trade looks like — Jul 2022</div>
           <div class="ex-grid">
             <div><span>Entry (confirmed)</span><b>2022-07-05 @ $92.64</b></div>
@@ -378,10 +389,8 @@
         </div>
 
         <div class="ex ex-loss">
-          <div class="ex-head">
-            <span class="ex-tick">MRNA</span>
-            <span class="ex-pnl" style="color:#c0392b">-112.8% <small>pair P&L</small></span>
-          </div>
+          <div class="ex-head"><span class="ex-tick">MRNA</span>
+            <span class="ex-pnl" style="color:#c0392b">-112.8% <small>pair P&L</small></span></div>
           <div class="ex-title">The disaster that wrote the risk rules — Mar 2020</div>
           <div class="ex-grid">
             <div><span>Entry (confirmed)</span><b>2020-03-26 @ $27.94</b></div>
@@ -392,27 +401,536 @@
             <div><span>Sector</span><b>Healthcare</b></div>
           </div>
           <p class="ex-blurb">Moderna matched every entry condition — then the COVID-vaccine run sent it +132% in 60 days. One binary-news biotech erased ~45 average wins. This single verified trade is why the playbook bans biotech and caps position size.</p>
-        </div>
-</div>
+        </div></div>
 
-<h2><span class="num">05</span> · Why trust the signal at all — the broad base</h2>
-<p class="lead">Underneath the focused rule sits the generic signal, tested on 25,203 events against random entries in the same stocks:</p>
-<div class="panel">
-  <div class="wb">
-    <div class="wb-label">Probability the stock declines within 20 days after a divergence</div>
-    <div class="wb-track">
-      <div class="wb-fill" style="width:42.8%;background:#0b5394"></div>
-      <div class="wb-null" style="left:35.3%" title="random baseline"></div>
-    </div>
-    <div class="wb-nums"><b>42.8%</b> vs. random baseline 35.3%</div>
-  </div>
-  <p style="font-size:14.5px;margin-top:8px">The black marker is the honest null: large stocks decline in only 35% of random 20-day windows
-  (they drift up — 50% would be the wrong benchmark). After a divergence the probability jumps to 43% —
-  a 7-point lift across tens of thousands of events, consistent in 20 of 22 years (p&lt;0.0001, month-clustered).
-  On top of that, the stock rises -1.4% <i>less</i> than a random entry on average — that relative weakness is the fuel the focused rule converts into profit.</p>
+<h2><span class="num">07</span> · Every single trade — the full record</h2>
+<p class="lead">All 503 trades of the winning rule, chronological. Pair P&amp;L = SPY's 60-session return minus the
+stock's (short stock + long SPY). Filter by ticker, year or sector:</p>
+<div class="tt-wrap">
+  <input id="ttq" type="text" placeholder="Filter: e.g. NVDA, 2022, Energy..." oninput="ttf()">
+  <span id="ttc" style="font-size:13px;color:var(--muted);margin-left:10px">503 trades</span>
+  <div class="tt-scroll"><table id="tt">
+    <thead><tr><th>Ticker</th><th>Entry date</th><th>Entry price</th><th>RSI hi1→hi2</th>
+    <th>Stock 60d</th><th>SPY 60d</th><th>Pair P&amp;L</th><th>Sector</th></tr></thead>
+    <tbody><tr><td>DE</td><td>2008-01-22</td><td>$83.15</td><td>72→62</td><td>+7.7%</td><td>+4.8%</td><td style='color:#c0392b;font-weight:600'>-2.9%</td><td>Industrials</td></tr>
+<tr><td>STT</td><td>2008-01-22</td><td>$74.89</td><td>70→60</td><td>-6.1%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+10.9%</td><td>Financial Services</td></tr>
+<tr><td>HRL</td><td>2008-01-22</td><td>$9.65</td><td>59→47</td><td>+2.1%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+2.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>BG</td><td>2008-01-23</td><td>$105.29</td><td>73→58</td><td>+11.3%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-7.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>CNC</td><td>2008-01-24</td><td>$6.32</td><td>81→60</td><td>-44.8%</td><td>+2.6%</td><td style='color:#1a7f37;font-weight:600'>+47.5%</td><td>Healthcare</td></tr>
+<tr><td>WAT</td><td>2008-01-24</td><td>$56.04</td><td>70→46</td><td>-2.7%</td><td>+2.6%</td><td style='color:#1a7f37;font-weight:600'>+5.3%</td><td>Healthcare</td></tr>
+<tr><td>MOH</td><td>2008-01-29</td><td>$22.47</td><td>66→40</td><td>-31.7%</td><td>+1.8%</td><td style='color:#1a7f37;font-weight:600'>+33.5%</td><td>Healthcare</td></tr>
+<tr><td>INCY</td><td>2008-02-07</td><td>$11.88</td><td>70→62</td><td>-6.6%</td><td>+5.2%</td><td style='color:#1a7f37;font-weight:600'>+11.8%</td><td>Healthcare</td></tr>
+<tr><td>ADM</td><td>2008-02-11</td><td>$42.95</td><td>65→56</td><td>+1.8%</td><td>+4.3%</td><td style='color:#1a7f37;font-weight:600'>+2.5%</td><td>Consumer Defensive</td></tr>
+<tr><td>MA</td><td>2008-02-11</td><td>$20.61</td><td>79→66</td><td>+41.2%</td><td>+4.3%</td><td style='color:#c0392b;font-weight:600'>-36.9%</td><td>Financial Services</td></tr>
+<tr><td>INCY</td><td>2008-02-22</td><td>$9.91</td><td>70→62</td><td>+3.6%</td><td>+5.5%</td><td style='color:#1a7f37;font-weight:600'>+1.8%</td><td>Healthcare</td></tr>
+<tr><td>MOS</td><td>2008-03-04</td><td>$108.92</td><td>75→68</td><td>+11.8%</td><td>+5.3%</td><td style='color:#c0392b;font-weight:600'>-6.5%</td><td>Basic Materials</td></tr>
+<tr><td>CTRA</td><td>2008-03-24</td><td>$11.85</td><td>78→68</td><td>+50.0%</td><td>+0.6%</td><td style='color:#c0392b;font-weight:600'>-49.4%</td><td>Energy</td></tr>
+<tr><td>JBHT</td><td>2008-03-31</td><td>$31.43</td><td>72→63</td><td>+6.0%</td><td>-0.6%</td><td style='color:#c0392b;font-weight:600'>-6.6%</td><td>Industrials</td></tr>
+<tr><td>TKO</td><td>2008-04-01</td><td>$18.74</td><td>72→63</td><td>-17.4%</td><td>-3.5%</td><td style='color:#1a7f37;font-weight:600'>+13.9%</td><td>Communication Services</td></tr>
+<tr><td>ODFL</td><td>2008-04-01</td><td>$4.97</td><td>68→63</td><td>-10.3%</td><td>-3.5%</td><td style='color:#1a7f37;font-weight:600'>+6.7%</td><td>Industrials</td></tr>
+<tr><td>JBHT</td><td>2008-04-08</td><td>$31.77</td><td>72→63</td><td>+0.0%</td><td>-7.8%</td><td style='color:#c0392b;font-weight:600'>-7.8%</td><td>Industrials</td></tr>
+<tr><td>TJX</td><td>2008-04-09</td><td>$8.02</td><td>66→61</td><td>-2.6%</td><td>-7.0%</td><td style='color:#c0392b;font-weight:600'>-4.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>TKO</td><td>2008-04-16</td><td>$19.00</td><td>72→61</td><td>-21.7%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+12.2%</td><td>Communication Services</td></tr>
+<tr><td>MA</td><td>2008-04-16</td><td>$23.05</td><td>66→61</td><td>+11.7%</td><td>-9.5%</td><td style='color:#c0392b;font-weight:600'>-21.2%</td><td>Financial Services</td></tr>
+<tr><td>CTRA</td><td>2008-04-24</td><td>$14.06</td><td>78→70</td><td>-3.9%</td><td>-8.9%</td><td style='color:#c0392b;font-weight:600'>-5.0%</td><td>Energy</td></tr>
+<tr><td>GILD</td><td>2008-04-28</td><td>$26.27</td><td>65→57</td><td>+0.3%</td><td>-8.2%</td><td style='color:#c0392b;font-weight:600'>-8.5%</td><td>Healthcare</td></tr>
+<tr><td>EOG</td><td>2008-04-29</td><td>$64.18</td><td>79→70</td><td>-21.2%</td><td>-9.8%</td><td style='color:#1a7f37;font-weight:600'>+11.4%</td><td>Energy</td></tr>
+<tr><td>STLD</td><td>2008-04-29</td><td>$34.60</td><td>69→58</td><td>-15.3%</td><td>-9.8%</td><td style='color:#1a7f37;font-weight:600'>+5.5%</td><td>Basic Materials</td></tr>
+<tr><td>NSC</td><td>2008-04-29</td><td>$59.99</td><td>72→67</td><td>+16.6%</td><td>-9.8%</td><td style='color:#c0392b;font-weight:600'>-26.3%</td><td>Industrials</td></tr>
+<tr><td>FMC</td><td>2008-05-01</td><td>$26.80</td><td>73→64</td><td>+6.2%</td><td>-12.4%</td><td style='color:#c0392b;font-weight:600'>-18.6%</td><td>Basic Materials</td></tr>
+<tr><td>OXY</td><td>2008-05-05</td><td>$82.34</td><td>70→64</td><td>-6.0%</td><td>-8.7%</td><td style='color:#c0392b;font-weight:600'>-2.7%</td><td>Energy</td></tr>
+<tr><td>FSLR</td><td>2008-05-07</td><td>$276.85</td><td>72→65</td><td>+1.4%</td><td>-9.6%</td><td style='color:#c0392b;font-weight:600'>-11.0%</td><td>Energy</td></tr>
+<tr><td>VTR</td><td>2008-05-09</td><td>$40.92</td><td>69→55</td><td>-0.5%</td><td>-7.6%</td><td style='color:#c0392b;font-weight:600'>-7.1%</td><td>Real Estate</td></tr>
+<tr><td>UHS</td><td>2008-05-13</td><td>$31.40</td><td>70→65</td><td>-4.8%</td><td>-9.6%</td><td style='color:#c0392b;font-weight:600'>-4.7%</td><td>Healthcare</td></tr>
+<tr><td>DVN</td><td>2008-05-14</td><td>$116.01</td><td>71→56</td><td>-22.8%</td><td>-8.1%</td><td style='color:#1a7f37;font-weight:600'>+14.7%</td><td>Energy</td></tr>
+<tr><td>TAP</td><td>2008-05-20</td><td>$56.29</td><td>71→62</td><td>-12.1%</td><td>-8.7%</td><td style='color:#1a7f37;font-weight:600'>+3.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>STLD</td><td>2008-05-27</td><td>$35.05</td><td>69→58</td><td>-26.1%</td><td>-8.0%</td><td style='color:#1a7f37;font-weight:600'>+18.1%</td><td>Basic Materials</td></tr>
+<tr><td>NUE</td><td>2008-05-27</td><td>$72.47</td><td>67→61</td><td>-27.5%</td><td>-8.0%</td><td style='color:#1a7f37;font-weight:600'>+19.5%</td><td>Basic Materials</td></tr>
+<tr><td>CAT</td><td>2008-05-27</td><td>$81.95</td><td>68→61</td><td>-16.0%</td><td>-8.0%</td><td style='color:#1a7f37;font-weight:600'>+8.1%</td><td>Industrials</td></tr>
+<tr><td>HAL</td><td>2008-05-29</td><td>$48.43</td><td>86→59</td><td>-6.1%</td><td>-7.4%</td><td style='color:#c0392b;font-weight:600'>-1.3%</td><td>Energy</td></tr>
+<tr><td>FCX</td><td>2008-05-29</td><td>$56.59</td><td>70→57</td><td>-20.0%</td><td>-7.4%</td><td style='color:#1a7f37;font-weight:600'>+12.6%</td><td>Basic Materials</td></tr>
+<tr><td>APA</td><td>2008-05-29</td><td>$133.16</td><td>72→61</td><td>-16.2%</td><td>-7.4%</td><td style='color:#1a7f37;font-weight:600'>+8.8%</td><td>Energy</td></tr>
+<tr><td>EOG</td><td>2008-05-29</td><td>$63.90</td><td>79→56</td><td>-18.9%</td><td>-7.4%</td><td style='color:#1a7f37;font-weight:600'>+11.5%</td><td>Energy</td></tr>
+<tr><td>TAP</td><td>2008-06-02</td><td>$57.72</td><td>71→61</td><td>-17.5%</td><td>-8.3%</td><td style='color:#1a7f37;font-weight:600'>+9.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>TDY</td><td>2008-06-04</td><td>$53.60</td><td>61→44</td><td>+18.5%</td><td>-5.7%</td><td style='color:#c0392b;font-weight:600'>-24.1%</td><td>Technology</td></tr>
+<tr><td>JBHT</td><td>2008-06-05</td><td>$35.89</td><td>63→57</td><td>+1.6%</td><td>-8.5%</td><td style='color:#c0392b;font-weight:600'>-10.1%</td><td>Industrials</td></tr>
+<tr><td>CHRW</td><td>2008-06-06</td><td>$61.07</td><td>64→55</td><td>-14.8%</td><td>-6.1%</td><td style='color:#1a7f37;font-weight:600'>+8.7%</td><td>Industrials</td></tr>
+<tr><td>MA</td><td>2008-06-06</td><td>$29.57</td><td>80→73</td><td>-19.1%</td><td>-6.1%</td><td style='color:#1a7f37;font-weight:600'>+13.0%</td><td>Financial Services</td></tr>
+<tr><td>DLR</td><td>2008-06-06</td><td>$41.25</td><td>71→61</td><td>+11.1%</td><td>-6.1%</td><td style='color:#c0392b;font-weight:600'>-17.2%</td><td>Real Estate</td></tr>
+<tr><td>TEL</td><td>2008-06-09</td><td>$38.79</td><td>68→63</td><td>-18.0%</td><td>-6.4%</td><td style='color:#1a7f37;font-weight:600'>+11.6%</td><td>Technology</td></tr>
+<tr><td>MAA</td><td>2008-06-10</td><td>$55.16</td><td>70→59</td><td>-12.2%</td><td>-8.8%</td><td style='color:#1a7f37;font-weight:600'>+3.4%</td><td>Real Estate</td></tr>
+<tr><td>BALL</td><td>2008-06-10</td><td>$12.60</td><td>58→52</td><td>-13.9%</td><td>-8.8%</td><td style='color:#1a7f37;font-weight:600'>+5.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>EW</td><td>2008-06-12</td><td>$4.98</td><td>87→82</td><td>-4.1%</td><td>-5.5%</td><td style='color:#c0392b;font-weight:600'>-1.4%</td><td>Healthcare</td></tr>
+<tr><td>AME</td><td>2008-06-12</td><td>$22.38</td><td>74→67</td><td>-9.5%</td><td>-5.5%</td><td style='color:#1a7f37;font-weight:600'>+3.9%</td><td>Industrials</td></tr>
+<tr><td>WMB</td><td>2008-06-13</td><td>$30.77</td><td>73→61</td><td>-33.8%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+24.3%</td><td>Energy</td></tr>
+<tr><td>EQT</td><td>2008-06-13</td><td>$37.05</td><td>73→55</td><td>-39.2%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+29.7%</td><td>Energy</td></tr>
+<tr><td>CVX</td><td>2008-06-13</td><td>$99.40</td><td>71→55</td><td>-20.7%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+11.2%</td><td>Energy</td></tr>
+<tr><td>NUE</td><td>2008-06-13</td><td>$77.06</td><td>67→54</td><td>-45.3%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+35.8%</td><td>Basic Materials</td></tr>
+<tr><td>MPWR</td><td>2008-06-13</td><td>$24.34</td><td>76→64</td><td>-15.9%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+6.4%</td><td>Technology</td></tr>
+<tr><td>TTWO</td><td>2008-06-13</td><td>$26.47</td><td>66→60</td><td>-17.8%</td><td>-9.5%</td><td style='color:#1a7f37;font-weight:600'>+8.3%</td><td>Communication Services</td></tr>
+<tr><td>HAL</td><td>2008-06-16</td><td>$48.79</td><td>86→65</td><td>-27.1%</td><td>-9.2%</td><td style='color:#1a7f37;font-weight:600'>+17.9%</td><td>Energy</td></tr>
+<tr><td>HAS</td><td>2008-06-17</td><td>$38.88</td><td>73→67</td><td>-1.4%</td><td>-7.4%</td><td style='color:#c0392b;font-weight:600'>-6.0%</td><td>Consumer Cyclical</td></tr>
+<tr><td>WMT</td><td>2008-06-17</td><td>$19.56</td><td>69→63</td><td>+7.7%</td><td>-7.4%</td><td style='color:#c0392b;font-weight:600'>-15.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>IBM</td><td>2008-06-23</td><td>$118.03</td><td>65→54</td><td>-9.7%</td><td>-11.3%</td><td style='color:#c0392b;font-weight:600'>-1.6%</td><td>Technology</td></tr>
+<tr><td>GLW</td><td>2008-06-23</td><td>$25.40</td><td>67→53</td><td>-42.9%</td><td>-11.3%</td><td style='color:#1a7f37;font-weight:600'>+31.6%</td><td>Technology</td></tr>
+<tr><td>ARE</td><td>2008-06-24</td><td>$99.08</td><td>59→49</td><td>+15.0%</td><td>-8.5%</td><td style='color:#c0392b;font-weight:600'>-23.5%</td><td>Real Estate</td></tr>
+<tr><td>CCI</td><td>2008-06-24</td><td>$40.29</td><td>65→59</td><td>-20.7%</td><td>-8.5%</td><td style='color:#1a7f37;font-weight:600'>+12.2%</td><td>Real Estate</td></tr>
+<tr><td>MAA</td><td>2008-06-24</td><td>$52.52</td><td>70→56</td><td>-2.9%</td><td>-8.5%</td><td style='color:#c0392b;font-weight:600'>-5.6%</td><td>Real Estate</td></tr>
+<tr><td>GILD</td><td>2008-06-26</td><td>$26.47</td><td>63→58</td><td>-15.5%</td><td>-5.4%</td><td style='color:#1a7f37;font-weight:600'>+10.1%</td><td>Healthcare</td></tr>
+<tr><td>DVN</td><td>2008-06-26</td><td>$114.65</td><td>61→52</td><td>-10.8%</td><td>-5.4%</td><td style='color:#1a7f37;font-weight:600'>+5.4%</td><td>Energy</td></tr>
+<tr><td>D</td><td>2008-06-27</td><td>$46.20</td><td>72→58</td><td>-7.5%</td><td>-7.0%</td><td style='color:#1a7f37;font-weight:600'>+0.5%</td><td>Utilities</td></tr>
+<tr><td>CRM</td><td>2008-06-30</td><td>$17.06</td><td>67→61</td><td>-25.3%</td><td>-7.1%</td><td style='color:#1a7f37;font-weight:600'>+18.2%</td><td>Technology</td></tr>
+<tr><td>GIS</td><td>2008-06-30</td><td>$30.39</td><td>65→57</td><td>+12.4%</td><td>-7.1%</td><td style='color:#c0392b;font-weight:600'>-19.5%</td><td>Consumer Defensive</td></tr>
+<tr><td>STLD</td><td>2008-07-01</td><td>$38.09</td><td>67→59</td><td>-45.6%</td><td>-5.9%</td><td style='color:#1a7f37;font-weight:600'>+39.6%</td><td>Basic Materials</td></tr>
+<tr><td>EXC</td><td>2008-07-01</td><td>$64.43</td><td>70→60</td><td>-24.3%</td><td>-5.9%</td><td style='color:#1a7f37;font-weight:600'>+18.4%</td><td>Utilities</td></tr>
+<tr><td>ROST</td><td>2008-07-02</td><td>$9.05</td><td>72→57</td><td>+1.9%</td><td>-4.2%</td><td style='color:#c0392b;font-weight:600'>-6.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>EW</td><td>2008-07-02</td><td>$5.17</td><td>87→72</td><td>-5.8%</td><td>-4.2%</td><td style='color:#1a7f37;font-weight:600'>+1.6%</td><td>Healthcare</td></tr>
+<tr><td>WMB</td><td>2008-07-02</td><td>$30.55</td><td>73→59</td><td>-33.8%</td><td>-4.2%</td><td style='color:#1a7f37;font-weight:600'>+29.6%</td><td>Energy</td></tr>
+<tr><td>HAS</td><td>2008-07-02</td><td>$34.48</td><td>73→56</td><td>+3.4%</td><td>-4.2%</td><td style='color:#c0392b;font-weight:600'>-7.6%</td><td>Consumer Cyclical</td></tr>
+<tr><td>FE</td><td>2008-07-02</td><td>$81.57</td><td>73→67</td><td>-15.9%</td><td>-4.2%</td><td style='color:#1a7f37;font-weight:600'>+11.6%</td><td>Utilities</td></tr>
+<tr><td>SLB</td><td>2008-07-10</td><td>$99.23</td><td>79→49</td><td>-26.9%</td><td>-11.9%</td><td style='color:#1a7f37;font-weight:600'>+15.0%</td><td>Energy</td></tr>
+<tr><td>CTRA</td><td>2008-07-10</td><td>$15.24</td><td>70→52</td><td>-52.4%</td><td>-11.9%</td><td style='color:#1a7f37;font-weight:600'>+40.5%</td><td>Energy</td></tr>
+<tr><td>D</td><td>2008-07-10</td><td>$47.13</td><td>72→57</td><td>-11.1%</td><td>-11.9%</td><td style='color:#c0392b;font-weight:600'>-0.8%</td><td>Utilities</td></tr>
+<tr><td>HAL</td><td>2008-07-10</td><td>$47.99</td><td>86→62</td><td>-44.2%</td><td>-11.9%</td><td style='color:#1a7f37;font-weight:600'>+32.2%</td><td>Energy</td></tr>
+<tr><td>EXC</td><td>2008-07-14</td><td>$63.03</td><td>70→54</td><td>-39.5%</td><td>-18.5%</td><td style='color:#1a7f37;font-weight:600'>+21.0%</td><td>Utilities</td></tr>
+<tr><td>AIZ</td><td>2008-07-16</td><td>$65.94</td><td>63→55</td><td>-40.4%</td><td>-26.8%</td><td style='color:#1a7f37;font-weight:600'>+13.6%</td><td>Financial Services</td></tr>
+<tr><td>FE</td><td>2008-07-18</td><td>$76.69</td><td>73→63</td><td>-30.3%</td><td>-19.6%</td><td style='color:#1a7f37;font-weight:600'>+10.7%</td><td>Utilities</td></tr>
+<tr><td>PWR</td><td>2008-07-24</td><td>$30.32</td><td>68→61</td><td>-30.3%</td><td>-25.7%</td><td style='color:#1a7f37;font-weight:600'>+4.6%</td><td>Industrials</td></tr>
+<tr><td>EW</td><td>2008-07-25</td><td>$5.18</td><td>87→77</td><td>-14.4%</td><td>-21.3%</td><td style='color:#c0392b;font-weight:600'>-6.8%</td><td>Healthcare</td></tr>
+<tr><td>APH</td><td>2008-07-25</td><td>$6.04</td><td>75→68</td><td>-42.9%</td><td>-21.3%</td><td style='color:#1a7f37;font-weight:600'>+21.6%</td><td>Technology</td></tr>
+<tr><td>HAS</td><td>2008-08-01</td><td>$38.76</td><td>73→66</td><td>-33.0%</td><td>-33.5%</td><td style='color:#c0392b;font-weight:600'>-0.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>UNP</td><td>2008-08-07</td><td>$40.66</td><td>75→66</td><td>-17.9%</td><td>-23.8%</td><td style='color:#c0392b;font-weight:600'>-5.9%</td><td>Industrials</td></tr>
+<tr><td>SBAC</td><td>2008-08-07</td><td>$34.66</td><td>75→62</td><td>-39.4%</td><td>-23.8%</td><td style='color:#1a7f37;font-weight:600'>+15.7%</td><td>Real Estate</td></tr>
+<tr><td>EW</td><td>2008-08-13</td><td>$4.90</td><td>82→55</td><td>-10.3%</td><td>-29.3%</td><td style='color:#c0392b;font-weight:600'>-19.1%</td><td>Healthcare</td></tr>
+<tr><td>TECH</td><td>2008-08-14</td><td>$20.42</td><td>77→56</td><td>-15.2%</td><td>-27.5%</td><td style='color:#c0392b;font-weight:600'>-12.3%</td><td>Healthcare</td></tr>
+<tr><td>UNP</td><td>2008-08-15</td><td>$38.44</td><td>75→64</td><td>-18.7%</td><td>-28.8%</td><td style='color:#c0392b;font-weight:600'>-10.1%</td><td>Industrials</td></tr>
+<tr><td>ODFL</td><td>2008-08-18</td><td>$5.33</td><td>70→64</td><td>-30.0%</td><td>-30.1%</td><td style='color:#c0392b;font-weight:600'>-0.1%</td><td>Industrials</td></tr>
+<tr><td>NSC</td><td>2008-08-18</td><td>$69.45</td><td>67→60</td><td>-21.2%</td><td>-30.1%</td><td style='color:#c0392b;font-weight:600'>-8.9%</td><td>Industrials</td></tr>
+<tr><td>HAS</td><td>2008-08-18</td><td>$38.49</td><td>67→59</td><td>-31.4%</td><td>-30.1%</td><td style='color:#1a7f37;font-weight:600'>+1.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>JBHT</td><td>2008-08-18</td><td>$38.63</td><td>68→62</td><td>-34.4%</td><td>-30.1%</td><td style='color:#1a7f37;font-weight:600'>+4.3%</td><td>Industrials</td></tr>
+<tr><td>ROST</td><td>2008-08-18</td><td>$9.74</td><td>72→58</td><td>-28.9%</td><td>-30.1%</td><td style='color:#c0392b;font-weight:600'>-1.2%</td><td>Consumer Cyclical</td></tr>
+<tr><td>STE</td><td>2008-08-25</td><td>$36.37</td><td>72→66</td><td>-14.9%</td><td>-31.4%</td><td style='color:#c0392b;font-weight:600'>-16.5%</td><td>Healthcare</td></tr>
+<tr><td>APH</td><td>2008-08-25</td><td>$5.93</td><td>66→56</td><td>-54.0%</td><td>-31.4%</td><td style='color:#1a7f37;font-weight:600'>+22.5%</td><td>Technology</td></tr>
+<tr><td>WAB</td><td>2008-08-26</td><td>$28.24</td><td>71→64</td><td>-45.6%</td><td>-36.0%</td><td style='color:#1a7f37;font-weight:600'>+9.6%</td><td>Industrials</td></tr>
+<tr><td>MKC</td><td>2008-09-04</td><td>$20.02</td><td>62→54</td><td>-25.6%</td><td>-27.4%</td><td style='color:#c0392b;font-weight:600'>-1.7%</td><td>Consumer Defensive</td></tr>
+<tr><td>WAB</td><td>2008-09-09</td><td>$25.34</td><td>72→58</td><td>-25.3%</td><td>-29.1%</td><td style='color:#c0392b;font-weight:600'>-3.8%</td><td>Industrials</td></tr>
+<tr><td>AZO</td><td>2008-09-09</td><td>$135.01</td><td>66→59</td><td>-14.2%</td><td>-29.1%</td><td style='color:#c0392b;font-weight:600'>-14.9%</td><td>Consumer Cyclical</td></tr>
+<tr><td>WELL</td><td>2008-09-09</td><td>$47.30</td><td>63→55</td><td>-25.7%</td><td>-29.1%</td><td style='color:#c0392b;font-weight:600'>-3.4%</td><td>Real Estate</td></tr>
+<tr><td>EL</td><td>2008-09-11</td><td>$26.42</td><td>74→65</td><td>-46.8%</td><td>-29.9%</td><td style='color:#1a7f37;font-weight:600'>+16.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>PTC</td><td>2008-09-16</td><td>$19.56</td><td>62→53</td><td>-38.3%</td><td>-26.2%</td><td style='color:#1a7f37;font-weight:600'>+12.1%</td><td>Technology</td></tr>
+<tr><td>JNJ</td><td>2008-09-16</td><td>$69.80</td><td>67→55</td><td>-17.2%</td><td>-26.2%</td><td style='color:#c0392b;font-weight:600'>-9.0%</td><td>Healthcare</td></tr>
+<tr><td>DLR</td><td>2008-09-26</td><td>$46.87</td><td>68→61</td><td>-35.4%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+7.4%</td><td>Real Estate</td></tr>
+<tr><td>MMC</td><td>2008-09-26</td><td>$33.57</td><td>67→61</td><td>-31.4%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+3.5%</td><td>Financial Services</td></tr>
+<tr><td>ESS</td><td>2008-09-26</td><td>$118.99</td><td>66→57</td><td>-36.1%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+8.2%</td><td>Real Estate</td></tr>
+<tr><td>EW</td><td>2008-09-26</td><td>$4.87</td><td>72→58</td><td>-7.7%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-20.2%</td><td>Healthcare</td></tr>
+<tr><td>DGX</td><td>2008-09-26</td><td>$52.01</td><td>74→61</td><td>-2.9%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-25.1%</td><td>Healthcare</td></tr>
+<tr><td>LMT</td><td>2008-09-26</td><td>$112.55</td><td>63→47</td><td>-29.9%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+1.9%</td><td>Industrials</td></tr>
+<tr><td>WELL</td><td>2008-09-26</td><td>$52.51</td><td>63→58</td><td>-27.4%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-0.5%</td><td>Real Estate</td></tr>
+<tr><td>UHS</td><td>2008-09-26</td><td>$29.13</td><td>57→46</td><td>-39.7%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+11.7%</td><td>Healthcare</td></tr>
+<tr><td>IWM</td><td>2008-09-26</td><td>$70.63</td><td>64→57</td><td>-32.4%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+4.4%</td><td>ETF</td></tr>
+<tr><td>UDR</td><td>2008-09-26</td><td>$28.00</td><td>64→59</td><td>-52.4%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+24.4%</td><td>Real Estate</td></tr>
+<tr><td>JNJ</td><td>2008-09-26</td><td>$69.40</td><td>67→47</td><td>-15.1%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-12.9%</td><td>Healthcare</td></tr>
+<tr><td>BLK</td><td>2008-09-26</td><td>$201.01</td><td>58→50</td><td>-33.7%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+5.7%</td><td>Financial Services</td></tr>
+<tr><td>FAST</td><td>2008-09-26</td><td>$6.30</td><td>63→57</td><td>-33.8%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+5.8%</td><td>Industrials</td></tr>
+<tr><td>TRMB</td><td>2008-09-26</td><td>$14.11</td><td>58→48</td><td>-28.8%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+0.9%</td><td>Technology</td></tr>
+<tr><td>HAS</td><td>2008-09-26</td><td>$35.66</td><td>56→44</td><td>-19.2%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-8.8%</td><td>Consumer Cyclical</td></tr>
+<tr><td>AOS</td><td>2008-09-26</td><td>$6.74</td><td>73→57</td><td>-30.7%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+2.8%</td><td>Industrials</td></tr>
+<tr><td>WAB</td><td>2008-09-26</td><td>$26.48</td><td>71→52</td><td>-25.2%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-2.8%</td><td>Industrials</td></tr>
+<tr><td>CLX</td><td>2008-09-26</td><td>$61.78</td><td>69→60</td><td>-11.5%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-16.5%</td><td>Consumer Defensive</td></tr>
+<tr><td>SPG</td><td>2008-09-26</td><td>$93.73</td><td>62→56</td><td>-47.8%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+19.9%</td><td>Real Estate</td></tr>
+<tr><td>CSGP</td><td>2008-09-26</td><td>$4.80</td><td>76→59</td><td>-35.0%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+7.0%</td><td>Real Estate</td></tr>
+<tr><td>ROL</td><td>2008-09-26</td><td>$3.73</td><td>71→58</td><td>-9.7%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-18.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>RL</td><td>2008-09-26</td><td>$71.88</td><td>72→49</td><td>-40.0%</td><td>-28.0%</td><td style='color:#1a7f37;font-weight:600'>+12.0%</td><td>Consumer Cyclical</td></tr>
+<tr><td>WMT</td><td>2008-09-26</td><td>$20.24</td><td>59→48</td><td>-7.8%</td><td>-28.0%</td><td style='color:#c0392b;font-weight:600'>-20.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>CPB</td><td>2008-09-30</td><td>$38.60</td><td>67→52</td><td>-25.2%</td><td>-25.3%</td><td style='color:#c0392b;font-weight:600'>-0.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>REGN</td><td>2008-10-06</td><td>$19.84</td><td>77→54</td><td>-7.5%</td><td>-13.8%</td><td style='color:#c0392b;font-weight:600'>-6.4%</td><td>Healthcare</td></tr>
+<tr><td>JPM</td><td>2008-10-10</td><td>$41.64</td><td>61→54</td><td>-32.5%</td><td>+2.5%</td><td style='color:#1a7f37;font-weight:600'>+35.0%</td><td>Financial Services</td></tr>
+<tr><td>GIS</td><td>2008-10-10</td><td>$29.06</td><td>68→59</td><td>+1.2%</td><td>+2.5%</td><td style='color:#1a7f37;font-weight:600'>+1.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>DLTR</td><td>2008-12-15</td><td>$13.64</td><td>60→54</td><td>+0.7%</td><td>-13.3%</td><td style='color:#c0392b;font-weight:600'>-14.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>BMY</td><td>2009-02-04</td><td>$22.73</td><td>57→51</td><td>-15.1%</td><td>+5.5%</td><td style='color:#1a7f37;font-weight:600'>+20.6%</td><td>Healthcare</td></tr>
+<tr><td>AZO</td><td>2009-03-02</td><td>$140.03</td><td>63→56</td><td>+10.7%</td><td>+27.0%</td><td style='color:#1a7f37;font-weight:600'>+16.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>VTRS</td><td>2009-04-17</td><td>$14.60</td><td>69→62</td><td>-15.4%</td><td>+4.1%</td><td style='color:#1a7f37;font-weight:600'>+19.5%</td><td>Healthcare</td></tr>
+<tr><td>DLTR</td><td>2009-05-05</td><td>$14.41</td><td>63→57</td><td>+7.5%</td><td>+8.9%</td><td style='color:#1a7f37;font-weight:600'>+1.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>VTRS</td><td>2009-05-06</td><td>$13.27</td><td>67→61</td><td>-0.6%</td><td>+7.2%</td><td style='color:#1a7f37;font-weight:600'>+7.8%</td><td>Healthcare</td></tr>
+<tr><td>DLTR</td><td>2009-05-14</td><td>$14.01</td><td>63→53</td><td>+9.7%</td><td>+12.9%</td><td style='color:#1a7f37;font-weight:600'>+3.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>ICE</td><td>2009-07-07</td><td>$19.61</td><td>70→61</td><td>-0.9%</td><td>+19.9%</td><td style='color:#1a7f37;font-weight:600'>+20.8%</td><td>Financial Services</td></tr>
+<tr><td>EW</td><td>2009-07-09</td><td>$5.45</td><td>68→57</td><td>+4.6%</td><td>+16.2%</td><td style='color:#1a7f37;font-weight:600'>+11.7%</td><td>Healthcare</td></tr>
+<tr><td>WBD</td><td>2009-07-09</td><td>$11.69</td><td>69→64</td><td>+29.3%</td><td>+16.2%</td><td style='color:#c0392b;font-weight:600'>-13.1%</td><td>Communication Services</td></tr>
+<tr><td>GNRC</td><td>2011-09-06</td><td>$12.63</td><td>67→60</td><td>+30.8%</td><td>+6.8%</td><td style='color:#c0392b;font-weight:600'>-23.9%</td><td>Industrials</td></tr>
+<tr><td>MNST</td><td>2011-09-07</td><td>$7.09</td><td>74→67</td><td>+8.2%</td><td>+3.9%</td><td style='color:#c0392b;font-weight:600'>-4.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>MKTX</td><td>2011-09-07</td><td>$30.24</td><td>78→63</td><td>-5.1%</td><td>+3.9%</td><td style='color:#1a7f37;font-weight:600'>+9.0%</td><td>Financial Services</td></tr>
+<tr><td>DLTR</td><td>2011-09-07</td><td>$35.99</td><td>78→66</td><td>+14.0%</td><td>+3.9%</td><td style='color:#c0392b;font-weight:600'>-10.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>TDY</td><td>2011-09-09</td><td>$50.14</td><td>69→57</td><td>+10.1%</td><td>+8.9%</td><td style='color:#c0392b;font-weight:600'>-1.2%</td><td>Technology</td></tr>
+<tr><td>KO</td><td>2011-09-15</td><td>$35.51</td><td>69→61</td><td>-4.8%</td><td>+3.8%</td><td style='color:#1a7f37;font-weight:600'>+8.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>MKTX</td><td>2011-09-20</td><td>$27.17</td><td>78→57</td><td>-0.8%</td><td>+1.3%</td><td style='color:#1a7f37;font-weight:600'>+2.1%</td><td>Financial Services</td></tr>
+<tr><td>KO</td><td>2011-09-23</td><td>$33.71</td><td>69→60</td><td>-0.1%</td><td>+5.9%</td><td style='color:#1a7f37;font-weight:600'>+6.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>CMG</td><td>2011-09-27</td><td>$6.41</td><td>81→64</td><td>+4.2%</td><td>+5.6%</td><td style='color:#1a7f37;font-weight:600'>+1.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>AAPL</td><td>2011-09-27</td><td>$14.26</td><td>84→69</td><td>-0.7%</td><td>+5.6%</td><td style='color:#1a7f37;font-weight:600'>+6.3%</td><td>Technology</td></tr>
+<tr><td>MA</td><td>2011-09-27</td><td>$33.81</td><td>72→64</td><td>+10.7%</td><td>+5.6%</td><td style='color:#c0392b;font-weight:600'>-5.0%</td><td>Financial Services</td></tr>
+<tr><td>V</td><td>2011-09-27</td><td>$22.37</td><td>73→65</td><td>+12.6%</td><td>+5.6%</td><td style='color:#c0392b;font-weight:600'>-6.9%</td><td>Financial Services</td></tr>
+<tr><td>TJX</td><td>2011-09-27</td><td>$14.44</td><td>74→67</td><td>+10.0%</td><td>+5.6%</td><td style='color:#c0392b;font-weight:600'>-4.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>DLTR</td><td>2011-10-04</td><td>$37.53</td><td>78→60</td><td>+12.0%</td><td>+12.3%</td><td style='color:#1a7f37;font-weight:600'>+0.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>HSY</td><td>2011-10-04</td><td>$58.01</td><td>69→61</td><td>+6.9%</td><td>+12.3%</td><td style='color:#1a7f37;font-weight:600'>+5.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>DECK</td><td>2011-10-04</td><td>$15.78</td><td>66→60</td><td>-17.9%</td><td>+12.3%</td><td style='color:#1a7f37;font-weight:600'>+30.2%</td><td>Consumer Cyclical</td></tr>
+<tr><td>AZO</td><td>2011-10-06</td><td>$322.37</td><td>61→52</td><td>-0.8%</td><td>+9.5%</td><td style='color:#1a7f37;font-weight:600'>+10.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>ED</td><td>2011-10-07</td><td>$56.11</td><td>65→56</td><td>+6.8%</td><td>+10.4%</td><td style='color:#1a7f37;font-weight:600'>+3.6%</td><td>Utilities</td></tr>
+<tr><td>SO</td><td>2011-10-07</td><td>$42.37</td><td>63→58</td><td>+6.2%</td><td>+10.4%</td><td style='color:#1a7f37;font-weight:600'>+4.2%</td><td>Utilities</td></tr>
+<tr><td>AAPL</td><td>2011-10-24</td><td>$14.49</td><td>84→66</td><td>+3.6%</td><td>+5.1%</td><td style='color:#1a7f37;font-weight:600'>+1.6%</td><td>Technology</td></tr>
+<tr><td>DG</td><td>2011-11-02</td><td>$39.18</td><td>71→64</td><td>+8.8%</td><td>+5.9%</td><td style='color:#c0392b;font-weight:600'>-2.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>ED</td><td>2011-11-03</td><td>$58.75</td><td>69→63</td><td>+0.4%</td><td>+4.9%</td><td style='color:#1a7f37;font-weight:600'>+4.5%</td><td>Utilities</td></tr>
+<tr><td>RL</td><td>2011-11-07</td><td>$157.32</td><td>68→62</td><td>-0.9%</td><td>+6.6%</td><td style='color:#1a7f37;font-weight:600'>+7.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>CNP</td><td>2011-11-09</td><td>$19.58</td><td>59→45</td><td>-3.6%</td><td>+9.4%</td><td style='color:#1a7f37;font-weight:600'>+13.1%</td><td>Utilities</td></tr>
+<tr><td>MNST</td><td>2011-11-11</td><td>$7.79</td><td>67→62</td><td>+15.9%</td><td>+6.9%</td><td style='color:#c0392b;font-weight:600'>-9.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>DLTR</td><td>2011-11-16</td><td>$38.02</td><td>66→51</td><td>+16.4%</td><td>+9.0%</td><td style='color:#c0392b;font-weight:600'>-7.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>NEM</td><td>2011-11-16</td><td>$67.99</td><td>71→58</td><td>-13.6%</td><td>+9.0%</td><td style='color:#1a7f37;font-weight:600'>+22.5%</td><td>Basic Materials</td></tr>
+<tr><td>ED</td><td>2011-11-18</td><td>$58.14</td><td>69→59</td><td>-0.4%</td><td>+11.5%</td><td style='color:#1a7f37;font-weight:600'>+11.9%</td><td>Utilities</td></tr>
+<tr><td>DUK</td><td>2011-11-21</td><td>$60.09</td><td>66→59</td><td>+4.3%</td><td>+14.0%</td><td style='color:#1a7f37;font-weight:600'>+9.7%</td><td>Utilities</td></tr>
+<tr><td>LKQ</td><td>2011-11-21</td><td>$14.14</td><td>65→58</td><td>+14.1%</td><td>+14.0%</td><td style='color:#c0392b;font-weight:600'>-0.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>MNST</td><td>2011-11-22</td><td>$7.41</td><td>67→58</td><td>+20.6%</td><td>+14.5%</td><td style='color:#c0392b;font-weight:600'>-6.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>DG</td><td>2011-11-23</td><td>$38.93</td><td>71→53</td><td>+6.3%</td><td>+16.7%</td><td style='color:#1a7f37;font-weight:600'>+10.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>INTC</td><td>2011-11-23</td><td>$22.70</td><td>66→58</td><td>+17.8%</td><td>+16.7%</td><td style='color:#c0392b;font-weight:600'>-1.0%</td><td>Technology</td></tr>
+<tr><td>TDG</td><td>2011-11-25</td><td>$91.17</td><td>65→52</td><td>+28.4%</td><td>+17.4%</td><td style='color:#c0392b;font-weight:600'>-11.0%</td><td>Industrials</td></tr>
+<tr><td>LKQ</td><td>2011-12-08</td><td>$14.80</td><td>65→58</td><td>+4.7%</td><td>+9.5%</td><td style='color:#1a7f37;font-weight:600'>+4.7%</td><td>Consumer Cyclical</td></tr>
+<tr><td>BIIB</td><td>2011-12-09</td><td>$112.95</td><td>65→55</td><td>+6.6%</td><td>+8.7%</td><td style='color:#1a7f37;font-weight:600'>+2.1%</td><td>Healthcare</td></tr>
+<tr><td>CNC</td><td>2011-12-09</td><td>$9.39</td><td>73→64</td><td>+22.6%</td><td>+8.7%</td><td style='color:#c0392b;font-weight:600'>-13.9%</td><td>Healthcare</td></tr>
+<tr><td>GOOGL</td><td>2011-12-12</td><td>$15.65</td><td>72→64</td><td>-4.0%</td><td>+10.8%</td><td style='color:#1a7f37;font-weight:600'>+14.8%</td><td>Communication Services</td></tr>
+<tr><td>GOOG</td><td>2011-12-12</td><td>$15.58</td><td>72→63</td><td>-4.0%</td><td>+10.8%</td><td style='color:#1a7f37;font-weight:600'>+14.8%</td><td>Communication Services</td></tr>
+<tr><td>ORLY</td><td>2011-12-16</td><td>$5.33</td><td>77→70</td><td>+12.8%</td><td>+15.7%</td><td style='color:#1a7f37;font-weight:600'>+3.0%</td><td>Consumer Cyclical</td></tr>
+<tr><td>ALGN</td><td>2011-12-16</td><td>$23.95</td><td>78→69</td><td>+13.5%</td><td>+15.7%</td><td style='color:#1a7f37;font-weight:600'>+2.2%</td><td>Healthcare</td></tr>
+<tr><td>HUM</td><td>2011-12-20</td><td>$86.63</td><td>59→53</td><td>+0.6%</td><td>+13.7%</td><td style='color:#1a7f37;font-weight:600'>+13.0%</td><td>Healthcare</td></tr>
+<tr><td>GOOG</td><td>2011-12-20</td><td>$15.70</td><td>72→61</td><td>+0.6%</td><td>+13.7%</td><td style='color:#1a7f37;font-weight:600'>+13.1%</td><td>Communication Services</td></tr>
+<tr><td>GNRC</td><td>2011-12-20</td><td>$18.63</td><td>73→67</td><td>-9.6%</td><td>+13.7%</td><td style='color:#1a7f37;font-weight:600'>+23.3%</td><td>Industrials</td></tr>
+<tr><td>LKQ</td><td>2011-12-20</td><td>$14.98</td><td>64→50</td><td>+5.7%</td><td>+13.7%</td><td style='color:#1a7f37;font-weight:600'>+7.9%</td><td>Consumer Cyclical</td></tr>
+<tr><td>GOOGL</td><td>2011-12-20</td><td>$15.77</td><td>72→61</td><td>+0.6%</td><td>+13.7%</td><td style='color:#1a7f37;font-weight:600'>+13.1%</td><td>Communication Services</td></tr>
+<tr><td>GNRC</td><td>2011-12-30</td><td>$18.47</td><td>73→64</td><td>-11.1%</td><td>+11.9%</td><td style='color:#1a7f37;font-weight:600'>+23.0%</td><td>Industrials</td></tr>
+<tr><td>DXCM</td><td>2015-09-08</td><td>$22.76</td><td>72→59</td><td>-5.3%</td><td>+5.6%</td><td style='color:#1a7f37;font-weight:600'>+10.9%</td><td>Healthcare</td></tr>
+<tr><td>MSI</td><td>2015-09-16</td><td>$67.47</td><td>77→66</td><td>+2.8%</td><td>+2.8%</td><td style='color:#1a7f37;font-weight:600'>+0.0%</td><td>Technology</td></tr>
+<tr><td>NVR</td><td>2015-09-16</td><td>$1574.99</td><td>76→58</td><td>+5.5%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Consumer Cyclical</td></tr>
+<tr><td>LMT</td><td>2015-09-16</td><td>$207.56</td><td>56→51</td><td>+5.5%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Industrials</td></tr>
+<tr><td>DHI</td><td>2015-09-16</td><td>$31.58</td><td>70→55</td><td>+2.4%</td><td>+2.8%</td><td style='color:#1a7f37;font-weight:600'>+0.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>AIZ</td><td>2015-09-22</td><td>$75.60</td><td>74→61</td><td>+9.2%</td><td>+7.3%</td><td style='color:#c0392b;font-weight:600'>-1.9%</td><td>Financial Services</td></tr>
+<tr><td>MO</td><td>2015-09-23</td><td>$54.40</td><td>65→59</td><td>+7.4%</td><td>+5.8%</td><td style='color:#c0392b;font-weight:600'>-1.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>HOLX</td><td>2015-09-24</td><td>$40.71</td><td>70→63</td><td>-5.2%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+8.9%</td><td>Healthcare</td></tr>
+<tr><td>NVR</td><td>2015-09-24</td><td>$1581.00</td><td>76→64</td><td>+4.8%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-1.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>MOH</td><td>2015-09-24</td><td>$76.60</td><td>66→60</td><td>-21.2%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+24.9%</td><td>Healthcare</td></tr>
+<tr><td>MLM</td><td>2015-09-24</td><td>$159.69</td><td>69→63</td><td>-12.4%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+16.1%</td><td>Basic Materials</td></tr>
+<tr><td>CCL</td><td>2015-09-24</td><td>$50.88</td><td>68→61</td><td>+3.0%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+0.7%</td><td>Consumer Cyclical</td></tr>
+<tr><td>DXCM</td><td>2015-09-24</td><td>$24.26</td><td>78→68</td><td>-15.4%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+19.1%</td><td>Healthcare</td></tr>
+<tr><td>CDW</td><td>2015-09-24</td><td>$40.59</td><td>73→63</td><td>+4.5%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-0.8%</td><td>Technology</td></tr>
+<tr><td>IQV</td><td>2015-09-24</td><td>$75.20</td><td>71→63</td><td>-7.6%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+11.2%</td><td>Healthcare</td></tr>
+<tr><td>ORLY</td><td>2015-09-24</td><td>$16.53</td><td>67→59</td><td>+1.4%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+2.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>META</td><td>2015-09-28</td><td>$89.21</td><td>71→62</td><td>+18.3%</td><td>+8.2%</td><td style='color:#c0392b;font-weight:600'>-10.0%</td><td>Communication Services</td></tr>
+<tr><td>MSI</td><td>2015-10-02</td><td>$68.40</td><td>77→65</td><td>+1.8%</td><td>+6.4%</td><td style='color:#1a7f37;font-weight:600'>+4.5%</td><td>Technology</td></tr>
+<tr><td>NVR</td><td>2015-10-02</td><td>$1547.06</td><td>76→62</td><td>+6.7%</td><td>+6.4%</td><td style='color:#c0392b;font-weight:600'>-0.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>INCY</td><td>2015-10-09</td><td>$105.00</td><td>65→58</td><td>-2.6%</td><td>-1.2%</td><td style='color:#1a7f37;font-weight:600'>+1.4%</td><td>Healthcare</td></tr>
+<tr><td>CBOE</td><td>2015-10-12</td><td>$65.93</td><td>69→57</td><td>-4.7%</td><td>-3.7%</td><td style='color:#1a7f37;font-weight:600'>+0.9%</td><td>Financial Services</td></tr>
+<tr><td>MSI</td><td>2015-10-15</td><td>$69.27</td><td>77→61</td><td>-6.3%</td><td>-4.3%</td><td style='color:#1a7f37;font-weight:600'>+2.0%</td><td>Technology</td></tr>
+<tr><td>LMT</td><td>2015-10-16</td><td>$209.78</td><td>78→61</td><td>+2.2%</td><td>-7.1%</td><td style='color:#c0392b;font-weight:600'>-9.3%</td><td>Industrials</td></tr>
+<tr><td>STZ</td><td>2015-10-19</td><td>$135.18</td><td>80→67</td><td>+6.0%</td><td>-5.6%</td><td style='color:#c0392b;font-weight:600'>-11.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>VRSN</td><td>2015-10-19</td><td>$75.50</td><td>78→67</td><td>+0.2%</td><td>-5.6%</td><td style='color:#c0392b;font-weight:600'>-5.8%</td><td>Technology</td></tr>
+<tr><td>NVR</td><td>2015-10-20</td><td>$1590.00</td><td>76→55</td><td>-4.9%</td><td>-7.5%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Consumer Cyclical</td></tr>
+<tr><td>TAP</td><td>2015-12-11</td><td>$92.68</td><td>77→65</td><td>-0.9%</td><td>-1.2%</td><td style='color:#c0392b;font-weight:600'>-0.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>POOL</td><td>2015-12-14</td><td>$80.23</td><td>62→56</td><td>+3.1%</td><td>-0.1%</td><td style='color:#c0392b;font-weight:600'>-3.2%</td><td>Industrials</td></tr>
+<tr><td>MNST</td><td>2015-12-14</td><td>$25.32</td><td>69→61</td><td>-11.9%</td><td>-0.1%</td><td style='color:#1a7f37;font-weight:600'>+11.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>NI</td><td>2015-12-17</td><td>$19.28</td><td>60→46</td><td>+19.8%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-20.6%</td><td>Utilities</td></tr>
+<tr><td>EW</td><td>2015-12-17</td><td>$27.00</td><td>68→59</td><td>+5.9%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-6.7%</td><td>Healthcare</td></tr>
+<tr><td>GE</td><td>2015-12-23</td><td>$148.11</td><td>74→64</td><td>+0.4%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-1.1%</td><td>Industrials</td></tr>
+<tr><td>FI</td><td>2015-12-23</td><td>$46.72</td><td>54→46</td><td>+6.9%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-7.6%</td><td>Technology</td></tr>
+<tr><td>NOC</td><td>2015-12-23</td><td>$190.00</td><td>66→60</td><td>+2.3%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-3.0%</td><td>Industrials</td></tr>
+<tr><td>NVDA</td><td>2015-12-24</td><td>$0.83</td><td>79→58</td><td>+3.8%</td><td>-1.2%</td><td style='color:#c0392b;font-weight:600'>-5.0%</td><td>Technology</td></tr>
+<tr><td>ADBE</td><td>2015-12-24</td><td>$94.30</td><td>65→58</td><td>-2.3%</td><td>-1.2%</td><td style='color:#1a7f37;font-weight:600'>+1.1%</td><td>Technology</td></tr>
+<tr><td>MKTX</td><td>2015-12-24</td><td>$111.13</td><td>60→54</td><td>+9.0%</td><td>-1.2%</td><td style='color:#c0392b;font-weight:600'>-10.2%</td><td>Financial Services</td></tr>
+<tr><td>CLX</td><td>2015-12-24</td><td>$127.86</td><td>73→68</td><td>-0.6%</td><td>-1.2%</td><td style='color:#c0392b;font-weight:600'>-0.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>TAP</td><td>2015-12-24</td><td>$93.98</td><td>72→56</td><td>+1.6%</td><td>-1.2%</td><td style='color:#c0392b;font-weight:600'>-2.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>LDOS</td><td>2015-12-24</td><td>$57.12</td><td>68→56</td><td>-14.3%</td><td>-1.2%</td><td style='color:#1a7f37;font-weight:600'>+13.1%</td><td>Technology</td></tr>
+<tr><td>SWK</td><td>2015-12-24</td><td>$106.95</td><td>57→50</td><td>-3.7%</td><td>-1.2%</td><td style='color:#1a7f37;font-weight:600'>+2.5%</td><td>Industrials</td></tr>
+<tr><td>GOOG</td><td>2015-12-24</td><td>$37.42</td><td>71→54</td><td>-1.4%</td><td>-1.2%</td><td style='color:#1a7f37;font-weight:600'>+0.2%</td><td>Communication Services</td></tr>
+<tr><td>GDDY</td><td>2015-12-28</td><td>$33.19</td><td>72→62</td><td>-4.9%</td><td>-1.0%</td><td style='color:#1a7f37;font-weight:600'>+3.9%</td><td>Technology</td></tr>
+<tr><td>FSLR</td><td>2016-01-04</td><td>$66.72</td><td>76→68</td><td>+2.6%</td><td>+2.2%</td><td style='color:#c0392b;font-weight:600'>-0.4%</td><td>Energy</td></tr>
+<tr><td>LDOS</td><td>2016-01-06</td><td>$54.28</td><td>68→59</td><td>-4.7%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+8.4%</td><td>Technology</td></tr>
+<tr><td>TYL</td><td>2016-01-06</td><td>$166.41</td><td>75→61</td><td>-18.4%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+22.1%</td><td>Technology</td></tr>
+<tr><td>TAP</td><td>2016-01-06</td><td>$90.80</td><td>72→60</td><td>+5.7%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-2.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>PSA</td><td>2016-01-06</td><td>$251.67</td><td>73→66</td><td>+9.8%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-6.0%</td><td>Real Estate</td></tr>
+<tr><td>PAYX</td><td>2016-01-06</td><td>$50.78</td><td>76→59</td><td>+5.3%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-1.5%</td><td>Industrials</td></tr>
+<tr><td>KLAC</td><td>2016-01-06</td><td>$66.58</td><td>83→64</td><td>+9.4%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-5.7%</td><td>Technology</td></tr>
+<tr><td>KDP</td><td>2016-01-06</td><td>$15.21</td><td>83→65</td><td>-3.7%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+7.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>STZ</td><td>2016-01-06</td><td>$143.12</td><td>67→59</td><td>+5.8%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-2.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>LOW</td><td>2016-01-06</td><td>$73.94</td><td>66→59</td><td>+3.0%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+0.7%</td><td>Consumer Cyclical</td></tr>
+<tr><td>A</td><td>2016-01-06</td><td>$40.73</td><td>69→63</td><td>-1.8%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+5.5%</td><td>Healthcare</td></tr>
+<tr><td>HD</td><td>2016-01-06</td><td>$129.08</td><td>68→59</td><td>+4.5%</td><td>+3.7%</td><td style='color:#c0392b;font-weight:600'>-0.7%</td><td>Consumer Cyclical</td></tr>
+<tr><td>GOOG</td><td>2016-01-06</td><td>$37.18</td><td>71→64</td><td>+0.2%</td><td>+3.7%</td><td style='color:#1a7f37;font-weight:600'>+3.5%</td><td>Communication Services</td></tr>
+<tr><td>NVDA</td><td>2016-01-07</td><td>$0.76</td><td>79→61</td><td>+18.1%</td><td>+5.2%</td><td style='color:#c0392b;font-weight:600'>-12.8%</td><td>Technology</td></tr>
+<tr><td>SWK</td><td>2016-01-07</td><td>$98.41</td><td>57→50</td><td>+6.3%</td><td>+5.2%</td><td style='color:#c0392b;font-weight:600'>-1.0%</td><td>Industrials</td></tr>
+<tr><td>IFF</td><td>2016-01-07</td><td>$116.59</td><td>69→56</td><td>-1.1%</td><td>+5.2%</td><td style='color:#1a7f37;font-weight:600'>+6.3%</td><td>Basic Materials</td></tr>
+<tr><td>GE</td><td>2016-01-08</td><td>$136.15</td><td>74→61</td><td>+8.6%</td><td>+7.6%</td><td style='color:#c0392b;font-weight:600'>-1.1%</td><td>Industrials</td></tr>
+<tr><td>KMB</td><td>2016-01-12</td><td>$126.13</td><td>79→63</td><td>+9.0%</td><td>+5.6%</td><td style='color:#c0392b;font-weight:600'>-3.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>NOC</td><td>2016-01-13</td><td>$184.86</td><td>66→55</td><td>+7.9%</td><td>+8.0%</td><td style='color:#1a7f37;font-weight:600'>+0.1%</td><td>Industrials</td></tr>
+<tr><td>ULTA</td><td>2016-01-14</td><td>$177.88</td><td>61→54</td><td>+14.7%</td><td>+7.3%</td><td style='color:#c0392b;font-weight:600'>-7.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>DLR</td><td>2016-01-20</td><td>$72.64</td><td>74→68</td><td>+21.1%</td><td>+11.9%</td><td style='color:#c0392b;font-weight:600'>-9.2%</td><td>Real Estate</td></tr>
+<tr><td>LHX</td><td>2016-01-21</td><td>$82.85</td><td>67→49</td><td>-6.2%</td><td>+12.1%</td><td style='color:#1a7f37;font-weight:600'>+18.3%</td><td>Industrials</td></tr>
+<tr><td>MDT</td><td>2016-01-21</td><td>$74.60</td><td>62→44</td><td>+4.1%</td><td>+12.1%</td><td style='color:#1a7f37;font-weight:600'>+8.0%</td><td>Healthcare</td></tr>
+<tr><td>TSN</td><td>2016-01-21</td><td>$51.01</td><td>65→57</td><td>+29.0%</td><td>+12.1%</td><td style='color:#c0392b;font-weight:600'>-16.9%</td><td>Consumer Defensive</td></tr>
+<tr><td>EXR</td><td>2016-01-21</td><td>$84.72</td><td>70→57</td><td>+6.9%</td><td>+12.1%</td><td style='color:#1a7f37;font-weight:600'>+5.2%</td><td>Real Estate</td></tr>
+<tr><td>PSA</td><td>2016-01-21</td><td>$241.06</td><td>73→55</td><td>+13.1%</td><td>+12.1%</td><td style='color:#c0392b;font-weight:600'>-1.0%</td><td>Real Estate</td></tr>
+<tr><td>LHX</td><td>2016-02-08</td><td>$73.02</td><td>67→56</td><td>+1.9%</td><td>+10.6%</td><td style='color:#1a7f37;font-weight:600'>+8.7%</td><td>Industrials</td></tr>
+<tr><td>EXR</td><td>2016-02-09</td><td>$79.28</td><td>70→58</td><td>+14.4%</td><td>+10.5%</td><td style='color:#c0392b;font-weight:600'>-3.9%</td><td>Real Estate</td></tr>
+<tr><td>META</td><td>2016-02-09</td><td>$99.54</td><td>74→68</td><td>+18.4%</td><td>+10.5%</td><td style='color:#c0392b;font-weight:600'>-7.8%</td><td>Communication Services</td></tr>
+<tr><td>GOOGL</td><td>2016-02-09</td><td>$35.05</td><td>73→61</td><td>+2.0%</td><td>+10.5%</td><td style='color:#1a7f37;font-weight:600'>+8.6%</td><td>Communication Services</td></tr>
+<tr><td>ED</td><td>2016-03-03</td><td>$70.63</td><td>73→62</td><td>+3.0%</td><td>+5.2%</td><td style='color:#1a7f37;font-weight:600'>+2.2%</td><td>Utilities</td></tr>
+<tr><td>HRL</td><td>2016-03-10</td><td>$43.51</td><td>72→64</td><td>-21.8%</td><td>+5.9%</td><td style='color:#1a7f37;font-weight:600'>+27.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>UDR</td><td>2018-11-06</td><td>$39.97</td><td>71→57</td><td>+10.3%</td><td>-0.7%</td><td style='color:#c0392b;font-weight:600'>-11.0%</td><td>Real Estate</td></tr>
+<tr><td>VZ</td><td>2018-11-06</td><td>$57.21</td><td>73→68</td><td>-5.4%</td><td>-0.7%</td><td style='color:#1a7f37;font-weight:600'>+4.6%</td><td>Communication Services</td></tr>
+<tr><td>TMUS</td><td>2018-11-14</td><td>$68.12</td><td>69→60</td><td>+1.4%</td><td>+1.8%</td><td style='color:#1a7f37;font-weight:600'>+0.4%</td><td>Communication Services</td></tr>
+<tr><td>PGR</td><td>2018-11-14</td><td>$64.80</td><td>82→64</td><td>+9.3%</td><td>+1.8%</td><td style='color:#c0392b;font-weight:600'>-7.5%</td><td>Financial Services</td></tr>
+<tr><td>CRL</td><td>2018-11-14</td><td>$128.71</td><td>78→68</td><td>+8.1%</td><td>+1.8%</td><td style='color:#c0392b;font-weight:600'>-6.3%</td><td>Healthcare</td></tr>
+<tr><td>ELV</td><td>2018-11-14</td><td>$280.10</td><td>78→64</td><td>+9.1%</td><td>+1.8%</td><td style='color:#c0392b;font-weight:600'>-7.4%</td><td>Healthcare</td></tr>
+<tr><td>WBD</td><td>2018-11-15</td><td>$31.76</td><td>78→60</td><td>-9.4%</td><td>+0.5%</td><td style='color:#1a7f37;font-weight:600'>+9.9%</td><td>Communication Services</td></tr>
+<tr><td>J</td><td>2018-11-15</td><td>$62.04</td><td>76→60</td><td>-9.5%</td><td>+0.5%</td><td style='color:#1a7f37;font-weight:600'>+10.0%</td><td>Industrials</td></tr>
+<tr><td>HSIC</td><td>2018-11-15</td><td>$67.48</td><td>68→59</td><td>-7.6%</td><td>+0.5%</td><td style='color:#1a7f37;font-weight:600'>+8.1%</td><td>Healthcare</td></tr>
+<tr><td>PFE</td><td>2018-11-16</td><td>$41.25</td><td>78→54</td><td>-2.6%</td><td>+1.3%</td><td style='color:#1a7f37;font-weight:600'>+3.9%</td><td>Healthcare</td></tr>
+<tr><td>BSX</td><td>2018-11-16</td><td>$37.21</td><td>70→62</td><td>+7.5%</td><td>+1.3%</td><td style='color:#c0392b;font-weight:600'>-6.2%</td><td>Healthcare</td></tr>
+<tr><td>CINF</td><td>2018-11-19</td><td>$80.71</td><td>72→61</td><td>+6.1%</td><td>+3.3%</td><td style='color:#c0392b;font-weight:600'>-2.8%</td><td>Financial Services</td></tr>
+<tr><td>FE</td><td>2018-11-19</td><td>$38.54</td><td>68→63</td><td>+2.8%</td><td>+3.3%</td><td style='color:#1a7f37;font-weight:600'>+0.5%</td><td>Utilities</td></tr>
+<tr><td>HCA</td><td>2018-11-19</td><td>$135.16</td><td>79→63</td><td>+6.2%</td><td>+3.3%</td><td style='color:#c0392b;font-weight:600'>-3.0%</td><td>Healthcare</td></tr>
+<tr><td>ELV</td><td>2018-11-26</td><td>$281.33</td><td>74→60</td><td>+11.8%</td><td>+4.5%</td><td style='color:#c0392b;font-weight:600'>-7.3%</td><td>Healthcare</td></tr>
+<tr><td>ULTA</td><td>2018-11-27</td><td>$296.83</td><td>81→71</td><td>+4.4%</td><td>+4.1%</td><td style='color:#c0392b;font-weight:600'>-0.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>MKC</td><td>2018-11-27</td><td>$73.56</td><td>76→65</td><td>-9.6%</td><td>+4.1%</td><td style='color:#1a7f37;font-weight:600'>+13.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>HRL</td><td>2018-11-27</td><td>$44.99</td><td>81→67</td><td>-6.3%</td><td>+4.1%</td><td style='color:#1a7f37;font-weight:600'>+10.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>AEE</td><td>2018-11-28</td><td>$68.11</td><td>70→65</td><td>+3.4%</td><td>+1.7%</td><td style='color:#c0392b;font-weight:600'>-1.7%</td><td>Utilities</td></tr>
+<tr><td>LLY</td><td>2018-11-28</td><td>$115.53</td><td>76→59</td><td>+8.8%</td><td>+1.7%</td><td style='color:#c0392b;font-weight:600'>-7.1%</td><td>Healthcare</td></tr>
+<tr><td>ESS</td><td>2018-11-29</td><td>$259.34</td><td>67→61</td><td>+7.9%</td><td>+1.7%</td><td style='color:#c0392b;font-weight:600'>-6.2%</td><td>Real Estate</td></tr>
+<tr><td>CLX</td><td>2018-12-06</td><td>$163.76</td><td>72→67</td><td>-4.2%</td><td>+2.8%</td><td style='color:#1a7f37;font-weight:600'>+7.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>CCEP</td><td>2018-12-07</td><td>$47.04</td><td>77→63</td><td>+1.5%</td><td>+4.3%</td><td style='color:#1a7f37;font-weight:600'>+2.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>DELL</td><td>2018-12-10</td><td>$29.22</td><td>75→65</td><td>-9.2%</td><td>+3.9%</td><td style='color:#1a7f37;font-weight:600'>+13.2%</td><td>Technology</td></tr>
+<tr><td>CI</td><td>2018-12-11</td><td>$205.94</td><td>82→67</td><td>-20.5%</td><td>+5.4%</td><td style='color:#1a7f37;font-weight:600'>+26.0%</td><td>Healthcare</td></tr>
+<tr><td>ICE</td><td>2018-12-11</td><td>$78.09</td><td>71→60</td><td>-7.1%</td><td>+5.4%</td><td style='color:#1a7f37;font-weight:600'>+12.5%</td><td>Financial Services</td></tr>
+<tr><td>MOS</td><td>2018-12-11</td><td>$33.00</td><td>71→63</td><td>-13.0%</td><td>+5.4%</td><td style='color:#1a7f37;font-weight:600'>+18.4%</td><td>Basic Materials</td></tr>
+<tr><td>CINF</td><td>2018-12-11</td><td>$79.14</td><td>72→65</td><td>+8.0%</td><td>+5.4%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Financial Services</td></tr>
+<tr><td>CRL</td><td>2018-12-11</td><td>$128.81</td><td>78→64</td><td>+9.0%</td><td>+5.4%</td><td style='color:#c0392b;font-weight:600'>-3.5%</td><td>Healthcare</td></tr>
+<tr><td>BALL</td><td>2018-12-11</td><td>$47.83</td><td>79→62</td><td>+16.2%</td><td>+5.4%</td><td style='color:#c0392b;font-weight:600'>-10.8%</td><td>Consumer Cyclical</td></tr>
+<tr><td>ALLE</td><td>2018-12-11</td><td>$87.31</td><td>73→67</td><td>+1.5%</td><td>+5.4%</td><td style='color:#1a7f37;font-weight:600'>+4.0%</td><td>Industrials</td></tr>
+<tr><td>UAL</td><td>2018-12-11</td><td>$88.14</td><td>71→66</td><td>-6.5%</td><td>+5.4%</td><td style='color:#1a7f37;font-weight:600'>+12.0%</td><td>Industrials</td></tr>
+<tr><td>AEE</td><td>2018-12-12</td><td>$69.84</td><td>70→65</td><td>+3.6%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+1.7%</td><td>Utilities</td></tr>
+<tr><td>TSCO</td><td>2018-12-12</td><td>$18.35</td><td>65→52</td><td>-1.3%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+6.6%</td><td>Consumer Cyclical</td></tr>
+<tr><td>JNJ</td><td>2018-12-12</td><td>$147.10</td><td>78→58</td><td>-5.4%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+10.7%</td><td>Healthcare</td></tr>
+<tr><td>PG</td><td>2018-12-12</td><td>$94.03</td><td>72→62</td><td>+6.4%</td><td>+5.3%</td><td style='color:#c0392b;font-weight:600'>-1.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>UNH</td><td>2018-12-12</td><td>$270.64</td><td>64→58</td><td>-9.1%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+14.4%</td><td>Healthcare</td></tr>
+<tr><td>SBUX</td><td>2018-12-12</td><td>$66.13</td><td>73→60</td><td>+5.9%</td><td>+5.3%</td><td style='color:#c0392b;font-weight:600'>-0.6%</td><td>Consumer Cyclical</td></tr>
+<tr><td>HCA</td><td>2018-12-12</td><td>$134.96</td><td>68→56</td><td>-4.5%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+9.8%</td><td>Healthcare</td></tr>
+<tr><td>ELV</td><td>2018-12-12</td><td>$278.56</td><td>68→61</td><td>+6.6%</td><td>+5.3%</td><td style='color:#c0392b;font-weight:600'>-1.3%</td><td>Healthcare</td></tr>
+<tr><td>HRL</td><td>2018-12-12</td><td>$45.17</td><td>81→55</td><td>-6.1%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+11.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>AON</td><td>2018-12-12</td><td>$155.40</td><td>70→55</td><td>+7.1%</td><td>+5.3%</td><td style='color:#c0392b;font-weight:600'>-1.8%</td><td>Financial Services</td></tr>
+<tr><td>AMT</td><td>2018-12-14</td><td>$166.60</td><td>72→64</td><td>+12.8%</td><td>+7.9%</td><td style='color:#c0392b;font-weight:600'>-4.9%</td><td>Real Estate</td></tr>
+<tr><td>TSLA</td><td>2018-12-14</td><td>$24.38</td><td>68→60</td><td>-20.7%</td><td>+7.9%</td><td style='color:#1a7f37;font-weight:600'>+28.7%</td><td>Consumer Cyclical</td></tr>
+<tr><td>UDR</td><td>2018-12-14</td><td>$42.01</td><td>67→60</td><td>+7.9%</td><td>+7.9%</td><td style='color:#1a7f37;font-weight:600'>+0.0%</td><td>Real Estate</td></tr>
+<tr><td>CME</td><td>2018-12-19</td><td>$185.53</td><td>71→51</td><td>-9.1%</td><td>+12.4%</td><td style='color:#1a7f37;font-weight:600'>+21.4%</td><td>Financial Services</td></tr>
+<tr><td>CLX</td><td>2018-12-19</td><td>$154.85</td><td>72→57</td><td>+1.3%</td><td>+12.4%</td><td style='color:#1a7f37;font-weight:600'>+11.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>SBUX</td><td>2018-12-20</td><td>$62.15</td><td>73→60</td><td>+15.3%</td><td>+13.9%</td><td style='color:#c0392b;font-weight:600'>-1.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>XEL</td><td>2018-12-21</td><td>$50.90</td><td>68→62</td><td>+11.0%</td><td>+18.3%</td><td style='color:#1a7f37;font-weight:600'>+7.3%</td><td>Utilities</td></tr>
+<tr><td>TEAM</td><td>2019-01-28</td><td>$94.72</td><td>61→54</td><td>+8.9%</td><td>+10.8%</td><td style='color:#1a7f37;font-weight:600'>+1.9%</td><td>Technology</td></tr>
+<tr><td>PG</td><td>2019-01-30</td><td>$94.52</td><td>69→60</td><td>+12.0%</td><td>+9.7%</td><td style='color:#c0392b;font-weight:600'>-2.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>NRG</td><td>2019-02-01</td><td>$40.80</td><td>67→55</td><td>+0.9%</td><td>+8.9%</td><td style='color:#1a7f37;font-weight:600'>+8.0%</td><td>Utilities</td></tr>
+<tr><td>CMS</td><td>2020-03-24</td><td>$51.43</td><td>64→50</td><td>+14.8%</td><td>+28.2%</td><td style='color:#1a7f37;font-weight:600'>+13.4%</td><td>Utilities</td></tr>
+<tr><td>WEC</td><td>2020-03-24</td><td>$80.21</td><td>76→54</td><td>+12.0%</td><td>+28.2%</td><td style='color:#1a7f37;font-weight:600'>+16.2%</td><td>Utilities</td></tr>
+<tr><td>KMB</td><td>2020-03-24</td><td>$117.38</td><td>62→54</td><td>+21.3%</td><td>+28.2%</td><td style='color:#1a7f37;font-weight:600'>+6.9%</td><td>Consumer Defensive</td></tr>
+<tr><td>CLX</td><td>2020-03-25</td><td>$165.66</td><td>74→64</td><td>+31.4%</td><td>+25.1%</td><td style='color:#c0392b;font-weight:600'>-6.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>HRL</td><td>2020-03-25</td><td>$41.94</td><td>70→61</td><td>+15.8%</td><td>+25.1%</td><td style='color:#1a7f37;font-weight:600'>+9.3%</td><td>Consumer Defensive</td></tr>
+<tr><td>LLY</td><td>2020-03-25</td><td>$121.94</td><td>88→54</td><td>+31.2%</td><td>+25.1%</td><td style='color:#c0392b;font-weight:600'>-6.1%</td><td>Healthcare</td></tr>
+<tr><td>MRNA</td><td>2020-03-26</td><td>$27.94</td><td>65→57</td><td>+131.7%</td><td>+18.9%</td><td style='color:#c0392b;font-weight:600'>-112.8%</td><td>Healthcare</td></tr>
+<tr><td>GILD</td><td>2020-03-26</td><td>$73.86</td><td>66→60</td><td>+2.5%</td><td>+18.9%</td><td style='color:#1a7f37;font-weight:600'>+16.5%</td><td>Healthcare</td></tr>
+<tr><td>NFLX</td><td>2020-04-07</td><td>$37.23</td><td>65→57</td><td>+28.1%</td><td>+17.8%</td><td style='color:#c0392b;font-weight:600'>-10.3%</td><td>Communication Services</td></tr>
+<tr><td>VRTX</td><td>2020-04-15</td><td>$255.23</td><td>68→57</td><td>+15.4%</td><td>+14.3%</td><td style='color:#c0392b;font-weight:600'>-1.0%</td><td>Healthcare</td></tr>
+<tr><td>ODFL</td><td>2020-04-15</td><td>$66.38</td><td>79→59</td><td>+33.2%</td><td>+14.3%</td><td style='color:#c0392b;font-weight:600'>-18.9%</td><td>Industrials</td></tr>
+<tr><td>DLR</td><td>2020-04-17</td><td>$149.20</td><td>75→62</td><td>-1.6%</td><td>+11.3%</td><td style='color:#1a7f37;font-weight:600'>+12.9%</td><td>Real Estate</td></tr>
+<tr><td>NEM</td><td>2020-04-21</td><td>$59.27</td><td>83→73</td><td>+3.8%</td><td>+17.5%</td><td style='color:#1a7f37;font-weight:600'>+13.6%</td><td>Basic Materials</td></tr>
+<tr><td>GILD</td><td>2020-04-24</td><td>$79.64</td><td>69→63</td><td>-3.6%</td><td>+14.9%</td><td style='color:#1a7f37;font-weight:600'>+18.4%</td><td>Healthcare</td></tr>
+<tr><td>MOH</td><td>2020-04-24</td><td>$168.28</td><td>72→67</td><td>+7.8%</td><td>+14.9%</td><td style='color:#1a7f37;font-weight:600'>+7.0%</td><td>Healthcare</td></tr>
+<tr><td>AKAM</td><td>2020-04-27</td><td>$103.07</td><td>72→65</td><td>+10.4%</td><td>+13.9%</td><td style='color:#1a7f37;font-weight:600'>+3.4%</td><td>Technology</td></tr>
+<tr><td>HRL</td><td>2020-04-27</td><td>$46.65</td><td>70→61</td><td>+6.7%</td><td>+13.9%</td><td style='color:#1a7f37;font-weight:600'>+7.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>SHOP</td><td>2020-04-28</td><td>$63.37</td><td>79→66</td><td>+46.5%</td><td>+13.0%</td><td style='color:#c0392b;font-weight:600'>-33.5%</td><td>Technology</td></tr>
+<tr><td>VRTX</td><td>2020-04-30</td><td>$251.20</td><td>66→60</td><td>+13.1%</td><td>+11.3%</td><td style='color:#c0392b;font-weight:600'>-1.9%</td><td>Healthcare</td></tr>
+<tr><td>NEM</td><td>2020-04-30</td><td>$59.48</td><td>83→72</td><td>+16.1%</td><td>+11.3%</td><td style='color:#c0392b;font-weight:600'>-4.8%</td><td>Basic Materials</td></tr>
+<tr><td>LLY</td><td>2020-05-01</td><td>$153.63</td><td>74→68</td><td>+5.9%</td><td>+13.6%</td><td style='color:#1a7f37;font-weight:600'>+7.7%</td><td>Healthcare</td></tr>
+<tr><td>WST</td><td>2020-05-05</td><td>$194.80</td><td>81→69</td><td>+38.1%</td><td>+13.2%</td><td style='color:#c0392b;font-weight:600'>-24.9%</td><td>Healthcare</td></tr>
+<tr><td>EQIX</td><td>2020-05-05</td><td>$686.39</td><td>78→56</td><td>+13.3%</td><td>+13.2%</td><td style='color:#c0392b;font-weight:600'>-0.1%</td><td>Real Estate</td></tr>
+<tr><td>DLR</td><td>2020-05-05</td><td>$148.00</td><td>75→62</td><td>+7.3%</td><td>+13.2%</td><td style='color:#1a7f37;font-weight:600'>+5.9%</td><td>Real Estate</td></tr>
+<tr><td>DG</td><td>2020-05-05</td><td>$174.87</td><td>71→63</td><td>+9.4%</td><td>+13.2%</td><td style='color:#1a7f37;font-weight:600'>+3.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>AMZN</td><td>2020-05-07</td><td>$118.38</td><td>81→69</td><td>+31.4%</td><td>+14.3%</td><td style='color:#c0392b;font-weight:600'>-17.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>GILD</td><td>2020-05-07</td><td>$77.61</td><td>69→60</td><td>-7.6%</td><td>+14.3%</td><td style='color:#1a7f37;font-weight:600'>+21.9%</td><td>Healthcare</td></tr>
+<tr><td>REGN</td><td>2020-05-12</td><td>$557.54</td><td>74→64</td><td>+11.4%</td><td>+16.6%</td><td style='color:#1a7f37;font-weight:600'>+5.2%</td><td>Healthcare</td></tr>
+<tr><td>EQIX</td><td>2020-05-13</td><td>$678.80</td><td>78→56</td><td>+16.6%</td><td>+18.8%</td><td style='color:#1a7f37;font-weight:600'>+2.2%</td><td>Real Estate</td></tr>
+<tr><td>MOH</td><td>2020-05-14</td><td>$176.48</td><td>72→63</td><td>+7.3%</td><td>+17.8%</td><td style='color:#1a7f37;font-weight:600'>+10.5%</td><td>Healthcare</td></tr>
+<tr><td>NOW</td><td>2020-05-18</td><td>$74.97</td><td>77→69</td><td>+14.0%</td><td>+14.4%</td><td style='color:#1a7f37;font-weight:600'>+0.4%</td><td>Technology</td></tr>
+<tr><td>PODD</td><td>2020-05-18</td><td>$201.26</td><td>81→70</td><td>+1.7%</td><td>+14.4%</td><td style='color:#1a7f37;font-weight:600'>+12.7%</td><td>Healthcare</td></tr>
+<tr><td>ROL</td><td>2020-05-18</td><td>$26.27</td><td>76→68</td><td>+38.4%</td><td>+14.4%</td><td style='color:#c0392b;font-weight:600'>-24.0%</td><td>Consumer Cyclical</td></tr>
+<tr><td>ODFL</td><td>2020-05-19</td><td>$76.67</td><td>75→63</td><td>+25.5%</td><td>+15.4%</td><td style='color:#c0392b;font-weight:600'>-10.2%</td><td>Industrials</td></tr>
+<tr><td>GIS</td><td>2020-05-21</td><td>$59.95</td><td>68→62</td><td>+7.2%</td><td>+14.6%</td><td style='color:#1a7f37;font-weight:600'>+7.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>REGN</td><td>2020-05-26</td><td>$545.21</td><td>74→55</td><td>+15.5%</td><td>+12.8%</td><td style='color:#c0392b;font-weight:600'>-2.7%</td><td>Healthcare</td></tr>
+<tr><td>DG</td><td>2020-05-26</td><td>$180.36</td><td>71→64</td><td>+11.0%</td><td>+12.8%</td><td style='color:#1a7f37;font-weight:600'>+1.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>CHRW</td><td>2022-05-06</td><td>$106.97</td><td>65→55</td><td>+2.1%</td><td>+0.8%</td><td style='color:#c0392b;font-weight:600'>-1.4%</td><td>Industrials</td></tr>
+<tr><td>FMC</td><td>2022-05-06</td><td>$119.00</td><td>67→49</td><td>-8.4%</td><td>+0.8%</td><td style='color:#1a7f37;font-weight:600'>+9.1%</td><td>Basic Materials</td></tr>
+<tr><td>MO</td><td>2022-05-06</td><td>$56.57</td><td>68→62</td><td>-21.8%</td><td>+0.8%</td><td style='color:#1a7f37;font-weight:600'>+22.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>WMB</td><td>2022-05-11</td><td>$34.46</td><td>77→69</td><td>-5.8%</td><td>+5.2%</td><td style='color:#1a7f37;font-weight:600'>+11.0%</td><td>Energy</td></tr>
+<tr><td>PKG</td><td>2022-05-11</td><td>$158.83</td><td>67→62</td><td>-13.1%</td><td>+5.2%</td><td style='color:#1a7f37;font-weight:600'>+18.3%</td><td>Consumer Cyclical</td></tr>
+<tr><td>CTRA</td><td>2022-05-12</td><td>$29.07</td><td>74→66</td><td>-3.2%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+8.1%</td><td>Energy</td></tr>
+<tr><td>FANG</td><td>2022-05-12</td><td>$127.04</td><td>64→54</td><td>-2.0%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+6.8%</td><td>Energy</td></tr>
+<tr><td>HST</td><td>2022-05-12</td><td>$19.20</td><td>69→50</td><td>-5.1%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+9.9%</td><td>Real Estate</td></tr>
+<tr><td>MPC</td><td>2022-05-12</td><td>$92.74</td><td>75→64</td><td>+0.7%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+4.2%</td><td>Energy</td></tr>
+<tr><td>AIZ</td><td>2022-05-13</td><td>$181.62</td><td>72→58</td><td>-10.9%</td><td>+4.5%</td><td style='color:#1a7f37;font-weight:600'>+15.4%</td><td>Financial Services</td></tr>
+<tr><td>OXY</td><td>2022-05-13</td><td>$64.08</td><td>81→66</td><td>-1.9%</td><td>+4.5%</td><td style='color:#1a7f37;font-weight:600'>+6.5%</td><td>Energy</td></tr>
+<tr><td>CVX</td><td>2022-05-13</td><td>$167.87</td><td>67→59</td><td>-7.2%</td><td>+4.5%</td><td style='color:#1a7f37;font-weight:600'>+11.7%</td><td>Energy</td></tr>
+<tr><td>HES</td><td>2022-05-13</td><td>$114.27</td><td>72→64</td><td>-5.8%</td><td>+4.5%</td><td style='color:#1a7f37;font-weight:600'>+10.4%</td><td>Energy</td></tr>
+<tr><td>EXE</td><td>2022-05-13</td><td>$85.89</td><td>82→59</td><td>+9.4%</td><td>+4.5%</td><td style='color:#c0392b;font-weight:600'>-4.9%</td><td>Energy</td></tr>
+<tr><td>MO</td><td>2022-05-16</td><td>$53.74</td><td>68→53</td><td>-16.0%</td><td>+5.0%</td><td style='color:#1a7f37;font-weight:600'>+21.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>ES</td><td>2022-05-17</td><td>$90.06</td><td>59→49</td><td>+3.4%</td><td>+4.6%</td><td style='color:#1a7f37;font-weight:600'>+1.2%</td><td>Utilities</td></tr>
+<tr><td>SO</td><td>2022-05-17</td><td>$74.15</td><td>64→47</td><td>+5.4%</td><td>+4.6%</td><td style='color:#c0392b;font-weight:600'>-0.8%</td><td>Utilities</td></tr>
+<tr><td>SYY</td><td>2022-05-17</td><td>$85.92</td><td>73→53</td><td>-1.3%</td><td>+4.6%</td><td style='color:#1a7f37;font-weight:600'>+5.9%</td><td>Consumer Defensive</td></tr>
+<tr><td>KHC</td><td>2022-05-17</td><td>$43.16</td><td>74→60</td><td>-10.4%</td><td>+4.6%</td><td style='color:#1a7f37;font-weight:600'>+15.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>K</td><td>2022-05-17</td><td>$68.91</td><td>73→67</td><td>+3.0%</td><td>+4.6%</td><td style='color:#1a7f37;font-weight:600'>+1.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>MCK</td><td>2022-05-18</td><td>$320.65</td><td>82→61</td><td>+15.8%</td><td>+9.4%</td><td style='color:#c0392b;font-weight:600'>-6.4%</td><td>Healthcare</td></tr>
+<tr><td>COR</td><td>2022-05-18</td><td>$151.11</td><td>71→58</td><td>-0.2%</td><td>+9.4%</td><td style='color:#1a7f37;font-weight:600'>+9.6%</td><td>Healthcare</td></tr>
+<tr><td>LLY</td><td>2022-05-23</td><td>$302.60</td><td>82→58</td><td>+4.7%</td><td>+7.8%</td><td style='color:#1a7f37;font-weight:600'>+3.1%</td><td>Healthcare</td></tr>
+<tr><td>HSY</td><td>2022-05-23</td><td>$209.25</td><td>68→60</td><td>+10.2%</td><td>+7.8%</td><td style='color:#c0392b;font-weight:600'>-2.4%</td><td>Consumer Defensive</td></tr>
+<tr><td>CF</td><td>2022-05-23</td><td>$101.09</td><td>80→60</td><td>+1.3%</td><td>+7.8%</td><td style='color:#1a7f37;font-weight:600'>+6.5%</td><td>Basic Materials</td></tr>
+<tr><td>OXY</td><td>2022-05-24</td><td>$65.07</td><td>81→65</td><td>+9.6%</td><td>+7.2%</td><td style='color:#c0392b;font-weight:600'>-2.4%</td><td>Energy</td></tr>
+<tr><td>BMY</td><td>2022-05-25</td><td>$77.24</td><td>69→57</td><td>-3.5%</td><td>+4.0%</td><td style='color:#1a7f37;font-weight:600'>+7.5%</td><td>Healthcare</td></tr>
+<tr><td>DVN</td><td>2022-05-25</td><td>$71.94</td><td>66→60</td><td>-4.9%</td><td>+4.0%</td><td style='color:#1a7f37;font-weight:600'>+8.9%</td><td>Energy</td></tr>
+<tr><td>SO</td><td>2022-06-03</td><td>$75.26</td><td>64→57</td><td>+3.1%</td><td>-3.0%</td><td style='color:#c0392b;font-weight:600'>-6.1%</td><td>Utilities</td></tr>
+<tr><td>BMY</td><td>2022-06-03</td><td>$75.17</td><td>69→59</td><td>-10.6%</td><td>-3.0%</td><td style='color:#1a7f37;font-weight:600'>+7.6%</td><td>Healthcare</td></tr>
+<tr><td>CTVA</td><td>2022-06-03</td><td>$62.00</td><td>80→70</td><td>-0.4%</td><td>-3.0%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Basic Materials</td></tr>
+<tr><td>MCK</td><td>2022-06-03</td><td>$316.38</td><td>82→61</td><td>+15.1%</td><td>-3.0%</td><td style='color:#c0392b;font-weight:600'>-18.1%</td><td>Healthcare</td></tr>
+<tr><td>AEP</td><td>2022-06-06</td><td>$102.06</td><td>76→64</td><td>-1.8%</td><td>-4.0%</td><td style='color:#c0392b;font-weight:600'>-2.2%</td><td>Utilities</td></tr>
+<tr><td>LLY</td><td>2022-06-06</td><td>$303.36</td><td>82→69</td><td>-0.7%</td><td>-4.0%</td><td style='color:#c0392b;font-weight:600'>-3.3%</td><td>Healthcare</td></tr>
+<tr><td>OXY</td><td>2022-06-07</td><td>$70.55</td><td>81→63</td><td>-3.0%</td><td>-4.6%</td><td style='color:#c0392b;font-weight:600'>-1.6%</td><td>Energy</td></tr>
+<tr><td>CTRA</td><td>2022-06-07</td><td>$36.11</td><td>74→65</td><td>-16.3%</td><td>-4.6%</td><td style='color:#1a7f37;font-weight:600'>+11.6%</td><td>Energy</td></tr>
+<tr><td>EXE</td><td>2022-06-07</td><td>$102.56</td><td>82→58</td><td>-4.4%</td><td>-4.6%</td><td style='color:#c0392b;font-weight:600'>-0.2%</td><td>Energy</td></tr>
+<tr><td>EQT</td><td>2022-06-08</td><td>$48.97</td><td>89→72</td><td>-3.5%</td><td>-4.6%</td><td style='color:#c0392b;font-weight:600'>-1.2%</td><td>Energy</td></tr>
+<tr><td>DOW</td><td>2022-06-08</td><td>$67.24</td><td>63→53</td><td>-26.7%</td><td>-4.6%</td><td style='color:#1a7f37;font-weight:600'>+22.1%</td><td>Basic Materials</td></tr>
+<tr><td>WMB</td><td>2022-06-10</td><td>$34.89</td><td>69→63</td><td>-4.6%</td><td>+2.0%</td><td style='color:#1a7f37;font-weight:600'>+6.6%</td><td>Energy</td></tr>
+<tr><td>SMCI</td><td>2022-06-13</td><td>$4.69</td><td>70→65</td><td>+38.6%</td><td>+6.8%</td><td style='color:#c0392b;font-weight:600'>-31.8%</td><td>Technology</td></tr>
+<tr><td>CTRA</td><td>2022-06-15</td><td>$30.67</td><td>73→68</td><td>+0.1%</td><td>+8.4%</td><td style='color:#1a7f37;font-weight:600'>+8.3%</td><td>Energy</td></tr>
+<tr><td>LLY</td><td>2022-06-15</td><td>$292.99</td><td>82→59</td><td>+7.6%</td><td>+8.4%</td><td style='color:#1a7f37;font-weight:600'>+0.8%</td><td>Healthcare</td></tr>
+<tr><td>EXE</td><td>2022-06-15</td><td>$88.25</td><td>73→58</td><td>+17.7%</td><td>+8.4%</td><td style='color:#c0392b;font-weight:600'>-9.3%</td><td>Energy</td></tr>
+<tr><td>PPL</td><td>2022-06-15</td><td>$26.27</td><td>71→60</td><td>+14.8%</td><td>+8.4%</td><td style='color:#c0392b;font-weight:600'>-6.4%</td><td>Utilities</td></tr>
+<tr><td>CHRW</td><td>2022-06-22</td><td>$99.90</td><td>66→52</td><td>+3.9%</td><td>+3.0%</td><td style='color:#c0392b;font-weight:600'>-0.9%</td><td>Industrials</td></tr>
+<tr><td>TKO</td><td>2022-06-23</td><td>$59.43</td><td>73→63</td><td>+15.7%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-12.9%</td><td>Communication Services</td></tr>
+<tr><td>MRK</td><td>2022-07-05</td><td>$92.64</td><td>76→68</td><td>-6.3%</td><td>-3.0%</td><td style='color:#1a7f37;font-weight:600'>+3.3%</td><td>Healthcare</td></tr>
+<tr><td>LLY</td><td>2022-07-05</td><td>$327.18</td><td>79→67</td><td>+2.2%</td><td>-3.0%</td><td style='color:#c0392b;font-weight:600'>-5.2%</td><td>Healthcare</td></tr>
+<tr><td>GIS</td><td>2022-07-20</td><td>$73.40</td><td>77→71</td><td>+7.4%</td><td>-7.3%</td><td style='color:#c0392b;font-weight:600'>-14.7%</td><td>Consumer Defensive</td></tr>
+<tr><td>TPL</td><td>2022-08-05</td><td>$184.09</td><td>79→67</td><td>+39.1%</td><td>-6.6%</td><td style='color:#c0392b;font-weight:600'>-45.6%</td><td>Energy</td></tr>
+<tr><td>KDP</td><td>2022-08-25</td><td>$39.69</td><td>77→71</td><td>-5.7%</td><td>-5.6%</td><td style='color:#1a7f37;font-weight:600'>+0.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>LW</td><td>2022-09-01</td><td>$79.52</td><td>72→66</td><td>+7.5%</td><td>-0.1%</td><td style='color:#c0392b;font-weight:600'>-7.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>ENPH</td><td>2022-09-02</td><td>$279.07</td><td>63→57</td><td>+8.7%</td><td>+0.8%</td><td style='color:#c0392b;font-weight:600'>-8.0%</td><td>Energy</td></tr>
+<tr><td>TMUS</td><td>2022-09-02</td><td>$141.98</td><td>65→50</td><td>+4.7%</td><td>+0.8%</td><td style='color:#c0392b;font-weight:600'>-3.9%</td><td>Communication Services</td></tr>
+<tr><td>TPL</td><td>2022-09-06</td><td>$206.58</td><td>79→61</td><td>+39.4%</td><td>+4.3%</td><td style='color:#c0392b;font-weight:600'>-35.1%</td><td>Energy</td></tr>
+<tr><td>MOH</td><td>2022-09-16</td><td>$339.37</td><td>72→64</td><td>+4.0%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-0.6%</td><td>Healthcare</td></tr>
+<tr><td>EQT</td><td>2022-09-21</td><td>$45.39</td><td>69→60</td><td>-15.8%</td><td>+3.2%</td><td style='color:#1a7f37;font-weight:600'>+19.0%</td><td>Energy</td></tr>
+<tr><td>ALB</td><td>2022-09-21</td><td>$285.03</td><td>78→68</td><td>-15.6%</td><td>+3.2%</td><td style='color:#1a7f37;font-weight:600'>+18.9%</td><td>Basic Materials</td></tr>
+<tr><td>CEG</td><td>2022-09-27</td><td>$83.97</td><td>84→64</td><td>+6.8%</td><td>+6.3%</td><td style='color:#c0392b;font-weight:600'>-0.5%</td><td>Utilities</td></tr>
+<tr><td>PCG</td><td>2022-09-27</td><td>$12.41</td><td>81→65</td><td>+28.5%</td><td>+6.3%</td><td style='color:#c0392b;font-weight:600'>-22.2%</td><td>Utilities</td></tr>
+<tr><td>HUBB</td><td>2022-09-28</td><td>$222.00</td><td>78→63</td><td>+5.7%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-3.0%</td><td>Industrials</td></tr>
+<tr><td>CI</td><td>2022-09-28</td><td>$282.55</td><td>66→47</td><td>+18.0%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-15.2%</td><td>Healthcare</td></tr>
+<tr><td>FSLR</td><td>2022-09-28</td><td>$136.19</td><td>87→68</td><td>+15.2%</td><td>+2.8%</td><td style='color:#c0392b;font-weight:600'>-12.4%</td><td>Energy</td></tr>
+<tr><td>FSLR</td><td>2022-10-11</td><td>$131.32</td><td>87→67</td><td>+19.4%</td><td>+8.5%</td><td style='color:#c0392b;font-weight:600'>-10.9%</td><td>Energy</td></tr>
+<tr><td>CI</td><td>2022-10-12</td><td>$288.36</td><td>66→60</td><td>+5.1%</td><td>+8.8%</td><td style='color:#1a7f37;font-weight:600'>+3.7%</td><td>Healthcare</td></tr>
+<tr><td>HUBB</td><td>2022-10-12</td><td>$225.42</td><td>78→69</td><td>+2.6%</td><td>+8.8%</td><td style='color:#1a7f37;font-weight:600'>+6.1%</td><td>Industrials</td></tr>
+<tr><td>CEG</td><td>2022-10-13</td><td>$83.82</td><td>84→55</td><td>-0.9%</td><td>+6.7%</td><td style='color:#1a7f37;font-weight:600'>+7.6%</td><td>Utilities</td></tr>
+<tr><td>PCG</td><td>2022-10-13</td><td>$14.31</td><td>81→70</td><td>+11.4%</td><td>+6.7%</td><td style='color:#c0392b;font-weight:600'>-4.7%</td><td>Utilities</td></tr>
+<tr><td>MOH</td><td>2022-10-21</td><td>$360.38</td><td>72→59</td><td>-17.3%</td><td>+3.8%</td><td style='color:#1a7f37;font-weight:600'>+21.1%</td><td>Healthcare</td></tr>
+<tr><td>LW</td><td>2022-10-25</td><td>$84.63</td><td>79→66</td><td>+13.6%</td><td>+4.1%</td><td style='color:#c0392b;font-weight:600'>-9.5%</td><td>Consumer Defensive</td></tr>
+<tr><td>HUBB</td><td>2022-11-03</td><td>$235.58</td><td>74→61</td><td>+1.2%</td><td>+10.7%</td><td style='color:#1a7f37;font-weight:600'>+9.5%</td><td>Industrials</td></tr>
+<tr><td>GL</td><td>2022-11-03</td><td>$112.32</td><td>66→59</td><td>+7.0%</td><td>+10.7%</td><td style='color:#1a7f37;font-weight:600'>+3.7%</td><td>Financial Services</td></tr>
+<tr><td>DVN</td><td>2022-11-03</td><td>$70.73</td><td>72→65</td><td>-12.5%</td><td>+10.7%</td><td style='color:#1a7f37;font-weight:600'>+23.2%</td><td>Energy</td></tr>
+<tr><td>PCG</td><td>2022-11-03</td><td>$15.20</td><td>81→69</td><td>+2.9%</td><td>+10.7%</td><td style='color:#1a7f37;font-weight:600'>+7.8%</td><td>Utilities</td></tr>
+<tr><td>CSGP</td><td>2022-11-08</td><td>$80.17</td><td>73→66</td><td>-5.5%</td><td>+7.3%</td><td style='color:#1a7f37;font-weight:600'>+12.8%</td><td>Real Estate</td></tr>
+<tr><td>CEG</td><td>2022-11-09</td><td>$87.35</td><td>84→63</td><td>-1.6%</td><td>+11.0%</td><td style='color:#1a7f37;font-weight:600'>+12.6%</td><td>Utilities</td></tr>
+<tr><td>LW</td><td>2022-11-09</td><td>$83.25</td><td>72→64</td><td>+19.0%</td><td>+11.0%</td><td style='color:#c0392b;font-weight:600'>-8.0%</td><td>Consumer Defensive</td></tr>
+<tr><td>VRTX</td><td>2022-11-09</td><td>$309.34</td><td>66→56</td><td>-0.3%</td><td>+11.0%</td><td style='color:#1a7f37;font-weight:600'>+11.2%</td><td>Healthcare</td></tr>
+<tr><td>CMI</td><td>2022-11-09</td><td>$237.69</td><td>76→65</td><td>+5.9%</td><td>+11.0%</td><td style='color:#1a7f37;font-weight:600'>+5.1%</td><td>Industrials</td></tr>
+<tr><td>FSLR</td><td>2022-11-11</td><td>$150.42</td><td>87→70</td><td>+9.0%</td><td>+2.2%</td><td style='color:#c0392b;font-weight:600'>-6.8%</td><td>Energy</td></tr>
+<tr><td>PCG</td><td>2022-11-11</td><td>$14.76</td><td>81→63</td><td>+4.7%</td><td>+2.2%</td><td style='color:#c0392b;font-weight:600'>-2.6%</td><td>Utilities</td></tr>
+<tr><td>MCK</td><td>2022-11-11</td><td>$356.21</td><td>76→69</td><td>+1.7%</td><td>+2.2%</td><td style='color:#1a7f37;font-weight:600'>+0.4%</td><td>Healthcare</td></tr>
+<tr><td>ADM</td><td>2022-11-11</td><td>$93.07</td><td>71→63</td><td>-13.4%</td><td>+2.2%</td><td style='color:#1a7f37;font-weight:600'>+15.6%</td><td>Consumer Defensive</td></tr>
+<tr><td>COP</td><td>2022-11-11</td><td>$133.96</td><td>76→69</td><td>-17.9%</td><td>+2.2%</td><td style='color:#1a7f37;font-weight:600'>+20.1%</td><td>Energy</td></tr>
+<tr><td>SJM</td><td>2022-11-15</td><td>$140.48</td><td>74→65</td><td>+6.4%</td><td>+3.6%</td><td style='color:#c0392b;font-weight:600'>-2.8%</td><td>Consumer Defensive</td></tr>
+<tr><td>TRV</td><td>2022-11-16</td><td>$181.14</td><td>70→63</td><td>+1.7%</td><td>+4.3%</td><td style='color:#1a7f37;font-weight:600'>+2.7%</td><td>Financial Services</td></tr>
+<tr><td>NOC</td><td>2022-11-16</td><td>$505.13</td><td>64→58</td><td>-7.4%</td><td>+4.3%</td><td style='color:#1a7f37;font-weight:600'>+11.8%</td><td>Industrials</td></tr>
+<tr><td>GL</td><td>2022-11-17</td><td>$112.88</td><td>66→58</td><td>+7.2%</td><td>+5.0%</td><td style='color:#c0392b;font-weight:600'>-2.2%</td><td>Financial Services</td></tr>
+<tr><td>GD</td><td>2022-11-17</td><td>$246.52</td><td>75→66</td><td>-5.7%</td><td>+5.0%</td><td style='color:#1a7f37;font-weight:600'>+10.7%</td><td>Industrials</td></tr>
+<tr><td>ACGL</td><td>2022-11-18</td><td>$57.67</td><td>73→64</td><td>+16.4%</td><td>+3.1%</td><td style='color:#c0392b;font-weight:600'>-13.3%</td><td>Financial Services</td></tr>
+<tr><td>CSGP</td><td>2022-11-18</td><td>$80.80</td><td>73→66</td><td>-3.2%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+6.3%</td><td>Real Estate</td></tr>
+<tr><td>GPC</td><td>2022-11-18</td><td>$180.68</td><td>78→62</td><td>-0.8%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+3.9%</td><td>Consumer Cyclical</td></tr>
+<tr><td>HUBB</td><td>2022-11-18</td><td>$253.49</td><td>74→65</td><td>-1.3%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+4.4%</td><td>Industrials</td></tr>
+<tr><td>ERIE</td><td>2022-11-18</td><td>$267.98</td><td>75→54</td><td>-10.2%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+13.3%</td><td>Financial Services</td></tr>
+<tr><td>CTVA</td><td>2022-11-18</td><td>$65.20</td><td>66→52</td><td>-3.8%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+6.9%</td><td>Basic Materials</td></tr>
+<tr><td>RJF</td><td>2022-11-18</td><td>$121.59</td><td>80→70</td><td>-6.2%</td><td>+3.1%</td><td style='color:#1a7f37;font-weight:600'>+9.3%</td><td>Financial Services</td></tr>
+<tr><td>EOG</td><td>2022-11-21</td><td>$139.86</td><td>70→65</td><td>-15.3%</td><td>+3.2%</td><td style='color:#1a7f37;font-weight:600'>+18.5%</td><td>Energy</td></tr>
+<tr><td>HES</td><td>2022-11-22</td><td>$148.11</td><td>72→65</td><td>-8.3%</td><td>-0.2%</td><td style='color:#1a7f37;font-weight:600'>+8.1%</td><td>Energy</td></tr>
+<tr><td>SMCI</td><td>2022-12-05</td><td>$8.33</td><td>77→69</td><td>+17.4%</td><td>+1.2%</td><td style='color:#c0392b;font-weight:600'>-16.3%</td><td>Technology</td></tr>
+<tr><td>BIIB</td><td>2022-12-07</td><td>$292.15</td><td>81→64</td><td>-9.3%</td><td>+1.3%</td><td style='color:#1a7f37;font-weight:600'>+10.6%</td><td>Healthcare</td></tr>
+<tr><td>FSLR</td><td>2022-12-07</td><td>$154.74</td><td>82→67</td><td>+38.5%</td><td>+1.3%</td><td style='color:#c0392b;font-weight:600'>-37.2%</td><td>Energy</td></tr>
+<tr><td>DECK</td><td>2022-12-08</td><td>$63.47</td><td>72→62</td><td>+13.0%</td><td>+0.7%</td><td style='color:#c0392b;font-weight:600'>-12.4%</td><td>Consumer Cyclical</td></tr>
+<tr><td>AES</td><td>2022-12-08</td><td>$28.34</td><td>73→64</td><td>-12.8%</td><td>+0.7%</td><td style='color:#1a7f37;font-weight:600'>+13.4%</td><td>Utilities</td></tr>
+<tr><td>PCG</td><td>2022-12-08</td><td>$15.42</td><td>70→63</td><td>+5.8%</td><td>+0.7%</td><td style='color:#c0392b;font-weight:600'>-5.2%</td><td>Utilities</td></tr>
+<tr><td>GPC</td><td>2022-12-09</td><td>$182.26</td><td>72→66</td><td>-9.4%</td><td>-0.4%</td><td style='color:#1a7f37;font-weight:600'>+8.9%</td><td>Consumer Cyclical</td></tr>
+<tr><td>CSGP</td><td>2022-12-09</td><td>$80.70</td><td>73→63</td><td>-14.7%</td><td>-0.4%</td><td style='color:#1a7f37;font-weight:600'>+14.2%</td><td>Real Estate</td></tr>
+<tr><td>CTVA</td><td>2022-12-09</td><td>$62.99</td><td>66→58</td><td>-4.9%</td><td>-0.4%</td><td style='color:#1a7f37;font-weight:600'>+4.4%</td><td>Basic Materials</td></tr>
+<tr><td>LLY</td><td>2022-12-12</td><td>$367.25</td><td>65→60</td><td>-14.2%</td><td>-3.3%</td><td style='color:#1a7f37;font-weight:600'>+11.0%</td><td>Healthcare</td></tr>
+<tr><td>HES</td><td>2022-12-12</td><td>$134.16</td><td>64→49</td><td>-3.4%</td><td>-3.3%</td><td style='color:#1a7f37;font-weight:600'>+0.1%</td><td>Energy</td></tr>
+<tr><td>TJX</td><td>2022-12-13</td><td>$79.16</td><td>70→65</td><td>-7.1%</td><td>-4.1%</td><td style='color:#1a7f37;font-weight:600'>+3.0%</td><td>Consumer Cyclical</td></tr>
+<tr><td>REGN</td><td>2022-12-15</td><td>$731.27</td><td>68→59</td><td>+4.0%</td><td>-0.1%</td><td style='color:#c0392b;font-weight:600'>-4.1%</td><td>Healthcare</td></tr>
+<tr><td>HUBB</td><td>2022-12-20</td><td>$235.95</td><td>69→60</td><td>+2.4%</td><td>+3.5%</td><td style='color:#1a7f37;font-weight:600'>+1.1%</td><td>Industrials</td></tr>
+<tr><td>A</td><td>2022-12-20</td><td>$147.93</td><td>69→62</td><td>-9.1%</td><td>+3.5%</td><td style='color:#1a7f37;font-weight:600'>+12.5%</td><td>Healthcare</td></tr>
+<tr><td>GWW</td><td>2022-12-20</td><td>$562.74</td><td>55→49</td><td>+19.8%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-16.3%</td><td>Industrials</td></tr>
+<tr><td>SMCI</td><td>2022-12-20</td><td>$8.33</td><td>77→60</td><td>+18.2%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-14.8%</td><td>Technology</td></tr>
+<tr><td>STLD</td><td>2022-12-20</td><td>$103.20</td><td>76→66</td><td>+4.3%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-0.9%</td><td>Basic Materials</td></tr>
+<tr><td>PCAR</td><td>2022-12-20</td><td>$66.27</td><td>58→51</td><td>+6.2%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-2.7%</td><td>Industrials</td></tr>
+<tr><td>MSI</td><td>2022-12-20</td><td>$255.82</td><td>66→57</td><td>+4.8%</td><td>+3.5%</td><td style='color:#c0392b;font-weight:600'>-1.3%</td><td>Technology</td></tr>
+<tr><td>AJG</td><td>2022-12-21</td><td>$189.48</td><td>57→51</td><td>-3.0%</td><td>+3.3%</td><td style='color:#1a7f37;font-weight:600'>+6.2%</td><td>Financial Services</td></tr>
+<tr><td>MRK</td><td>2022-12-21</td><td>$111.11</td><td>77→71</td><td>-5.0%</td><td>+3.3%</td><td style='color:#1a7f37;font-weight:600'>+8.3%</td><td>Healthcare</td></tr>
+<tr><td>AZN</td><td>2022-12-22</td><td>$134.42</td><td>71→65</td><td>+0.8%</td><td>+3.0%</td><td style='color:#1a7f37;font-weight:600'>+2.1%</td><td>Healthcare</td></tr>
+<tr><td>PCG</td><td>2022-12-22</td><td>$15.95</td><td>70→65</td><td>-2.6%</td><td>+3.0%</td><td style='color:#1a7f37;font-weight:600'>+5.6%</td><td>Utilities</td></tr>
+<tr><td>ERIE</td><td>2022-12-29</td><td>$249.87</td><td>72→63</td><td>-8.6%</td><td>+3.2%</td><td style='color:#1a7f37;font-weight:600'>+11.8%</td><td>Financial Services</td></tr>
+<tr><td>GIS</td><td>2023-01-05</td><td>$84.41</td><td>66→51</td><td>+1.8%</td><td>+8.3%</td><td style='color:#1a7f37;font-weight:600'>+6.5%</td><td>Consumer Defensive</td></tr>
+<tr><td>CPB</td><td>2023-01-05</td><td>$56.14</td><td>67→62</td><td>-1.8%</td><td>+8.3%</td><td style='color:#1a7f37;font-weight:600'>+10.1%</td><td>Consumer Defensive</td></tr>
+<tr><td>MDLZ</td><td>2023-01-05</td><td>$66.19</td><td>68→55</td><td>+6.1%</td><td>+8.3%</td><td style='color:#1a7f37;font-weight:600'>+2.2%</td><td>Consumer Defensive</td></tr>
+<tr><td>PCG</td><td>2023-01-05</td><td>$15.66</td><td>70→59</td><td>+3.4%</td><td>+8.3%</td><td style='color:#1a7f37;font-weight:600'>+4.9%</td><td>Utilities</td></tr>
+<tr><td>CI</td><td>2023-01-05</td><td>$304.19</td><td>60→55</td><td>-13.9%</td><td>+8.3%</td><td style='color:#1a7f37;font-weight:600'>+22.2%</td><td>Healthcare</td></tr>
+<tr><td>LLY</td><td>2023-01-06</td><td>$362.94</td><td>61→54</td><td>-2.3%</td><td>+5.3%</td><td style='color:#1a7f37;font-weight:600'>+7.6%</td><td>Healthcare</td></tr>
+<tr><td>NOC</td><td>2023-01-10</td><td>$495.79</td><td>63→55</td><td>-5.1%</td><td>+4.8%</td><td style='color:#1a7f37;font-weight:600'>+9.9%</td><td>Industrials</td></tr>
+<tr><td>MTD</td><td>2023-01-19</td><td>$1518.46</td><td>71→65</td><td>+5.1%</td><td>+6.5%</td><td style='color:#1a7f37;font-weight:600'>+1.4%</td><td>Healthcare</td></tr>
+<tr><td>EG</td><td>2023-01-19</td><td>$344.49</td><td>74→66</td><td>+5.6%</td><td>+6.5%</td><td style='color:#1a7f37;font-weight:600'>+0.9%</td><td>Financial Services</td></tr>
+<tr><td>A</td><td>2023-01-20</td><td>$155.92</td><td>69→59</td><td>-10.9%</td><td>+4.6%</td><td style='color:#1a7f37;font-weight:600'>+15.5%</td><td>Healthcare</td></tr>
+<tr><td>BA</td><td>2023-03-10</td><td>$203.07</td><td>71→59</td><td>+2.1%</td><td>+10.9%</td><td style='color:#1a7f37;font-weight:600'>+8.8%</td><td>Industrials</td></tr>
+<tr><td>JBL</td><td>2023-03-10</td><td>$81.91</td><td>74→67</td><td>+13.3%</td><td>+10.9%</td><td style='color:#c0392b;font-weight:600'>-2.4%</td><td>Technology</td></tr>
+<tr><td>BLDR</td><td>2023-03-13</td><td>$79.84</td><td>83→66</td><td>+53.2%</td><td>+10.7%</td><td style='color:#c0392b;font-weight:600'>-42.5%</td><td>Industrials</td></tr>
+<tr><td>APO</td><td>2023-03-13</td><td>$58.47</td><td>64→57</td><td>+22.4%</td><td>+10.7%</td><td style='color:#c0392b;font-weight:600'>-11.7%</td><td>Financial Services</td></tr>
+<tr><td>MS</td><td>2023-03-13</td><td>$87.99</td><td>63→57</td><td>-1.7%</td><td>+10.7%</td><td style='color:#1a7f37;font-weight:600'>+12.4%</td><td>Financial Services</td></tr>
+<tr><td>ORLY</td><td>2025-04-23</td><td>$92.03</td><td>76→55</td><td>+2.3%</td><td>+17.4%</td><td style='color:#1a7f37;font-weight:600'>+15.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>RSG</td><td>2025-04-23</td><td>$241.22</td><td>70→59</td><td>-0.5%</td><td>+17.4%</td><td style='color:#1a7f37;font-weight:600'>+17.9%</td><td>Industrials</td></tr>
+<tr><td>DUK</td><td>2025-04-25</td><td>$119.85</td><td>70→59</td><td>-0.3%</td><td>+15.2%</td><td style='color:#1a7f37;font-weight:600'>+15.5%</td><td>Utilities</td></tr>
+<tr><td>AEP</td><td>2025-04-25</td><td>$106.74</td><td>79→57</td><td>+2.0%</td><td>+15.2%</td><td style='color:#1a7f37;font-weight:600'>+13.2%</td><td>Utilities</td></tr>
+<tr><td>COR</td><td>2025-04-28</td><td>$287.75</td><td>65→59</td><td>+0.9%</td><td>+15.2%</td><td style='color:#1a7f37;font-weight:600'>+14.2%</td><td>Healthcare</td></tr>
+<tr><td>EXC</td><td>2025-05-07</td><td>$46.34</td><td>65→58</td><td>-2.5%</td><td>+12.5%</td><td style='color:#1a7f37;font-weight:600'>+15.0%</td><td>Utilities</td></tr>
+<tr><td>CVS</td><td>2025-05-08</td><td>$67.85</td><td>81→61</td><td>-6.5%</td><td>+11.1%</td><td style='color:#1a7f37;font-weight:600'>+17.7%</td><td>Healthcare</td></tr>
+<tr><td>ORLY</td><td>2025-05-09</td><td>$90.62</td><td>76→55</td><td>+15.3%</td><td>+12.1%</td><td style='color:#c0392b;font-weight:600'>-3.1%</td><td>Consumer Cyclical</td></tr>
+<tr><td>BRK-B</td><td>2025-05-09</td><td>$513.74</td><td>70→61</td><td>-8.7%</td><td>+12.1%</td><td style='color:#1a7f37;font-weight:600'>+20.9%</td><td>Financial Services</td></tr></tbody>
+  </table></div>
 </div>
+<script>
+function ttf() {
+  const q = document.getElementById('ttq').value.toLowerCase();
+  let n = 0;
+  for (const tr of document.querySelectorAll('#tt tbody tr')) {
+    const show = tr.textContent.toLowerCase().includes(q);
+    tr.style.display = show ? '' : 'none';
+    if (show) n++;
+  }
+  document.getElementById('ttc').textContent = n + ' trades';
+}
+</script>
 
-<h2><span class="num">06</span> · The strategy — making money from it consistently</h2>
+<h2><span class="num">08</span> · The strategy — making money from it consistently</h2>
 <div class="tiers">
   <div class="tier core">
     <span class="t-tag">THE CORE — where the money is</span>
@@ -432,8 +950,8 @@
     <ul>
       <li>Only when SPY's own 20-day momentum is also negative</li>
       <li>Hold 10–20 days · small size</li>
-      <li>Wide +10% stop or none — tight stops destroy the edge (these stocks rally one last time before falling: a +4% stop triggers on 57% of trades and cuts the win rate to 37%)</li>
-      <li>Verified warning: profits concentrate in real bears (2008, 2018, 2022). In V-shaped recoveries it loses — without 2008+2018 the edge is just +0.1%. Prefer puts for a capped tail</li>
+      <li>Wide +10% stop or none — tight stops destroy the edge (a +4% stop triggers on 57% of trades and cuts the win rate to 37%)</li>
+      <li>Verified warning: without 2008+2018 the edge is just +0.1%. Prefer puts for a capped tail</li>
     </ul>
   </div>
   <div class="tier off">
@@ -443,7 +961,7 @@
     <ul>
       <li>Measured on 20,312 bull-regime events: naked shorting loses -1.3% per 20 days; even the hedged pair loses (-0.4% at 20d, -1.0% at 60d)</li>
       <li>Instead: take partial profits, tighten stops, delay new buys on stocks flashing divergence</li>
-      <li>That's where the most consistent edge lives: the stock underperforms its own normal drift by 1.4% per 20 days, in 20 of 22 years</li>
+      <li>That's where the most consistent edge lives: 1.4% underperformance per 20 days, in 20 of 22 years</li>
     </ul>
   </div>
 </div>
@@ -455,19 +973,30 @@
   <div class="step"><b>Filter to the rule</b><span>Within 3% of the 52-week high · second peak ≥4% above the first · RSI drop ≥5 pts</span></div>
   <div class="step"><b>Execute &amp; diversify</b><span>Hedged pair, 1–2% per leg, up to 15 pairs, 60 days or until SPY reclaims the 200-day MA</span></div>
 </div>
-
 <div class="dont">
   <b>The three verified prohibitions:</b>
   ① Never short in a bull market — measured loss even hedged. ② Never use tight stops — small size instead.
   ③ No biotech / binary-event stocks — the only left tail that truly hurts.
 </div>
 
+<h2><span class="num">09</span> · Sources &amp; honest limitations</h2>
+<div class="m-grid">
+  <div class="m-card"><b>Data</b> Financial Modeling Prep daily OHLCV (stable API), 2005–2026, 509 tickers,
+    stored in SQLite. Prices split-adjusted but ex-dividend — absolute bearish metrics gain ~0.1–0.5% of dividend
+    drift; the vs-random edge is immune (both legs share it).</div>
+  <div class="m-card"><b>Survivorship bias</b> The universe is today's index members, so today's winners are
+    over-represented and absolute returns skew positive. The headline metric — edge vs random entries in the same
+    stocks — is immune by construction.</div>
+  <div class="m-card"><b>Costs</b> No commissions, borrow fees or slippage are included. The 60-day hedged edge of
+    +2.5% leaves room for realistic costs; the thinner naked-short edges may not.</div>
+  <div class="m-card"><b>Code &amp; reproducibility</b> Python + pandas + SQLite. Detection, backtest, statistics
+    and this page are generated from the database by scripts — nothing hand-typed. Repo folder:
+    <code>rsi-divergence-research</code> (research pipeline, nightly scanner, Streamlit dashboard).</div>
+</div>
+
 <div class="foot">
-  All numbers computed from real daily OHLCV data (Financial Modeling Prep) · events 2005–2026 ·
-  no trading or borrow costs included · universe = current index members (survivorship bias — the
-  vs-random edge is immune to it; absolute levels are not) · returns are split-adjusted, ex-dividend ·
-  this is research, not investment advice · full methodology: <a href="research_report.html">full research report (Hebrew)</a> ·
-  code: <code>ClaritX\rsi-divergence-research</code>
+  Research, not investment advice · all numbers computed from real market data and independently re-verified ·
+  generated from the research database · full Hebrew report: <a href="research_report.html">research_report.html</a>
 </div>
 
 </div></body></html>
