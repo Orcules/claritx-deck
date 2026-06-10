@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implementation Guide — Trading the RSI Divergence Findings</title>
+<style>
+  :root { --ink:#16212c; --muted:#5b6b7a; --line:#e3e8ee; --good:#1a7f37; --bad:#c0392b; --accent:#0b5394; --warn:#9a6700; --paper:#fff; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:"Segoe UI",Arial,sans-serif; color:var(--ink); background:#f4f6f8; line-height:1.6; }
+  .wrap { max-width:1020px; margin:0 auto; padding:0 22px 90px; }
+  .hero { background:var(--ink); color:#fff; padding:56px 22px 48px; }
+  .hero-in { max-width:1020px; margin:0 auto; }
+  .hero h1 { font-size:36px; line-height:1.2; max-width:820px; }
+  .hero p { color:#aebbc7; margin-top:12px; max-width:740px; font-size:16.5px; }
+  .hero a { color:#7fb3e3; }
+  h2 { font-size:25px; margin:56px 0 8px; }
+  h2 .num { color:var(--accent); }
+  h3 { font-size:18px; margin:22px 0 8px; }
+  .lead { color:var(--muted); max-width:800px; margin-bottom:18px; }
+  .panel { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:24px 26px; }
+  table { border-collapse:collapse; width:100%; background:#fff; font-size:14px; margin:10px 0 4px; }
+  th, td { border:1px solid var(--line); padding:7px 10px; text-align:center; }
+  th { background:#f0f3f7; }
+  td:first-child, th:first-child { text-align:left; }
+  .warnbox { background:#fff8ec; border:2px solid #e7c87b; border-radius:14px; padding:20px 24px; margin:22px 0; }
+  .warnbox b { color:var(--warn); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px 20px; font-size:14px; }
+  .card b { display:block; color:var(--accent); margin-bottom:6px; font-size:15px; }
+  .card .tag { display:inline-block; font-size:11.5px; font-weight:700; padding:2px 10px; border-radius:99px; margin-bottom:8px; }
+  .tag.rec { background:#e2f3e8; color:var(--good); }
+  .tag.ok { background:#eef1f4; color:var(--muted); }
+  .tag.no { background:#fdeaea; color:var(--bad); }
+  ul { padding-left:20px; }
+  li { margin:5px 0; font-size:14.5px; }
+  pre { background:#0f1822; color:#d7e3ee; border-radius:12px; padding:22px 24px; font-size:12.8px; line-height:1.55; overflow-x:auto; white-space:pre-wrap; }
+  .copybar { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .steps { counter-reset:s; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:14px; }
+  .step { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px 20px 14px; position:relative; }
+  .step::before { counter-increment:s; content:counter(s); position:absolute; top:-13px; left:16px; background:var(--accent); color:#fff; width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; }
+  .step b { display:block; margin:4px 0 5px; }
+  .step span { font-size:13.5px; color:var(--muted); }
+  .foot { font-size:12.5px; color:var(--muted); margin-top:52px; border-top:1px solid var(--line); padding-top:16px; }
+  code { background:#eef1f4; padding:2px 7px; border-radius:5px; font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="hero-in">
+  <h1>Implementation guide: trading the findings — with leverage that won't kill you</h1>
+  <p>How to turn the validated edges (<a href="./">full research</a>) into executable trades: which instruments,
+  how much leverage the data actually supports, the exact tooling, and a copy-paste operator prompt for the
+  nightly routine. Everything here is anchored to the measured numbers — including the parts that say "don't".</p>
+</div></div>
+
+<div class="wrap">
+
+<div class="warnbox">
+<b>Read this first — the leverage math was measured, and it is humbling.</b>
+We re-ran the 503-trade daily simulation at increasing leverage. Linear leverage (bigger margin positions)
+buys return at an accelerating drawdown cost:
+<table>
+<tr><th>Sizing per pair</th><th>Gross exposure cap</th><th>Total return</th><th>Max drawdown</th><th>Worst year</th></tr>
+<tr><td>5% (research baseline)</td><td>100%</td><td>+16%</td><td>−20%</td><td>−9%</td></tr>
+<tr><td>10%</td><td>100%</td><td>+23%</td><td>−22%</td><td>−13%</td></tr>
+<tr><td>10%</td><td>150%</td><td>+25%</td><td>−31%</td><td>−17%</td></tr>
+<tr><td>20%</td><td>200%</td><td>+38%</td><td><b style="color:#c0392b">−41%</b></td><td><b style="color:#c0392b">−25%</b></td></tr>
+</table>
+<p style="font-size:14px;margin-top:8px">4× the leverage ≈ 2.4× the return for 2× the drawdown — the ratio
+DEGRADES, because losses cluster (2008, 2020) and one short leg lost −113% (Moderna). The conclusion the data
+forces: <b>the right way to lever this edge is defined-risk options, not margin.</b> A put spread caps the
+Moderna scenario at the premium paid. If you insist on linear margin: 10%/pair with a hard 100% gross cap is
+the best measured risk-adjusted point.</p>
+</div>
+
+<h2><span class="num">01</span> · What you are implementing — the three validated edges</h2>
+<div class="cards">
+  <div class="card"><b>Edge A — the bear-regime pair (absolute money-maker)</b>
+    SPY below falling 200-day MA + confirmed divergence + stock within 3% of its 52w high + extension ≥4%.
+    Short stock / long SPY, 60 trading days. Measured: +2.5%/pair, 59% win, 10/11 bear years.</div>
+  <div class="card"><b>Edge B — the edge-score overlay (relative, all regimes)</b>
+    The 6-condition score (stretch &gt;200MA, RSI1&gt;72, drop&gt;10.6, ext&gt;5.1%, fresh high, low SPY corr).
+    Score 5-6 forecasts −9 to −13pp of 60d underperformance vs the stock's own drift. NOT an absolute short —
+    a ranking and long-management tool.</div>
+  <div class="card"><b>Edge C — long-book defense (bull markets)</b>
+    In bulls nothing here is shortable (measured: even hedged loses). A high-score divergence on a stock you
+    OWN is the validated signal to harvest: trim, collar, delay adds.</div>
+</div>
+
+<h2><span class="num">02</span> · Instruments — ranked by fit to the evidence</h2>
+<div class="cards">
+  <div class="card"><span class="tag rec">RECOMMENDED — Edge A</span><b>Put debit spread on the stock</b>
+    60-90 DTE (matches the validated horizon). Long ~0.45Δ put, short ~0.20Δ put. Caps the squeeze tail at
+    premium paid; cheapens the high IV you'll face in bear regimes; no borrow fees. Cost: theta + capped upside.
+    Liquidity gate: OI &gt; 500, spread &lt; 10% of mid on both legs.</div>
+  <div class="card"><span class="tag rec">RECOMMENDED — Edge A core</span><b>Short stock + long SPY (classic pair)</b>
+    Exact replication of what was tested. Use only when borrow fee &lt; 2%/yr and the name isn't HTB.
+    1.5-2% of equity per leg unlevered; 10%/pair max if levering, gross ≤ 100%.</div>
+  <div class="card"><span class="tag ok">SITUATIONAL</span><b>Long puts (no spread)</b>
+    Cleaner downside but expensive in bear-regime IV; use when IV rank &lt; 50 or when you explicitly want the
+    crash convexity. Risk = premium; size 0.5-1% of equity.</div>
+  <div class="card"><span class="tag ok">SITUATIONAL — Edge C</span><b>Collars / covered calls on longs</b>
+    On a score 5-6 divergence in a stock you own: sell 30-45 DTE ~0.25Δ calls (harvest the forecast stall) or
+    collar with the proceeds. The −9..−13pp underperformance forecast is exactly the regime where covered calls
+    outperform holding.</div>
+  <div class="card"><span class="tag no">REJECTED BY THE DATA</span><b>Naked margin shorts, 3x sizing</b>
+    The −113% single-trade tail and −41% simulated drawdown at 20%/pair. Also rejected: tight stops (+4% stop
+    cuts win rate 56%→37%), shorting in bull regimes (0/672 rules worked), biotech/binary names.</div>
+  <div class="card"><span class="tag no">NOT TESTED — DON'T ASSUME</span><b>Inverse/levered ETFs, futures baskets</b>
+    The research tested single-stock pairs. SQQQ-style instruments decay and express a different bet (index
+    direction), which the research explicitly does NOT support.</div>
+</div>
+
+<h2><span class="num">03</span> · Sizing rules — from the measured distribution</h2>
+<div class="panel">
+<ul>
+  <li><b>Per-position risk:</b> options — premium at risk 0.5-1% of equity; pairs — 1.5-2% per leg (10% max if levered).</li>
+  <li><b>Portfolio heat:</b> total options premium at risk ≤ 6% of equity; total pair gross ≤ 100% of equity. Hard caps.</li>
+  <li><b>Concurrency:</b> up to 10-15 positions (bear years produce 124-135 setups; diversification across them IS the edge), max 2 per sector.</li>
+  <li><b>Why not Kelly:</b> naive Kelly on +2.5%/σ≈12% suggests absurd size — it assumes independent trades. The real series has ~6 effective bear episodes and fat tails; the simulation table above is the honest sizing authority.</li>
+  <li><b>No stop-losses on stock legs</b> — validated. The exit discipline is time (60d), regime (SPY reclaims 200MA), and profit harvest (spread ≥ 70% of max value).</li>
+</ul>
+</div>
+
+<h2><span class="num">04</span> · The stack — tools that do this job</h2>
+<div class="cards">
+  <div class="card"><b>Broker: Interactive Brokers (or any with cheap borrow + good chains)</b>
+    Needed: portfolio margin optional, visible stock borrow rates (IBKR: SLB rates page), 60-90 DTE chains with
+    depth, API if you want to automate (<code>ib_insync</code>).</div>
+  <div class="card"><b>This repo's scanner — the signal source</b>
+    <code>python run_scanner.py</code> nightly after close (Task Scheduler entry in the README). Outputs ranked
+    setups with <code>edge_score_0_6</code>, 52w distance, divergence stats, regime line. <code>--drop-last-bar</code>
+    if run intraday.</div>
+  <div class="card"><b>Regime alert</b>
+    TradingView alert: SPY daily close crossing its 200-day SMA (both directions). This single alert arms and
+    disarms the whole system.</div>
+  <div class="card"><b>Calendar hygiene</b>
+    Check earnings/FDA/event dates inside the 60-day window before entry (broker calendar or earningswhispers).
+    Not part of the backtest — pure tail-avoidance hygiene, the Moderna lesson generalized.</div>
+</div>
+
+<h2><span class="num">05</span> · The nightly operator prompt — copy, paste, fill</h2>
+<p class="lead">Paste this into your AI assistant (or follow it yourself) every evening with the scanner output.
+It encodes every validated rule and refuses the trades the data rejected:</p>
+<pre>You are my trading operator for the RSI-divergence research system
+(research: orcules.github.io/claritx-deck/research). Tonight's inputs:
+1) Market regime line from the scanner output: {REGIME}
+2) Scanner CSV rows (fresh confirmed setups): {PASTE_SCANNER_ROWS}
+3) My current positions: {PASTE_POSITIONS}
+4) Account equity: {EQUITY}
+
+Apply these rules EXACTLY — they are validated by 21 years of data; do not improvise:
+
+REGIME GATE
+- If regime != "bear" (SPY not below a falling 200-day MA): output NO new short
+  entries. Only review my existing longs: for any long showing a fresh divergence
+  with edge_score_0_6 >= 5, recommend trim 25-50% / tighten stop / collar.
+  STOP HERE.
+
+ENTRY FILTER (bear regime only)
+- Keep only rows where: dist_from_52w_high is between 0% and -3%, AND
+  divergence price extension >= 4% (high2/high1-1), AND the ticker is NOT
+  biotech/pharma and has NO binary event (earnings, FDA, trial, merger vote)
+  scheduled within the next 60 trading days - check and tell me what you find.
+- Rank survivors by edge_score_0_6 (descending), then confidence.
+
+POSITION CONSTRUCTION (per surviving setup, until limits hit)
+- Default: PUT DEBIT SPREAD on the stock, 60-90 DTE: long put at ~0.45 delta,
+  short put at ~0.20 delta. Premium at risk = {RISK_PER_TRADE, default 0.75%}
+  of equity. Require: option OI > 500 on both legs, bid-ask < 10% of mid.
+- If options illiquid: short stock + long SPY equal dollars, 1.5% of equity
+  per leg, ONLY if borrow fee < 2%/yr - tell me to check the borrow rate.
+- LIMITS: max 10 concurrent positions; total premium at risk <= 6% of equity;
+  max 2 positions per GICS sector.
+
+EXITS (check my existing positions every night)
+- Time exit: close at 60 trading days from entry.
+- Regime exit: if SPY closed back above its 200-day MA - close EVERYTHING, list
+  the closing orders first in your output.
+- Profit harvest: if a spread reached >= 70% of max value, close it.
+- NEVER suggest tightening stops on the stock legs (validated: tight stops
+  destroy this edge). Size small instead.
+
+OUTPUT FORMAT
+1. Regime verdict + what it permits.
+2. Closing orders (if any) with reasons.
+3. New entries table: ticker | structure | strikes/DTE | premium | % equity at
+   risk | edge_score | the one reason this setup qualifies.
+4. Risk dashboard: total at risk, concurrent count, sector counts.
+5. Anything you were unsure about - ask, do not assume.</pre>
+
+<h2><span class="num">06</span> · The weekly rhythm</h2>
+<div class="steps">
+  <div class="step"><b>Nightly (2 min)</b><span>Scanner run → operator prompt → orders for tomorrow's open. Zero new shorts unless regime line says bear.</span></div>
+  <div class="step"><b>On regime flip to bear</b><span>The hunting season opens: expect a wave of setups within days. Deploy gradually — the best entries cluster over weeks, not one day.</span></div>
+  <div class="step"><b>On regime flip to bull</b><span>Close all pairs/spreads same week (validated exit). Switch to Edge C mode on your long book.</span></div>
+  <div class="step"><b>Quarterly</b><span><code>run_research.py --refresh</code> + <code>confirm_short.py</code> — re-verify the edge still holds on new data before continuing.</span></div>
+</div>
+
+<h2><span class="num">07</span> · Honest expectations</h2>
+<div class="panel">
+<ul>
+  <li>This is an <b>episodic alpha sleeve</b>, not a wealth engine: at the recommended sizing it targets roughly
+      +10-25% on deployed capital in a real bear year, near-zero in bull years (capital parked elsewhere), with
+      measured worst-year −9% to −13%.</li>
+  <li>It will NOT beat buy-and-hold SPY over a full cycle (measured: +16% vs +458% standalone at baseline sizing) —
+      its value is making money in exactly the windows when everything else bleeds, and disciplining your longs
+      the rest of the time.</li>
+  <li>Costs not in the backtest: spreads, borrow, theta. The +2.5%/60d gross edge absorbs normal costs; it does
+      not absorb sloppy execution on illiquid options.</li>
+</ul>
+</div>
+
+<div class="foot">
+  Research, not investment advice. Leveraged and short trading can lose more than invested capital.
+  All measured numbers from the verified research: <a href="./">orcules.github.io/claritx-deck/research</a> ·
+  generated from the research repo · simulation: <code>portfolio_sim.py</code> (leverage sweep documented above).
+</div>
+
+</div></body></html>
