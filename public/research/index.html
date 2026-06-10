@@ -158,9 +158,10 @@
     decline in only 35% of random 20-day windows; 50% would be the wrong benchmark)</div>
   </div>
   <p style="font-size:14.5px">On average the stock rises <b>-1.4% less</b> than a random entry over the
-  next 20 days — across 25,136 paired events, consistent in <b>20 of 22 years</b>, p&lt;0.0001 month-clustered,
-  and it survives a 30-day non-overlap cooldown (−1.38%, p&lt;0.0001). The exhaustion-top variant
-  (a stricter 8-condition pattern, 5,300 events) shows the same picture at −1.61%, 21 of 22 years.</p>
+  next 20 days — across 25,136 paired events, consistent in <b>19 of 22 years</b> (one more year, 2013, is a dead
+  tie at −0.002pp, and 2026 is a partial year), p&lt;0.0001 month-clustered, and it survives a 30-day non-overlap
+  cooldown (−1.38%, p&lt;0.0001). The exhaustion-top variant (a stricter 8-condition pattern, 5,300 events)
+  shows the same picture at −1.61%, 21 of 22 years.</p>
 
   <h4>Where the relative edge is strongest (generic signal, by universe)</h4>
     <table><tr><th style="text-align:left">Universe</th><th>Events</th><th>Win 20d</th><th>Random null</th>
@@ -340,15 +341,20 @@ return and cannot be compared to buy &amp; hold. We ran a true daily mark-to-mar
     <td><b>+508%</b></td><td>10.3%</td><td>-54%</td></tr>
 </table>
 <p style="font-size:13.5px;margin-top:10px">The rule is NOT an SPY replacement — it sits in cash 80% of the
-time and its exposure cap binds exactly when signals cluster. Its value is different: per-trade alpha in bear
-windows (it made +0.3% through the 2008 crash while SPY lost 39%, and −2.9% through the COVID crash vs SPY's
-−17.5%), and as a long-book timing tool in bull markets. Anyone who reads the green curve above as
-"this beat the market" is misreading it — that is exactly why this box exists.</p>
+time and its exposure cap binds exactly when signals cluster. Note the overlay's drawdown is slightly WORSE than
+SPY's: the long-SPY hedge leg adds market beta exactly during crashes. The rule's value is different: per-trade
+alpha in bear windows (it made +0.3% through the 2008 crash while SPY lost 39%, and −2.9% through the COVID crash
+vs SPY's −17.5%), and as a long-book timing tool in bull markets. Anyone who reads the green curve above as
+"this beat the market" is misreading it — that is exactly why this box exists. Simulation as of 2026-06-09;
+totals are method-sensitive at the ±1% level (entry alignment, end date).</p>
 </div>
 
 <h2><span class="num">06</span> · Real trades from the database</h2>
 <p class="lead">Five actual events — three wins, the typical (median) trade, and the one disaster that defines the
-risk rules. Prices are split-adjusted; "stock" and "SPY" are the next 60 trading sessions from the confirmed entry.</p>
+risk rules. Prices are split-adjusted; "stock" and "SPY" are the next 60 trading sessions from the confirmed entry.
+<b>Representativeness note:</b> these five showcase the most dramatic outcomes. Across all 503 trades the stock
+itself fell in only ~50% of cases — the pair usually wins because the stock <i>lags</i> SPY, not because it crashes.
+The full unfiltered record is in section 07.</p>
 <div class="exs">
         <div class="ex ex-win">
           <div class="ex-head"><span class="ex-tick">CNC</span>
@@ -1015,11 +1021,21 @@ function ttf() {
   <div class="m-card"><b>Code &amp; reproducibility</b> Python + pandas + SQLite. Detection, backtest, statistics
     and this page are generated from the database by scripts — nothing hand-typed. Repo folder:
     <code>rsi-divergence-research</code> (research pipeline, nightly scanner, Streamlit dashboard).</div>
+  <div class="m-card"><b>Effective sample &lt; 503</b> Trades cluster heavily: 503 trades on 245 distinct days,
+    and 2008+2022 alone hold 51.5% of them — effectively ~6 bear episodes, not 503 independent bets. That is why
+    the day-collapsed mean (+1.8%) is below the per-trade mean (+2.5%), why we report cluster-robust statistics,
+    and why thin years (2019: 3 trades, 2025: 9) should not be over-read.</div>
+  <div class="m-card"><b>Execution is idealized</b> Stop-loss numbers assume exact fills at the stop level —
+    real short-side fills on gap-ups are worse. Borrow fees on hard-to-borrow names (MRNA in 2020) and pair
+    slippage are not modeled. The +2.5%/60d gross edge leaves room for normal costs, but not for crowded or
+    hard-to-borrow situations.</div>
 </div>
 
 <div class="foot">
-  Research, not investment advice · all numbers computed from real market data and independently re-verified ·
-  generated from the research database · full Hebrew report: <a href="research_report.html">research_report.html</a>
+  Research, not investment advice · all numbers computed from real market data · price data through 2026-06-09 ·
+  re-verified by 7 independent recomputation agents (81 checks) plus an external cross-check against a second
+  data source · generated from the research database · full Hebrew report:
+  <a href="research_report.html">research_report.html</a>
 </div>
 
 </div></body></html>
