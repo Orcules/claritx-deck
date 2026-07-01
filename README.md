@@ -6,6 +6,10 @@
 
 ---
 
+<p align="center">
+  <img src="slides/claritx-pitch-v5/assets/home-hero.png" alt="ClaritX — the AI market-research & portfolio platform this deck pitches" width="760">
+</p>
+
 ## 🎯 Overview
 
 This is the investor / product pitch deck for **ClaritX** (an AI-powered stock-analysis platform), built not in slide software but as a **React application**. Each slide is a component, so the deck is version-controlled, themeable, responsive, and deployable as a static site — and content like charts, tables, and interactive elements are real code rather than static images.
