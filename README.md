@@ -1,64 +1,57 @@
-# open-slide workspace
+# ClaritX — Investor Pitch Deck
 
-Slides as React components. Each slide lives under `slides/<id>/index.tsx` and default-exports an array of page components. The `@open-slide/core` runtime handles layout, scaling, navigation, thumbnails, and fullscreen play mode — you just write the pages.
+**An interactive, code-driven pitch deck built as React components — slides as JSX, with runtime layout, scaling, navigation, and fullscreen play mode.**
 
-## Getting started
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![open-slide](https://img.shields.io/badge/open--slide-1e293b) ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
+---
+
+## 🎯 Overview
+
+This is the investor / product pitch deck for **ClaritX** (an AI-powered stock-analysis platform), built not in slide software but as a **React application**. Each slide is a component, so the deck is version-controlled, themeable, responsive, and deployable as a static site — and content like charts, tables, and interactive elements are real code rather than static images.
+
+It's built on the [`open-slide`](https://www.npmjs.com/package/@open-slide/core) framework: you write pages as React components and the runtime handles layout, scaling to any screen, thumbnails, keyboard navigation, and fullscreen presentation mode.
+
+## ✨ Highlights
+
+- **Slides as components** — every page under `slides/claritx-pitch-v5/` is JSX; layout and scaling are handled by the `@open-slide/core` runtime.
+- **Responsive & self-scaling** — the deck fits any display without manual resizing.
+- **Presentation mode** — keyboard navigation, thumbnails, and fullscreen play.
+- **Static deployment** — ships as a static build (Netlify / Vercel configs included).
+- **Custom themes** — presentation styling defined under `themes/`.
+
+## 🧰 Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | React, TypeScript |
+| Deck runtime | `@open-slide/core` |
+| Build | Vite |
+| Deployment | Netlify / Vercel (static) |
+
+## 🚀 Getting Started
 
 ```bash
+# install (uses pnpm)
 pnpm install
+
+# run the dev server
 pnpm dev
 ```
 
-Then open the dev server and edit `slides/getting-started/index.tsx`, or create a new slide at `slides/<your-slide>/index.tsx`.
+Slides live under `slides/claritx-pitch-v5/index.tsx`. Presentation config is in `open-slide.config.ts`.
 
-## Scripts
+## 📁 Structure
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start the dev server with hot reload. |
-| `pnpm build` | Build a static bundle you can deploy. |
-| `pnpm preview` | Preview the built bundle locally. |
-
-## Authoring a slide
-
-```tsx
-// slides/my-slide/index.tsx
-import type { Page, SlideMeta } from '@open-slide/core';
-
-const Cover: Page = () => (
-  <div style={{ width: '100%', height: '100%' }}>Hello</div>
-);
-
-export const meta: SlideMeta = { title: 'My slide' };
-export default [Cover] satisfies Page[];
+```
+claritx-deck/
+├── slides/claritx-pitch-v5/   # the deck — pages as React components + assets
+├── themes/                    # presentation themes
+├── public/                    # static assets + research pages
+├── open-slide.config.ts       # deck configuration
+└── netlify.toml / vercel.json # static deployment
 ```
 
-Every page renders into a fixed **1920 × 1080** canvas — design with absolute pixel values. Put images, videos, and fonts under `slides/<id>/assets/` and import them directly.
+## License
 
-See [`CLAUDE.md`](./CLAUDE.md) for the full authoring guide.
-
-## Navigation
-
-- Arrow keys / PageUp / PageDown move between pages.
-- `F` enters fullscreen play mode; Esc exits.
-- In play mode: Space / → next, ← prev.
-
-## Claude Code integration
-
-This workspace ships with Claude Code skills preconfigured under `.claude/skills/` and `.agents/skills/`. Ask Claude Code to "make slides about X" and the `create-slide` skill takes over. Use `apply-comments` to iterate via inspector-style markers inside your source.
-
-## Config
-
-Optional `open-slide.config.ts` at the workspace root:
-
-```ts
-import type { OpenSlideConfig } from '@open-slide/core';
-
-const openSlideConfig: OpenSlideConfig = {
-  port: 5173,
-};
-
-export default openSlideConfig;
-```
-
-Supported fields: `slidesDir`, `port`.
+Released under the [MIT License](LICENSE). Personal portfolio project.
