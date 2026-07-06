@@ -4,6 +4,8 @@
 
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![open-slide](https://img.shields.io/badge/open--slide-1e293b) ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
+**▶ Live demo:** [orcules.github.io/claritx-deck](https://orcules.github.io/claritx-deck/)
+
 ---
 
 <p align="center">
@@ -22,7 +24,6 @@ It's built on the [`open-slide`](https://www.npmjs.com/package/@open-slide/core)
 - **Responsive & self-scaling** — the deck fits any display without manual resizing.
 - **Presentation mode** — keyboard navigation, thumbnails, and fullscreen play.
 - **Static deployment** — ships as a static build (Netlify / Vercel configs included).
-- **Custom themes** — presentation styling defined under `themes/`.
 
 ## 🧰 Tech Stack
 
@@ -36,11 +37,14 @@ It's built on the [`open-slide`](https://www.npmjs.com/package/@open-slide/core)
 ## 🚀 Getting Started
 
 ```bash
-# install (uses pnpm)
-pnpm install
+# install
+npm ci
 
 # run the dev server
-pnpm dev
+npm run dev
+
+# build the static site
+npm run build
 ```
 
 Slides live under `slides/claritx-pitch-v5/index.tsx`. Presentation config is in `open-slide.config.ts`.
@@ -50,7 +54,6 @@ Slides live under `slides/claritx-pitch-v5/index.tsx`. Presentation config is in
 ```
 claritx-deck/
 ├── slides/claritx-pitch-v5/   # the deck — pages as React components + assets
-├── themes/                    # presentation themes
 ├── public/                    # static assets + research pages
 ├── open-slide.config.ts       # deck configuration
 └── netlify.toml / vercel.json # static deployment
